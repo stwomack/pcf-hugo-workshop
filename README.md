@@ -1,6 +1,3 @@
-# pcf-kroger-workshop
-This repository is for Kroger Workshop
------
 
 Building the workshop site
 ---
