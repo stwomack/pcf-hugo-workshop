@@ -73,6 +73,7 @@ $cf push
 
 ## Step 5: Add content
 Anytime you make changes in the content, delete the public directory, hugo will rebuild the directory. 
+
 Let's now add a post to our `workshop`. We will use the `hugo new` command to add a post. 
 
 ```bash
@@ -155,6 +156,13 @@ After you run the hugo command, a public directory will be created with the gene
 
 ## Step 8: Deploy to Cloud foundry
 
+Create a Staticfile in public folder before pushing to Cloud Foundry. 
+
+```bash
+$touch public/Staticfile
+$cf push
+```
+
 Make sure you commit all your changes back to the git repo. 
 
 ```bash
@@ -165,4 +173,3 @@ $ git push origin master
 
 In couple of minutes, your website will be live https://kroger-workshop.cfapps.io
 
-----
