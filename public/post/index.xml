@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Cloud Foundry DevOps Workshop at Kroger</title>
+    <link>https://kroger-workshop.cfapps.io/post/</link>
+    <description>Recent content in Posts on Cloud Foundry DevOps Workshop at Kroger</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2015 Copyright Text</copyright>
+    <lastBuildDate>Tue, 15 Mar 2016 11:14:27 -0400</lastBuildDate>
+    <atom:link href="https://kroger-workshop.cfapps.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Kroger DevOps Workshop - March 17, 2016</title>
+      <link>https://kroger-workshop.cfapps.io/2016/03/15/kroger-devops-workshop---march-17-2016/</link>
+      <pubDate>Tue, 15 Mar 2016 11:14:27 -0400</pubDate>
+      
+      <guid>https://kroger-workshop.cfapps.io/2016/03/15/kroger-devops-workshop---march-17-2016/</guid>
+      <description>&lt;p&gt;Location:
+Date and Time&lt;/p&gt;
+
+&lt;p&gt;Logistics:&lt;/p&gt;
+
+&lt;p&gt;Kroger Contacts&lt;/p&gt;
+
+&lt;p&gt;Pivotal Contacts&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
