@@ -7,17 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© 2015 Copyright Text</copyright>
-    <lastBuildDate>Tue, 15 Mar 2016 11:14:27 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 15 Mar 2016 15:00:49 -0400</lastBuildDate>
     <atom:link href="https://kroger-workshop.cfapps.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Kroger DevOps Workshop - March 17, 2016</title>
-      <link>https://kroger-workshop.cfapps.io/2016/03/15/kroger-devops-workshop---march-17-2016/</link>
-      <pubDate>Tue, 15 Mar 2016 11:14:27 -0400</pubDate>
+      <title>Workshop Details</title>
+      <link>https://kroger-workshop.cfapps.io/2016/03/15/workshop-details/</link>
+      <pubDate>Tue, 15 Mar 2016 15:00:49 -0400</pubDate>
       
-      <guid>https://kroger-workshop.cfapps.io/2016/03/15/kroger-devops-workshop---march-17-2016/</guid>
-      <description>&lt;p&gt;Location:
-Date and Time&lt;/p&gt;
+      <guid>https://kroger-workshop.cfapps.io/2016/03/15/workshop-details/</guid>
+      <description>&lt;p&gt;Location:&lt;/p&gt;
+
+&lt;p&gt;Date and Time&lt;/p&gt;
 
 &lt;p&gt;Logistics:&lt;/p&gt;
 
@@ -25,6 +26,33 @@ Date and Time&lt;/p&gt;
 
 &lt;p&gt;Pivotal Contacts&lt;/p&gt;
 </description>
+    </item>
+    
+    <item>
+      <title>Introduction to Kroger Workshop</title>
+      <link>https://kroger-workshop.cfapps.io/2016/03/15/introduction-to-kroger-workshop/</link>
+      <pubDate>Tue, 15 Mar 2016 14:54:34 -0400</pubDate>
+      
+      <guid>https://kroger-workshop.cfapps.io/2016/03/15/introduction-to-kroger-workshop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lab 2</title>
+      <link>https://kroger-workshop.cfapps.io/2016/03/15/lab-2/</link>
+      <pubDate>Tue, 15 Mar 2016 14:54:22 -0400</pubDate>
+      
+      <guid>https://kroger-workshop.cfapps.io/2016/03/15/lab-2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lab-1: Push, Bind and Scale</title>
+      <link>https://kroger-workshop.cfapps.io/2016/03/15/lab-1-push-bind-and-scale/</link>
+      <pubDate>Tue, 15 Mar 2016 14:54:11 -0400</pubDate>
+      
+      <guid>https://kroger-workshop.cfapps.io/2016/03/15/lab-1-push-bind-and-scale/</guid>
+      <description></description>
     </item>
     
   </channel>

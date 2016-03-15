@@ -3,13 +3,28 @@
   
   <url>
     <loc>https://kroger-workshop.cfapps.io/</loc>
-    <lastmod>2016-03-15T11:14:27-04:00</lastmod>
+    <lastmod>2016-03-15T15:00:49-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://kroger-workshop.cfapps.io/2016/03/15/kroger-devops-workshop---march-17-2016/</loc>
-    <lastmod>2016-03-15T11:14:27-04:00</lastmod>
+    <loc>https://kroger-workshop.cfapps.io/2016/03/15/workshop-details/</loc>
+    <lastmod>2016-03-15T15:00:49-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kroger-workshop.cfapps.io/2016/03/15/introduction-to-kroger-workshop/</loc>
+    <lastmod>2016-03-15T14:54:34-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kroger-workshop.cfapps.io/2016/03/15/lab-2/</loc>
+    <lastmod>2016-03-15T14:54:22-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kroger-workshop.cfapps.io/2016/03/15/lab-1-push-bind-and-scale/</loc>
+    <lastmod>2016-03-15T14:54:11-04:00</lastmod>
   </url>
   
 </urlset>
