@@ -1,9 +1,9 @@
 +++
 
-Categories = []
-Tags = []
+Categories = ["lab"]
+Tags = ["spring","microservices","cloudfoundry"]
 date = "2016-03-15T14:54:11-04:00"
-title = "Lab-1"
+title = "Lab 1"
 weight = 2
 
 +++
@@ -12,8 +12,8 @@ weight = 2
 Pivotal Cloud Foundry with Spring
 -
 
-Goals
---
+### Goals
+
 
 To deploy and configure a microservice and UI, leverage the platform for monitoring & management of the microservice, and do a blue green deployment with zero downtime.
 
