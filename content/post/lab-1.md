@@ -9,7 +9,7 @@ weight = 2
 +++
 
 
-DevOps on Cloud Foundry Platform
+Pivotal Cloud Foundry with Spring
 -
 
 Goals
@@ -24,26 +24,19 @@ Prerequisites
 
 1. Java SDK 1.7+
 
-2. Git from link:https://mac.github.com/[github.com]
+2. Git from [github.com](https://mac.github.com/)
 
-3. Cloud Foundry CLI from link:https://github.com/cloudfoundry/cli/releases[`CF CLI Releases`]
+3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
-4. Curl from link:http://curl.haxx.se/[curl]
+4. Curl from [curl](http://curl.haxx.se/)
 
-5. Pivotal Web Services Account.
-Create a free trial account here link:http://run.pivotal.io/[`Pivotal Web Services`]
-
-6. Optional: Install link:http://www.mysql.com/products/workbench/[MySQL Workbench] or other MySQL tool
-
-7. Optional: Install link:https://golang.org/doc/install[Go Programming Language ]
-
-8. Familiarity with link:http://www.spring.io[Spring IO]
+5. Use the Kroger internal instance of Pivotal Cloud Foundry, follow instructions [cloud.kroger.com](http://cloud.kroger.com) and click 'Try Cloud Foundry'
+6. OR Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
 Pre-work
 --
-1. Pivotal Architect has given a PCF deep dive to the workshop attendees link:https://drive.google.com/a/pivotal.io/file/d/0B_s5GpI2bqC9NjNDLUdUOFJKSjQ[Technical Deep Dive on Cloud Foundry]
-2. Fork and Clone link:https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/[`PCF Workspace for DevOps`]
-3. Review the link:https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/tree/master[ `cities`] application.
+1. Fork and Clone [PCF Workspace](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
+2. Review the [cities](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/tree/master) application.
 
 Steps
 --
@@ -54,21 +47,27 @@ In this workshop we are going to follow these steps to deploy apps on Cloud foun
 
 __NOTE__
 
-> The instructions in this document are for Mac/Linux based CLI/Shell. If you are using Windows, you can use link:http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows[Windows CLI]
-or a Virtual Box / Vagrant with a link:./vagrant.adoc[Linux VM].
+> The instructions in this document are for Mac/Linux based CLI/Shell. If you are using Windows, you may need to adjust your slashes.
 
 
 Building apps
 ---
-To build the app go to the workspace folder
+By this point, you should have cloned (or forked, or downloaded) the [workspace repo](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/).  Now you will build the project and deploy it to Cloud Foundry.
 
+For Linux/Mac:
 ```bash
 
 cd pcf-workspace-devops/cities
-./gradlew clean
-./gradlew build
+./gradlew clean build
 
 ```
+
+Windows:
+```bash
+cd pcf-workspace-devops\cities
+gradlew.bat clean build
+```
+
 <br>
 <hr>
 # PART 1: Introduction to CF, Push an App.
