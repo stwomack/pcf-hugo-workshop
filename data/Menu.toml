@@ -1,0 +1,13 @@
+[about]
+    Name = "About"
+    URL = "/2016/03/15/workshop-details/"
+
+[posts]
+    Name = "Labs"
+    Title = "Show list of Labs"
+    URL = "/post"
+
+[tags]
+    Name = "Tags"
+    Title = "Show list of tags"
+    URL = "/tags"

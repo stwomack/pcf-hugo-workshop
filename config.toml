@@ -3,19 +3,36 @@ languageCode = "en-us"
 title = "Cloud Foundry Workshop at Kroger"
 
 
-theme="material-design"
+
+#theme="material-design"
 MetaDataFormat = "toml"
 paginate = 9 # To specify a multiple of 3
 disqusShortname = "Rajesh Jain" # optional
 copyright = "© 2015 Copyright Text"
 
+#
+# All parameters below here are optional and can be mixed and matched.
+#
 [params]
-  description = "Cloud Foundry Workshops" # optional
-  twitter = "rjain15" # optional
-  # headerCover = "images/headerCover.png" # optional
-  # footerCover = "images/footerCover.png" # optional
-  googleAnalyticsUserID = "UA-75133856-1" # optional
+    # You can use markdown here.
+    brand = "Kroger"
+    topline = "Right Store, Right Price"
+    footline = "code with <i class='fa fa-heart'></i>"
+
+    # Sidebar position
+    # false, true, "left", "right"
+    sidebar = "left"
+
+    # Text for the top menu link, which goes the root URL for the site.
+    # Default (if omitted) is "Home".
+    home = "Home"
+
+    description = "Pivotal Cloud Foundry" # optional
+    twitter = "pivotal" # optional
+    customer = "kroger"
+    # headerCover = "images/headerCover.png" # optional
+    # footerCover = "images/footerCover.png" # optional
+    googleAnalyticsUserID = "UA-75133856-1" # optional
 
 [permalinks]
   post = "/:year/:month/:day/:title/" # optional
-
