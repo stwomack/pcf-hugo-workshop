@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Agenda on Cloud Foundry Workshop at Kroger</title>
+    <link>https://kroger-workshop.cfapps.io/categories/agenda/</link>
+    <description>Recent content in Agenda on Cloud Foundry Workshop at Kroger</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 2015 Copyright Text</copyright>
+    <lastBuildDate>Tue, 15 Mar 2016 16:23:23 +0900</lastBuildDate>
+    <atom:link href="https://kroger-workshop.cfapps.io/categories/agenda/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Workshop Details</title>
+      <link>https://kroger-workshop.cfapps.io/2016/03/15/workshop-details/</link>
+      <pubDate>Tue, 15 Mar 2016 16:23:23 +0900</pubDate>
+      
+      <guid>https://kroger-workshop.cfapps.io/2016/03/15/workshop-details/</guid>
+      <description>
+
+&lt;p&gt;Click here to get the workshop details, locations, time and agenda.&lt;/p&gt;
+
+&lt;p&gt;For more info email xyz@pivotal.io&lt;/p&gt;
+
+&lt;h2 id=&#34;location:34c4da6d4768d05e50db99357a299b5c&#34;&gt;Location&lt;/h2&gt;
+
+&lt;p&gt;11450 Grooms Rd, Cincinnati, OH 45242, USA&lt;/p&gt;
+
+&lt;h2 id=&#34;date-and-time:34c4da6d4768d05e50db99357a299b5c&#34;&gt;Date and Time&lt;/h2&gt;
+
+&lt;p&gt;Date: March 16, 2016
+Time: 11:00 am to 5:00 pm&lt;/p&gt;
+
+&lt;h2 id=&#34;agenda:34c4da6d4768d05e50db99357a299b5c&#34;&gt;Agenda&lt;/h2&gt;
+
+&lt;h2 id=&#34;speakers:34c4da6d4768d05e50db99357a299b5c&#34;&gt;Speakers&lt;/h2&gt;
+
+&lt;h2 id=&#34;customer-contact:34c4da6d4768d05e50db99357a299b5c&#34;&gt;Customer Contact&lt;/h2&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

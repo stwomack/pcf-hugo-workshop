@@ -112,773 +112,736 @@ Create a free trial account here link:<a href="http://run.pivotal.io/[`Pivotal">
 
 <p><img src="/images/devops-cf.png" alt="DevOps on CF" /></p>
 
-<p>[NOTE]
-The instructions in this document are for Mac/Linux based CLI/Shell. If you are using Windows, you can use link:<a href="http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows[Windows">http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows[Windows</a> CLI]
+<p><strong>NOTE</strong></p>
+
+<blockquote>
+<p>The instructions in this document are for Mac/Linux based CLI/Shell. If you are using Windows, you can use link:<a href="http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows[Windows">http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows[Windows</a> CLI]
 or a Virtual Box / Vagrant with a link:./vagrant.adoc[Linux VM].</p>
+</blockquote>
 
-<p>&mdash; Building apps
-To build the app go to the workspace folder</p>
+<h2 id="building-apps:8bd1bf82bb668bb452ca3d0d6b4e19bc">Building apps</h2>
 
-<h2 id="source-bash:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<p>To build the app go to the workspace folder</p>
 
-<p>cd pcf-workspace-devops/cities
-./gradlew clean</p>
+<pre><code class="language-bash">
+cd pcf-workspace-devops/cities
+./gradlew clean
+./gradlew build
 
-<h2 id="gradlew-build:8bd1bf82bb668bb452ca3d0d6b4e19bc">./gradlew build</h2>
+</code></pre>
 
-<p>&ndash; PART 1: Introduction to CF, Push an App.</p>
+<p><br>
+<hr></p>
 
-<p>&mdash; Login to the Cloud Platform</p>
+<h1 id="part-1-introduction-to-cf-push-an-app:8bd1bf82bb668bb452ca3d0d6b4e19bc">PART 1: Introduction to CF, Push an App.</h1>
+
+<h3 id="login-to-the-cloud-platform:8bd1bf82bb668bb452ca3d0d6b4e19bc">Login to the Cloud Platform</h3>
 
 <p>Use <code>cf help</code> and/or <code>cf &lt;command&gt; --help</code> for details on each of the commands below.</p>
 
-<p>. Review the docs: <a href="http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html">http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html</a>
-. Login to the Pivotal Cloud Foundry.
-+</p>
+<ol>
+<li>Review the docs: <a href="http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html">http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html</a></li>
 
-<h2 id="source-bash-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<li><p>Login to the Pivotal Cloud Foundry.</p>
 
-<p>// Assuming you are using PWS, your system domain is run.pivotal.io and Use the interactive prompts to login in.</p>
+<pre><code class="language-bash">// Assuming you are using PWS, your system domain is run.pivotal.io and Use the interactive prompts to login in.
+$ cf login -a https://api.run.pivotal.io
+</code></pre></li>
 
-<h2 id="cf-login-a-https-api-run-pivotal-io:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf login -a <a href="https://api.run.pivotal.io">https://api.run.pivotal.io</a></h2>
+<li><p>Alternatively, you can set the env variables in the <code>env</code> file in <code>cities</code> folder and source the <code>env</code> file</p>
 
-<p>+
-. Alternatively, you can set the env varibles in the <code>env</code> file in <code>cities</code> folder and source the <code>env</code> file
-+</p>
+<pre><code class="language-bash">$nano env.sh
+export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
+export CF_APPS_DOMAIN=       //CF_APPS_DOMAIN will look similar to cfapps.io
+export CF_USER=              //CF_USER is the user account to sign into Pivotal Cloud Foundry, which is usually your email address.
+export CF_ORG=               //CF_ORG is the name of the Organization within Pivotal Cloud Foundry where you want to deploy your applications.
+export CF_SPACE=             //CF_SPACE is the name of the Space within the above Organization where you want your application deployed.
+</code></pre>
 
-<h2 id="source-bash-2:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">$ source ./env
+$ cf login -a https://api.$CF_SYSTEM_DOMAIN -u $CF_USER -o $CF_ORG -s $CF_SPACE
+</code></pre></li>
 
-<p>$nano env.sh</p>
+<li><p>Verify you are logged in with your own userid (<em>not admin</em>) and targeted to your PCF instance:</p>
 
-<p>export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
- export CF_APPS_DOMAIN=       //CF_APPS_DOMAIN will look similar to cfapps.io
- export CF_USER=              //CF_USER is the user account to sign into Pivotal Cloud Foundry, which is usually your email address.
- export CF_ORG=               //CF_ORG is the name of the Organization within Pivotal Cloud Foundry where you want to deploy your applications.</p>
+<pre><code class="language-bash">$ cf target
+</code></pre></li>
+</ol>
 
-<h2 id="export-cf-space-cf-space-is-the-name-of-the-space-within-the-above-organization-where-you-want-your-application-deployed:8bd1bf82bb668bb452ca3d0d6b4e19bc">export CF_SPACE=             //CF_SPACE is the name of the Space within the above Organization where you want your application deployed.</h2>
+<blockquote>
+<p><i>add <code>--skip-ssl-validation</code> if you are pointing to CF installation which is using self signed certificates.</i></p>
+</blockquote>
 
-<p>+</p>
+<h3 id="push-the-app:8bd1bf82bb668bb452ca3d0d6b4e19bc">Push the app</h3>
 
-<h2 id="source-bash-3:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<ol>
+<li><p>Push the cities-hello</p>
 
-<p>$ source ./env</p>
-
-<h2 id="cf-login-a-https-api-cf-system-domain-u-cf-user-o-cf-org-s-cf-space:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf login -a <a href="https://api.$CF_SYSTEM_DOMAIN">https://api.$CF_SYSTEM_DOMAIN</a> -u $CF_USER -o $CF_ORG -s $CF_SPACE</h2>
-
-<p>+
-[NOTE]
-add <code>--skip-ssl-validation</code> if you are pointing to CF installation which is using self signed certificates.</p>
-
-<p>+
-. Verify you are logged in with your own userid (<em>not admin</em>) and targeted to your PCF instance:
-+</p>
-
-<h2 id="source-bash-4:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-target:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf target</h2>
-
-<p>&mdash; Push the app</p>
-
-<p>. Push the cities-hello +</p>
-
-<p>+</p>
-
-<h2 id="source-bash-5:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<p>$ cd cities-hello
-$ cf push <first-initial><last-initial>-cities-hello</p>
-
-<p>// This will give an output which is similar to this</p>
-
-<p>requested state: started
-instances: <sup>1</sup>&frasl;<sub>1</sub>
+<pre><code class="language-bash">$ cd cities-hello
+$ cf push &lt;first-initial&gt;&lt;last-initial&gt;-cities-hello
+// This will give an output which is similar to this
+requested state: started
+instances: 1/1
 usage: 512M x 1 instances
 urls: cities-hello-lactiferous-unanswerableness.cfapps.io
 last uploaded: Mon Jun 15 14:53:10 UTC 2015
-stack: cflinuxfs2</p>
+stack: cflinuxfs2
+</code></pre></li>
 
-<hr />
+<li><p>Open the app url</p>
 
-<p>+
-. Open the app url +
-When you push the apps, it will give the url route to the app. +
-image:./images/welcome.png[Welcome to PCF Workshop] +</p>
+<ul>
+<li>When you push the apps, it will give the url route to the app.
+<img src="/images/welcome.png" alt="Welcome to PCF Workshop" /></li>
+</ul></li>
 
-<p>. Walk through the App Console and the Ops Manager</p>
+<li><p>Walk through the App Console and the Ops Manager</p></li>
+</ol>
 
-<p>&mdash; Recap: Part 1</p>
+<h2 id="recap-part-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">Recap: Part 1</h2>
 
-<p>.Cloud Foundry Haiku
-[quote, Cloud Foundry]</p>
+<blockquote>
+<p>Cloud Foundry Haiku </br>
+  Here is my source code </br>
+  Run it on the cloud for me </br>
+  I do not care how</br></p>
+</blockquote>
 
-<hr />
-
-<p>Here is my source code +
-Run it on the cloud for me +
-I do not care how</p>
-
-<hr />
-
-<p>&mdash; Discussion: Part 1</p>
-
-<h2 id="note:8bd1bf82bb668bb452ca3d0d6b4e19bc">[NOTE]</h2>
+<h2 id="discussion-part-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">Discussion: Part 1</h2>
 
 <ul>
 <li>How do you push an app to the cloud today?</li>
-<li>How does the cloud platform understand which runtime to use to run the app?
-&mdash;-</li>
+<li>How does the cloud platform understand which runtime to use to run the app?</li>
 </ul>
 
-<p>&ndash; PART 2: Build, Push, Bind, Monitor and Scale an App.</p>
+<p><br>
+<hr></p>
+
+<h2 id="part-2-build-push-bind-monitor-and-scale-an-app:8bd1bf82bb668bb452ca3d0d6b4e19bc">PART 2: Build, Push, Bind, Monitor and Scale an App.</h2>
 
 <p>The cities-service app requires a database service to store and fetch cities info.</p>
 
-<p>&mdash; Create a Database Service from Marketplace</p>
+<h2 id="create-a-database-service-from-marketplace:8bd1bf82bb668bb452ca3d0d6b4e19bc">Create a Database Service from Marketplace</h2>
 
-<p>. Review the docs on Services:
-+
-* link:<a href="http://docs.pivotal.io/pivotalcf/devguide/services/adding-a-service.html[Adding">http://docs.pivotal.io/pivotalcf/devguide/services/adding-a-service.html[Adding</a> a Service]
-* link:<a href="http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html[Managing">http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html[Managing</a> Services]
-+
-. Create a mysql service instance, name it as <code>&lt;YOUR INITIALS&gt;-cities-db</code>
-You can create the service from the <code>cli</code> or launch the App Manager <a href="http://console.run.pivotal.io">http://console.run.pivotal.io</a> and login.
-Navigate to the marketplace and see the available services. Here you will create the service using the CLI.
-+</p>
+<ol>
+<li><p>Review the docs on Services:</p>
 
-<h2 id="source-bash-6:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<p><a href="http://docs.pivotal.io/pivotalcf/devguide/services/adding-a-service.html">Adding a Service</a> <br>
+<a href="http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html">Managing Services</a></p></li>
 
-<p>$ cf marketplace // check if cleardb mysql service is available</p>
+<li><p>Create a mysql service instance, name it as <code>&lt;YOUR INITIALS&gt;-cities-db</code></p>
 
-<h2 id="cf-create-service-cleardb-spark-first-initial-last-initial-cities-db:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf create-service cleardb spark <first-initial><last-initial>-cities-db</h2>
+<p>You can create the service from the <code>cli</code> or launch the App Manager <a href="http://console.run.pivotal.io">http://console.run.pivotal.io</a> and login. <br>
+Navigate to the marketplace and see the available services. Here you will create the service using the CLI.</p>
 
-<p>+</p>
+<pre><code class="language-bash">$ cf marketplace // check if cleardb mysql service is available
+$ cf create-service cleardb spark &lt;first-initial&gt;&lt;last-initial&gt;-cities-db
+</code></pre></li>
 
-<p>. Launch the DB console via the <code>Manage</code> link in the App Manager.  Note the database is empty.</p>
+<li><p>Launch the DB console via the <code>Manage</code> link in the App Manager.  Note the database is empty.</p></li>
+</ol>
 
-<p>&mdash; Push the App</p>
+<p><br></p>
 
-<p>. Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.
-+</p>
+<h2 id="push-the-app-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">Push the App</h2>
 
-<h2 id="source-bash-7:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<ol>
+<li><p>Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.</p>
 
-<h2 id="cf-push-first-initial-last-initial-cities-service-i-1-m-512m-p-build-libs-cities-service-0-0-1-snapshot-jar:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf push <first-initial><last-initial>-cities-service -i 1 -m 512M -p build/libs/cities-service-0.0.1-SNAPSHOT.jar</h2>
+<pre><code class="language-bash">$ cf push &lt;first-initial&gt;&lt;last-initial&gt;-cities-service -i 1 -m 512M -p build/libs/cities-service-0.0.1-SNAPSHOT.jar
+</code></pre></li>
 
-<p>+
-. Check the logs to learn more about why the application is not starting
-+</p>
+<li><p>Check the logs to learn more about why the application is not starting</p>
 
-<h2 id="source-bash-8:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">$ cf logs &lt;first-initial&gt;&lt;last-initial&gt;-cities-service --recent
+</code></pre></li>
+</ol>
 
-<h2 id="cf-logs-first-initial-last-initial-cities-service-recent:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf logs <first-initial><last-initial>-cities-service &ndash;recent</h2>
+<p><br></p>
 
-<p>&mdash; Manually Binding the Service Instance</p>
+<h2 id="manually-binding-the-service-instance:8bd1bf82bb668bb452ca3d0d6b4e19bc">Manually Binding the Service Instance</h2>
 
-<p>. Review the docs on link:<a href="http://docs.pivotal.io/pivotalcf/devguide/services/bind-service.html[Binding">http://docs.pivotal.io/pivotalcf/devguide/services/bind-service.html[Binding</a> a Service Instance]</p>
+<ol>
+<li>Review the docs on <a href="http://docs.pivotal.io/pivotalcf/devguide/services/bind-service.html">Binding a Service Instance</a></li>
 
-<p>. Bind the mysql instance <code>&lt;YOUR INITIALS&gt;-cities-db</code> to your app cities-service
-You can bind from the App Manager or from the <code>cli</code>
-+</p>
+<li><p>Bind the mysql instance <code>&lt;YOUR INITIALS&gt;-cities-db</code> to your app cities-service
+You can bind from the App Manager or from the <code>cli</code></p>
 
-<h2 id="source-bash-9:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">$ cf bind-service &lt;first-initial&gt;&lt;last-initial&gt;-cities-service &lt;first-initial&gt;&lt;last-initial&gt;-cities-db
+</code></pre></li>
 
-<h2 id="cf-bind-service-first-initial-last-initial-cities-service-first-initial-last-initial-cities-db:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf bind-service <first-initial><last-initial>-cities-service <first-initial><last-initial>-cities-db</h2>
+<li><p>Restage your cities-service application to inject the new database.</p>
 
-<p>+</p>
+<pre><code class="language-bash">$ cf restage &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre>
 
-<p>. Restage your cities-service application to inject the new database.</p>
+<p>Notice that the application is now running.</p></li>
 
-<p>+</p>
+<li><p>Check the Env variables to see if the service is bound.
+You can do it from App Manager or from the <code>cli</code></p>
 
-<h2 id="source-bash-10:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">$ cf env &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre></li>
 
-<h2 id="cf-restage-first-initial-last-initial-cities-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf restage <first-initial><last-initial>-cities-service</h2>
+<li><p>Check the MySQL database to see that it now contains data using MySQL Workbench or a similar tool.</p></li>
+</ol>
 
-<p>Notice that the application is now running.</p>
+<p><strong>NOTE</strong></p>
 
-<p>. Check the Env variables to see if the service is bound.
-You can do it from App Manager or from the <code>cli</code>
-+</p>
-
-<h2 id="source-bash-11:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-env-first-initial-last-initial-cities-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf env <first-initial><last-initial>-cities-service</h2>
-
-<p>+
-. Check the MySQL database to see that it now contains data using MySQL Workbench or a similar tool.</p>
-
-<p>[NOTE]
-This app is an Spring Cloud app which uses Spring Cloud Configuration to bind to a database service provided by the cloud platform.
+<blockquote>
+<p>This app is an Spring Cloud app which uses Spring Cloud Configuration to bind to a database service provided by the cloud platform.
 For more information refer to link:Spring-Cloud.adoc[this document] on Spring Cloud configuration.</p>
+</blockquote>
 
-<p>&mdash; Binding Services via the Manifest</p>
+<p><br></p>
+
+<h2 id="binding-services-via-the-manifest:8bd1bf82bb668bb452ca3d0d6b4e19bc">Binding Services via the Manifest</h2>
 
 <p>Next, let&rsquo;s push the cities-service app with a manifest to help automate deployment.</p>
 
-<p>. Review the documentation: <a href="http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html">http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html</a>
-. Edit the application manifest  <code>manifest.service</code> in your <code>cities-service</code>
-+</p>
+<ol>
+<li>Review the documentation: <a href="http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html">http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html</a></li>
 
-<h2 id="source-bash-12:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<li><p>Edit the application manifest  <code>manifest.service</code> in your <code>cities-service</code></p>
 
-<h2 id="nano-manifest-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ nano manifest.service</h2>
+<pre><code class="language-bash">$ nano manifest.service
+</code></pre></li>
 
-<p>+
-. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
-<em>Be sure to name your application &lsquo;<first-initial><last-initial>-cities-service&rsquo; and use this as the host value.</em>
-. Add the services binding <code>&lt;YOUR INITIALS&gt;-cities-db</code> to your deployment manifest for cities-service .
-. Now, manually unbind the service and re-push your app using the manifest.
-+</p>
+<li><p>Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
+<em>Be sure to name your application &lsquo;<first-initial><last-initial>-cities-service&rsquo; and use this as the host value.</em></p></li>
 
-<h2 id="source-bash-13:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<li><p>Add the services binding <code>&lt;YOUR INITIALS&gt;-cities-db</code> to your deployment manifest for cities-service .</p></li>
 
-<h2 id="cf-unbind-service-first-initial-last-initial-cities-service-first-initial-last-initial-cities-db:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf unbind-service <first-initial><last-initial>-cities-service <first-initial><last-initial>-cities-db</h2>
+<li><p>Now, manually unbind the service and re-push your app using the manifest.</p>
 
-<p>+
-. Test your manifest by re-pushing your app with no parameters:
-+</p>
+<pre><code class="language-bash">$ cf unbind-service &lt;first-initial&gt;&lt;last-initial&gt;-cities-service &lt;first-initial&gt;&lt;last-initial&gt;-cities-db
+</code></pre></li>
 
-<h2 id="source-bash-14:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<li><p>Test your manifest by re-pushing your app with no parameters:</p>
 
-<h2 id="cf-push-f-manifest-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf push -f manifest.service</h2>
+<pre><code class="language-bash">$ cf push -f manifest.service
+</code></pre>
 
-<p>Notice that using a manifest, you have moved the command line parameters (number of instances, memory, etc) into the manifest.
-. Verify you can access your application via a curl request:</p>
+<p>Notice that using a manifest, you have moved the command line parameters (number of instances, memory, etc) into the manifest.</p></li>
 
-<h2 id="source-bash-15:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<li><p>Verify you can access your application via a curl request:</p>
 
-<h2 id="curl-i-http-first-initial-last-initial-cities-service-cfapps-io:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io</h2>
+<pre><code class="language-bash">$ curl -i http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-service.cfapps.io
+</code></pre>
 
-<p>We must be able to access your application at https://<first-initial><last-initial>-cities-service.cfapps.io for the next steps to work properly.</p>
+<p>We must be able to access your application at https://<first-initial><last-initial>-cities-service.cfapps.io for the next steps to work properly.</p></li>
+</ol>
 
-<p>[NOTE]
-The default manifest file for an app is <code>manifest.yml</code> and it if is present, it is automatically picked without specifying the manifest file option.
+<p><strong>NOTE</strong></p>
+
+<blockquote>
+<p>The default manifest file for an app is <code>manifest.yml</code> and it if is present, it is automatically picked without specifying the manifest file option.
 In this exercise we have used a different naming convention.</p>
+</blockquote>
 
-<p>&mdash; Health, logging &amp; events via the CLI</p>
+<p><br></p>
+
+<h2 id="health-logging-events-via-the-cli:8bd1bf82bb668bb452ca3d0d6b4e19bc">Health, logging &amp; events via the CLI</h2>
 
 <p>Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.</p>
 
 <p>To tail the logs of your application perform this command:</p>
 
-<h2 id="source-bash-16:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-logs-first-initial-last-initial-cities-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf logs <first-initial><last-initial>-cities-service</h2>
+<pre><code class="language-bash">  $ cf logs &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre>
 
 <p>Notice that nothing is showing because there isn&rsquo;t any activity. Use the following curl command to see the application working:</p>
 
-<h2 id="source-bash-17:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">  $ curl -i http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-service.cfapps.io/cities/
+</code></pre>
 
-<h2 id="curl-i-http-first-initial-last-initial-cities-service-cfapps-io-cities:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities/</h2>
-
-<p>For other ways of viewing logs check out the documentation here: link:<a href="http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view[Streaming">http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view[Streaming</a> Logs]</p>
+<p>For other ways of viewing logs check out the documentation here: <a href="http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view">Streaming Logs</a></p>
 
 <p>To view recent events, including application crashes, and error codes, you can see them from the App Manager or from the cli.</p>
 
-<h2 id="source-bash-18:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-events-first-initial-last-initial-cities-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf events <first-initial><last-initial>-cities-service</h2>
+<pre><code class="language-bash">  $ cf events &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre>
 
 <p>To view the health of the application you can see from the App Manager or from the cli:</p>
 
-<h2 id="source-bash-19:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-app-first-initial-last-initial-cities-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf app <first-initial><last-initial>-cities-service</h2>
+<pre><code class="language-bash">  $ cf app &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre>
 
 <p>You will get detailed output of the health</p>
 
-<h2 id="source-bash-20:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">  Showing health and status for app cities-service in org  / space development as...
+  OK
 
-<p>Showing health and status for app cities-service in org  / space development as&hellip;
-OK</p>
+  requested state: started
+  instances: 1/1
+  usage: 512M x 1 instances
+  urls: cities-service.cfapps.io
+  last uploaded: Wed May 27 15:53:32 UTC 2015
+  stack: cflinuxfs2
 
-<p>requested state: started
-instances: <sup>1</sup>&frasl;<sub>1</sub>
-usage: 512M x 1 instances
-urls: cities-service.cfapps.io
-last uploaded: Wed May 27 15:53:32 UTC 2015
-stack: cflinuxfs2</p>
-
-<pre><code> state     since                    cpu    memory           disk           details
+       state     since                    cpu    memory           disk           details
+  #0   running   2015-05-27 12:17:55 PM   0.1%   434.5M of 512M   145.4M of 1G
 </code></pre>
 
-<h2 id="0-running-2015-05-27-12-17-55-pm-0-1-434-5m-of-512m-145-4m-of-1g:8bd1bf82bb668bb452ca3d0d6b4e19bc">#0   running   2015-05-27 12:17:55 PM   0.1%   434.5M of 512M   145.4M of 1G</h2>
+<p><br></p>
 
-<p>&mdash; Environment variables</p>
+<h2 id="environment-variables:8bd1bf82bb668bb452ca3d0d6b4e19bc">Environment variables</h2>
 
-<p>View the environment variable and explanation of link:<a href="http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env[VCAP">http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env[VCAP</a> Env]</p>
+<p>View the environment variable and explanation of <a href="http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env">VCAP Env</a></p>
 
-<h2 id="source-bash-21:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-env-first-initial-last-initial-cities-service-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf env <first-initial><last-initial>-cities-service</h2>
+<pre><code class="language-bash">  $ cf env &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre>
 
 <p>You will get the output similar to this on your terminal</p>
 
-<h2 id="source-bash-22:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">  Getting env variables for app rj-cities-service in org Central / space development as rajesh.jain@pivotal.io...
+  OK
 
-<p>Getting env variables for app rj-cities-service in org Central / space development as rajesh.jain@pivotal.io&hellip;
-OK</p>
-
-<p>System-Provided:
-{
- &ldquo;VCAP_SERVICES&rdquo;: {
-  &ldquo;cleardb&rdquo;: [
-   {
-    &ldquo;credentials&rdquo;: {
-     &ldquo;hostname&rdquo;: &ldquo;xxxx&rdquo;,
-     &ldquo;jdbcUrl&rdquo;: &ldquo;xxxx&rdquo;,
-     &ldquo;name&rdquo;: &ldquo;xxxx&rdquo;,
-     &ldquo;password&rdquo;: &ldquo;xxxx&rdquo;,
-     &ldquo;port&rdquo;: &ldquo;3306&rdquo;,
-     &ldquo;uri&rdquo;: &ldquo;mysql://xxxx?reconnect=true&rdquo;,
-     &ldquo;username&rdquo;: &ldquo;xxxx&rdquo;
-    },
-    &ldquo;label&rdquo;: &ldquo;cleardb&rdquo;,
-    &ldquo;name&rdquo;: &ldquo;rj-cities-db&rdquo;,
-    &ldquo;plan&rdquo;: &ldquo;spark&rdquo;,
-    &ldquo;tags&rdquo;: [
-     &ldquo;Data Stores&rdquo;,
-     &ldquo;Cloud Databases&rdquo;,
-     &ldquo;Developer Tools&rdquo;,
-     &ldquo;Data Store&rdquo;,
-     &ldquo;mysql&rdquo;,
-     &ldquo;relational&rdquo;
+  System-Provided:
+  {
+   &quot;VCAP_SERVICES&quot;: {
+    &quot;cleardb&quot;: [
+     {
+      &quot;credentials&quot;: {
+       &quot;hostname&quot;: &quot;xxxx&quot;,
+       &quot;jdbcUrl&quot;: &quot;xxxx&quot;,
+       &quot;name&quot;: &quot;xxxx&quot;,
+       &quot;password&quot;: &quot;xxxx&quot;,
+       &quot;port&quot;: &quot;3306&quot;,
+       &quot;uri&quot;: &quot;mysql://xxxx?reconnect=true&quot;,
+       &quot;username&quot;: &quot;xxxx&quot;
+      },
+      &quot;label&quot;: &quot;cleardb&quot;,
+      &quot;name&quot;: &quot;rj-cities-db&quot;,
+      &quot;plan&quot;: &quot;spark&quot;,
+      &quot;tags&quot;: [
+       &quot;Data Stores&quot;,
+       &quot;Cloud Databases&quot;,
+       &quot;Developer Tools&quot;,
+       &quot;Data Store&quot;,
+       &quot;mysql&quot;,
+       &quot;relational&quot;
+      ]
+     }
     ]
    }
-  ]
- }
-}</p>
+  }
 
-<p>{
- &ldquo;VCAP_APPLICATION&rdquo;: {
-  &ldquo;application_name&rdquo;: &ldquo;rj-cities-service&rdquo;,
-  &ldquo;application_uris&rdquo;: [
-   &ldquo;rj-cities-service.cfapps.io&rdquo;
-  ],
-  &ldquo;application_version&rdquo;: &ldquo;c3c35527-424f-4dbc-a4ea-115e1250cc5d&rdquo;,
-  &ldquo;limits&rdquo;: {
-   &ldquo;disk&rdquo;: 1024,
-   &ldquo;fds&rdquo;: 16384,
-   &ldquo;mem&rdquo;: 512
-  },
-  &ldquo;name&rdquo;: &ldquo;rj-cities-service&rdquo;,
-  &ldquo;space_id&rdquo;: &ldquo;56e1d8ef-e87f-4b1c-930b-e7f46c00e483&rdquo;,
-  &ldquo;space_name&rdquo;: &ldquo;development&rdquo;,
-  &ldquo;uris&rdquo;: [
-   &ldquo;rj-cities-service.cfapps.io&rdquo;
-  ],
-  &ldquo;users&rdquo;: null,
-  &ldquo;version&rdquo;: &ldquo;c3c35527-424f-4dbc-a4ea-115e1250cc5d&rdquo;
- }
-}</p>
+  {
+   &quot;VCAP_APPLICATION&quot;: {
+    &quot;application_name&quot;: &quot;rj-cities-service&quot;,
+    &quot;application_uris&quot;: [
+     &quot;rj-cities-service.cfapps.io&quot;
+    ],
+    &quot;application_version&quot;: &quot;c3c35527-424f-4dbc-a4ea-115e1250cc5d&quot;,
+    &quot;limits&quot;: {
+     &quot;disk&quot;: 1024,
+     &quot;fds&quot;: 16384,
+     &quot;mem&quot;: 512
+    },
+    &quot;name&quot;: &quot;rj-cities-service&quot;,
+    &quot;space_id&quot;: &quot;56e1d8ef-e87f-4b1c-930b-e7f46c00e483&quot;,
+    &quot;space_name&quot;: &quot;development&quot;,
+    &quot;uris&quot;: [
+     &quot;rj-cities-service.cfapps.io&quot;
+    ],
+    &quot;users&quot;: null,
+    &quot;version&quot;: &quot;c3c35527-424f-4dbc-a4ea-115e1250cc5d&quot;
+   }
+  }
 
-<p>User-Provided:
-SPRING_PROFILES_ACTIVE: cloud</p>
+  User-Provided:
+  SPRING_PROFILES_ACTIVE: cloud
 
-<p>No running env variables have been set</p>
+  No running env variables have been set
 
-<h2 id="no-staging-env-variables-have-been-set:8bd1bf82bb668bb452ca3d0d6b4e19bc">No staging env variables have been set</h2>
+  No staging env variables have been set
+</code></pre>
 
-<p>&mdash; Scaling apps</p>
+<h2 id="scaling-apps:8bd1bf82bb668bb452ca3d0d6b4e19bc">Scaling apps</h2>
 
-<p>Applications can be scaled via the command line or the console. When we talk about scale, there are two different types of scale: Vertical and Horizontal. Read link:<a href="http://docs.cloudfoundry.org/devguide/deploy-apps/cf-scale.html[this">http://docs.cloudfoundry.org/devguide/deploy-apps/cf-scale.html[this</a>] doc on more details on scaling applications.</p>
+<p>Applications can be scaled via the command line or the console. When we talk about scale, there are two different types of scale: Vertical and Horizontal. Read <a href="http://docs.cloudfoundry.org/devguide/deploy-apps/cf-scale.html">Scaling Apps</a> doc on more details on scaling applications.</p>
 
 <p>When you vertically scale your application, you are increasing the amount of memory made available to your application. You would vertically scale your application while profiling your app, do performance tuning and to find the best memory settings before you deploy it in production.
 Scaling your application horizontally means that you are adding application instances to increase your application throughput and performance under load.</p>
 
 <p>Let&rsquo;s vertically scale the application to 1 GB of RAM.</p>
 
-<h2 id="source-bash-23:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-scale-first-initial-last-initial-cities-service-m-1g:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf scale <first-initial><last-initial>-cities-service -m 1G</h2>
+<pre><code class="language-bash">  $ cf scale &lt;first-initial&gt;&lt;last-initial&gt;-cities-service -m 1G
+</code></pre>
 
 <p>Now scale your application down to 512 MB.</p>
 
 <p>Next, let&rsquo;s scale up your application to 2 instances</p>
 
-<h2 id="source-bash-24:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-scale-first-initial-last-initial-cities-service-i-2:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf scale <first-initial><last-initial>-cities-service -i 2</h2>
+<pre><code class="language-bash">  $ cf scale &lt;first-initial&gt;&lt;last-initial&gt;-cities-service -i 2
+</code></pre>
 
 <p>To check the status of your applications you can check from the command line to see how many instances your app is running and their current state</p>
 
-<h2 id="source-bash-25:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-app-first-initial-last-initial-cities-service-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf app <first-initial><last-initial>-cities-service</h2>
+<pre><code class="language-bash">  $ cf app &lt;first-initial&gt;&lt;last-initial&gt;-cities-service
+</code></pre>
 
 <p>Once the second instance as started, scale the app back down to one instance.</p>
 
-<p>&mdash; Verify the app from the Console</p>
+<p><br></p>
+
+<h2 id="verify-the-app-from-the-console:8bd1bf82bb668bb452ca3d0d6b4e19bc">Verify the app from the Console</h2>
 
 <p>To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:</p>
 
-<h2 id="source-bash-26:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">  $ curl -i http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-service.cfapps.io/cities
+</code></pre>
 
-<h2 id="curl-i-http-first-initial-last-initial-cities-service-cfapps-io-cities-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities</h2>
+<pre><code class="language-bash">  $ curl -i http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-service.cfapps.io/cities/162
+</code></pre>
 
-<h2 id="source-bash-27:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">  $ curl -i http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-service.cfapps.io/cities?size=5
+</code></pre>
 
-<h2 id="curl-i-http-first-initial-last-initial-cities-service-cfapps-io-cities-162:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities/162</h2>
+<p><br></p>
 
-<h2 id="source-bash-28:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<h2 id="discussion-part-2:8bd1bf82bb668bb452ca3d0d6b4e19bc">Discussion: Part 2</h2>
 
-<h2 id="curl-i-http-first-initial-last-initial-cities-service-cfapps-io-cities-size-5:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities?size=5</h2>
+<p>In this part of the workshop we created a database service from the marketplace, pushed an app, bound it to the database service, monitored the health of the app and scaled the app.</p>
 
-<p>&mdash; Discussion: Part 2
-In this part of the workshop we created a database service from the marketplace, pushed an app, bound it to the database service, monitored the health of the app and scaled the app.</p>
+<ol>
+<li>How does the app get the database info today vs. VCAP_SERVICES? <br></li>
+<li>How do you horizontally scale your applications?</li>
+</ol>
 
-<h2 id="note-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">[NOTE]</h2>
+<p><br>
+<hr></p>
 
-<ul>
-<li>How does the app get the database info today vs. VCAP_SERVICES?</li>
-<li>How do you horizontally scale your applications?
-&mdash;-</li>
-</ul>
-
-<p>&ndash; PART 3: Deploying Upstream App and Bind to backend services</p>
+<h2 id="part-3-deploying-upstream-app-and-bind-to-backend-services:8bd1bf82bb668bb452ca3d0d6b4e19bc">PART 3: Deploying Upstream App and Bind to backend services</h2>
 
 <p>The <code>cities</code> directory also includes a <code>cities-ui</code> application which uses the <code>cities-client</code> to consume from the <code>cities-service</code>.</p>
 
-<p>The <code>cities-client</code> demonstrates using the link:<a href="http://cloud.spring.io/spring-cloud-connectors[Spring">http://cloud.spring.io/spring-cloud-connectors[Spring</a> Cloud Connector] project to consume from a microservice.  This is a common pattern for 3rd platform apps.  For more details on building 12 Factor Apps for the 3rd platform (Cloud Foundry) refer to link:<a href="http://12factor.net/[this">http://12factor.net/[this</a>] website.</p>
+<p>The <code>cities-client</code> demonstrates using the <a href="http://cloud.spring.io/spring-cloud-connectors">Spring Cloud Connector</a> project to consume from a microservice.  This is a common pattern for Cloud Native apps.  For more details on building 12 Factor Apps for the Cloud (Cloud Foundry) refer to <a href="http://12factor.net/">12 Factor</a> website.</p>
 
 <p>The goal of this exercise is to use what you have learned to deploy the <code>cities-ui</code> application.</p>
 
-<p>&mdash; Build the Cities UI and Cities Client App</p>
+<h2 id="build-the-cities-ui-and-cities-client-app:8bd1bf82bb668bb452ca3d0d6b4e19bc">Build the Cities UI and Cities Client App</h2>
 
-<p>The cities-ui and cities-client can be both built at once by running <code>./gradlew assemble</code> in the parent +cities+ directory. Run this commmand now.</p>
+<p>The cities-ui and cities-client can be both built at once by running <code>./gradlew assemble</code> in the parent <code>cities</code> directory. Run this command now.</p>
 
-<p>&mdash; Create a User Provided Service Instance.
-In this section we will create a backend microservice end point for cities-service.</p>
+<h2 id="create-a-user-provided-service-instance:8bd1bf82bb668bb452ca3d0d6b4e19bc">Create a User Provided Service Instance.</h2>
 
-<ul>
+<p>In this section we will create a backend microservice end point for cities-service.</p>
+
+<ol>
 <li>Review the documentation on link:<a href="http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html[User">http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html[User</a> Provided Service Instances]</li>
 
 <li><p>Look for the details by running <code>cf cups --help</code>.</p></li>
 
-<li><p>You will need to specify two parameters when you create the service instance: <code>uri</code> and <code>tag</code> (see: CitiesWebServiceInfoCreator.java in the cities-client project).
-** The <code>uri</code> should point to your deployed microservice
-** The <code>tag</code> is a property specified in the CitiesWebServiceInfoCreator.  Tags have a special meaning in CF:
-+
-<em>Tags provide a flexible mechanism to expose a classification, attribute, or base technology of a service, enabling equivalent services to be swapped out without changes to dependent logic in applications, buildpacks, or other services. Eg. mysql, relational, redis, key-value, caching, messaging, amqp.  Tags also allow application configurations to be independent of a service instance name.</em></p></li>
-</ul>
+<li><p>You will need to specify two parameters when you create the service instance: <code>uri</code> and <code>tag</code> (see: CitiesWebServiceInfoCreator.java in the cities-client project). <br>
+The <code>uri</code> should point to your deployed microservice <br>
+The <code>tag</code> is a property specified in the CitiesWebServiceInfoCreator.  Tags have a special meaning in CF: <br></p>
 
-<p>+
-* Refer to the CitiesWebServiceInfoCreator class for the necessary tag value.</p>
+<p><em>Tags</em> provide a flexible mechanism to expose a classification, attribute, or base technology of a service, enabling equivalent services to be swapped out without changes to dependent logic in applications, buildpacks, or other services. <br>
+ Eg. mysql, relational, redis, key-value, caching, messaging, amqp.<br />
+ <br>
+ Tags also allow application configurations to be independent of a service instance name._</p></li>
 
-<h2 id="source-bash-29:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<li><p>Refer to the CitiesWebServiceInfoCreator class for the necessary tag value.</p></li>
+</ol>
 
-<p>// Use the interactive prompt to create user defined service
-// It will prompt you for the parameters</p>
+<pre><code class="language-bash">  // Use the interactive prompt to create user defined service
+  // It will prompt you for the parameters
 
-<p>$ cf create-user-provided-service <first-initial><last-initial>-cities-ws -p &ldquo;uri,tag&rdquo;</p>
+  $ cf create-user-provided-service &lt;first-initial&gt;&lt;last-initial&gt;-cities-ws -p &quot;uri,tag&quot;
 
-<p>uri&gt;   http://<first-initial><last-initial>-cities-service.cfapps.io/
-tag&gt;   cities</p>
+  uri&gt;   http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-service.cfapps.io/
+  tag&gt;   cities
 
-<h2 id="creating-user-provided-service:8bd1bf82bb668bb452ca3d0d6b4e19bc">Creating user provided service&hellip;.</h2>
+  Creating user provided service....
+</code></pre>
 
-<p>&mdash; Deploy cities-ui project</p>
+<p><br></p>
+
+<h2 id="deploy-cities-ui-project:8bd1bf82bb668bb452ca3d0d6b4e19bc">Deploy cities-ui project</h2>
 
 <p>A <code>manifest.yml</code> is included in the cities-ui app.  Edit this manifest with your initials and add the service binding to your cities-service</p>
 
-<h2 id="source-bash-30:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<hr />
-
-<p>applications:
-- name: <YOUR INITIALS>-cities-ui
-  memory: 512M
-  instances: 1
-  path: build/libs/cities-ui.jar
-  services: [ <YOUR INITIALS>-cities-ws ]
-  env:</p>
-
-<h2 id="spring-profiles-active-cloud:8bd1bf82bb668bb452ca3d0d6b4e19bc">SPRING_PROFILES_ACTIVE: cloud</h2>
+<pre><code class="language-bash">  ---
+  applications:
+  - name: &lt;YOUR INITIALS&gt;-cities-ui
+    memory: 512M
+    instances: 1
+    path: build/libs/cities-ui.jar
+    services: [ &lt;YOUR INITIALS&gt;-cities-ws ]
+    env:
+      SPRING_PROFILES_ACTIVE: cloud
+</code></pre>
 
 <p>Push the <code>cities-ui</code> without specifying the manifest.yml. It will by default pick the manifest.yml file and deploy the app.</p>
 
-<h2 id="source-bash-31:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="cf-push:8bd1bf82bb668bb452ca3d0d6b4e19bc">$ cf push</h2>
+<pre><code class="language-bash">  $ cf push
+</code></pre>
 
 <p>Note the URL once the application has been successfully pushed.</p>
 
-<p>&mdash; Verify the backend service is bound to cities-ui</p>
+<h2 id="verify-the-backend-service-is-bound-to-cities-ui:8bd1bf82bb668bb452ca3d0d6b4e19bc">Verify the backend service is bound to cities-ui</h2>
 
-<h2 id="source-bash-32:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">----
+$ cf env &lt;first-initial&gt;&lt;last-initial&gt;-cities-ui
 
-<p>$ cf env <first-initial><last-initial>-cities-ui</p>
-
-<p>System-Provided:
+System-Provided:
 {
- &ldquo;VCAP_SERVICES&rdquo;: {
-  &ldquo;user-provided&rdquo;: [
+ &quot;VCAP_SERVICES&quot;: {
+  &quot;user-provided&quot;: [
    {
-    &ldquo;credentials&rdquo;: {
-     &ldquo;tag&rdquo;: &ldquo;cities&rdquo;,
-     &ldquo;uri&rdquo;: &ldquo;<a href="http://rj-cities-service.cfapps.io/&quot;">http://rj-cities-service.cfapps.io/&quot;</a>
+    &quot;credentials&quot;: {
+     &quot;tag&quot;: &quot;cities&quot;,
+     &quot;uri&quot;: &quot;http://rj-cities-service.cfapps.io/&quot;
     },
-    &ldquo;label&rdquo;: &ldquo;user-provided&rdquo;,
-    &ldquo;name&rdquo;: &ldquo;cities-ws&rdquo;,
-    &ldquo;syslog_drain_url&rdquo;: &ldquo;&rdquo;,
-    &ldquo;tags&rdquo;: []
+    &quot;label&quot;: &quot;user-provided&quot;,
+    &quot;name&quot;: &quot;cities-ws&quot;,
+    &quot;syslog_drain_url&quot;: &quot;&quot;,
+    &quot;tags&quot;: []
    }
   ]
  }
-}</p>
+}
 
-<p>{
- &ldquo;VCAP_APPLICATION&rdquo;: {
-  &ldquo;application_name&rdquo;: &ldquo;rj-cities-ui&rdquo;,
-  &ldquo;application_uris&rdquo;: [
-   &ldquo;rj-cities-ui.cfapps.io&rdquo;
+{
+ &quot;VCAP_APPLICATION&quot;: {
+  &quot;application_name&quot;: &quot;rj-cities-ui&quot;,
+  &quot;application_uris&quot;: [
+   &quot;rj-cities-ui.cfapps.io&quot;
   ],
-  &ldquo;application_version&rdquo;: &ldquo;dceb111b-3a68-45ad-83fd-3b8b836ebbe7&rdquo;,
-  &ldquo;limits&rdquo;: {
-   &ldquo;disk&rdquo;: 1024,
-   &ldquo;fds&rdquo;: 16384,
-   &ldquo;mem&rdquo;: 512
+  &quot;application_version&quot;: &quot;dceb111b-3a68-45ad-83fd-3b8b836ebbe7&quot;,
+  &quot;limits&quot;: {
+   &quot;disk&quot;: 1024,
+   &quot;fds&quot;: 16384,
+   &quot;mem&quot;: 512
   },
-  &ldquo;name&rdquo;: &ldquo;rj-cities-ui&rdquo;,
-  &ldquo;space_id&rdquo;: &ldquo;56e1d8ef-e87f-4b1c-930b-e7f46c00e483&rdquo;,
-  &ldquo;space_name&rdquo;: &ldquo;development&rdquo;,
-  &ldquo;uris&rdquo;: [
-   &ldquo;rj-cities-ui.cfapps.io&rdquo;
+  &quot;name&quot;: &quot;rj-cities-ui&quot;,
+  &quot;space_id&quot;: &quot;56e1d8ef-e87f-4b1c-930b-e7f46c00e483&quot;,
+  &quot;space_name&quot;: &quot;development&quot;,
+  &quot;uris&quot;: [
+   &quot;rj-cities-ui.cfapps.io&quot;
   ],
-  &ldquo;users&rdquo;: null,
-  &ldquo;version&rdquo;: &ldquo;dceb111b-3a68-45ad-83fd-3b8b836ebbe7&rdquo;
+  &quot;users&quot;: null,
+  &quot;version&quot;: &quot;dceb111b-3a68-45ad-83fd-3b8b836ebbe7&quot;
  }
-}</p>
+}
 
-<p>User-Provided:</p>
+User-Provided:
+SPRING_PROFILES_ACTIVE: cloud
+</code></pre>
 
-<h2 id="spring-profiles-active-cloud-1:8bd1bf82bb668bb452ca3d0d6b4e19bc">SPRING_PROFILES_ACTIVE: cloud</h2>
+<h2 id="access-the-cities-ui-to-verify-it-is-connected-to-your-microservice:8bd1bf82bb668bb452ca3d0d6b4e19bc">Access the cities-ui to verify it is connected to your microservice.</h2>
 
-<p>&mdash; Access the cities-ui to verify it is connected to your microservice.
-Open the App Manager (Console) and navigate to your apps. You will see the cities-ui app, with a link to launch the cities-ui application. Alternatively you can open up your browser and navigate to the URL listed from a successful cf push command.</p>
+<p>Open the App Manager (Console) and navigate to your apps. You will see the cities-ui app, with a link to launch the cities-ui application. Alternatively you can open up your browser and navigate to the URL listed from a successful cf push command.</p>
 
-<p>image:./images/cities-ui.png[Cities UI]</p>
+<p><img src="/images/cities-ui.png" alt="Cities UI" /></p>
 
-<p>&mdash; Discussion: Part 3
-In this part of the workshop we created a cities-ui app which is loosely bound and independently developed from the backend service. We bound that app to the cities-service microservice.</p>
+<h2 id="discussion-part-3:8bd1bf82bb668bb452ca3d0d6b4e19bc">Discussion: Part 3</h2>
 
-<h2 id="note-2:8bd1bf82bb668bb452ca3d0d6b4e19bc">[NOTE]</h2>
+<p>In this part of the workshop we created a cities-ui app which is loosely bound and independently developed from the backend service. We bound that app to the cities-service microservice.</p>
 
-<ul>
-<li>Discussion on loose coupling of your services from your app and 12 Factor App design principles.
-&mdash;-</li>
-</ul>
+<ol>
+<li>Discussion on loose coupling of your services from your app and 12 Factor App design principles.</li>
+</ol>
 
-<p>&ndash; PART 4: Deploy Version 2 of the App</p>
+<p><br>
+<hr></p>
+
+<h2 id="part-4-deploy-version-2-of-the-app:8bd1bf82bb668bb452ca3d0d6b4e19bc">PART 4: Deploy Version 2 of the App</h2>
 
 <p>In this section we are going to do a green-blue deployment using a shell script. The same can be done by executing the commands one at a time.</p>
 
-<p>&mdash; Delete the unversioned app and the route</p>
+<h2 id="delete-the-unversioned-app-and-the-route:8bd1bf82bb668bb452ca3d0d6b4e19bc">Delete the unversioned app and the route</h2>
 
-<h2 id="source-bash-33:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<pre><code class="language-bash">  cf delete &lt;first-initial&gt;&lt;last-initial&gt;-cities-ui
+  cf delete-route cfapps.io -n &lt;first-initial&gt;&lt;last-initial&gt;-cities-ui
+</code></pre>
 
-<p>cf delete <first-initial><last-initial>-cities-ui</p>
+<h2 id="push-version-2-and-delete-the-old-route-using-the-script:8bd1bf82bb668bb452ca3d0d6b4e19bc">Push Version 2 and Delete the Old Route using the script</h2>
 
-<h2 id="cf-delete-route-cfapps-io-n-first-initial-last-initial-cities-ui:8bd1bf82bb668bb452ca3d0d6b4e19bc">cf delete-route cfapps.io -n <first-initial><last-initial>-cities-ui</h2>
+<p>We are going to deploy the next version of the <code>cities-ui</code> app. The deployment typically is automated using a CD pipeline built with Jenkins or any CD automation tool, but in this workshop we will walk through a simple version number change in the deployment manifest.</p>
 
-<p>&mdash; Push Version 2 and Delete the Old Route using the script
-We are going to deploy the next version of the <code>cities-ui</code> app. The deployment typically is automated using a CD pipeline built with Jenkins or any CD automation tool, but in this workshop we will walk through a simple version number change in the deployment manifest.</p>
-
-<p>. Edit the <code>manifest.blue-green</code> with the following variables</p>
-
-<h2 id="source-bash-34:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<h2 id="version-cities-app-1-0:8bd1bf82bb668bb452ca3d0d6b4e19bc">VERSION: CITIES_APP_1_0</h2>
-
-<p>+
-. Edit and source the <code>env</code> file from the cities-ui folder with the following variables
-+</p>
-
-<h2 id="source-bash-35:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<p>export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
+<ol>
+<li>Edit the <code>manifest.blue-green</code> with the following variables
+<code>bash
+VERSION: CITIES_APP_1_0
+</code></li>
+<li>Edit and source the <code>env</code> file from the cities-ui folder with the following variables
+<code>bash
+export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
 export CF_APPS_DOMAIN=       //CF_APPS_DOMAIN will look similar to cfapps.io
 export CF_USER=              //CF_USER is the user account to sign into Pivotal Cloud Foundry, which is usually your email address.
 export CF_ORG=               //CF_ORG is the name of the Organization within Pivotal Cloud Foundry where you want to deploy your applications.
 export CF_SPACE=             //CF_SPACE is the name of the Space within the above Organization where you want your application deployed.
-export CF_APP=<first-initial><last-initial>-cities-ui
+export CF_APP=&lt;first-initial&gt;&lt;last-initial&gt;-cities-ui
 export CF_JAR=build/libs/cities-ui.jar
-export CF_MANIFEST=manifest.blue-green</p>
+export CF_MANIFEST=manifest.blue-green
+export BUILD_NUMBER=1001
+</code></li>
+</ol>
 
-<h2 id="export-build-number-1001:8bd1bf82bb668bb452ca3d0d6b4e19bc">export BUILD_NUMBER=1001</h2>
+<p><strong>Note</strong></p>
 
-<p>+
-Note: Be sure to change the CF_APP name to match your application and add the BUILD_NUMBER to the env file. Add the Version number in the manifest.blue-green
-+
-. First deploy the blue v1 of the app.
-+</p>
+<blockquote>
+<p>Be sure to change the CF_APP name to match your application and add the BUILD_NUMBER to the env file. Add the Version number in the manifest.blue-green</p>
+</blockquote>
 
-<h2 id="source-bash-36:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<ol>
+<li><p>First deploy the blue v1 of the app.</p>
 
-<p>// Push the new version of the app, with the version number and route</p>
+<pre><code class="language-bash">// Push the new version of the app, with the version number and route
+$cf push &quot;$CF_APP-$BUILD_NUMBER&quot; -n &quot;$CF_APP-$BUILD_NUMBER&quot; -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
+</code></pre></li>
 
-<h2 id="cf-push-cf-app-build-number-n-cf-app-build-number-d-cf-apps-domain-p-cf-jar-f-cf-manifest:8bd1bf82bb668bb452ca3d0d6b4e19bc">$cf push &ldquo;$CF_APP-$BUILD_NUMBER&rdquo; -n &ldquo;$CF_APP-$BUILD_NUMBER&rdquo; -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST</h2>
-
-<p>. Next, increment the BUILD_NUMBER in the env file and source it. Change the VERSION number in the manifest.blue-green
-+</p>
-
-<h2 id="source-bash-37:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<p>&hellip;.
-export BUILD_NUMBER=2001</p>
+<li><p>Next, increment the BUILD_NUMBER in the env file and source it. Change the VERSION number in the manifest.blue-green
+```bash
+&hellip;.
+export BUILD_NUMBER=2001</p></li>
+</ol>
 
 <p>$nano manifest.yml
-&hellip;.</p>
+  &hellip;.
+  VERSION: CITIES_APP_2_0</p>
 
-<h2 id="version-cities-app-2-0:8bd1bf82bb668bb452ca3d0d6b4e19bc">VERSION: CITIES_APP_2_0</h2>
+<pre><code>
+5. Deploy the green v2 and delete the blue v1 of the app.
+  ```bash
+  // Push the new version of the app, with the version number and route
+  $cf push &quot;$CF_APP-$BUILD_NUMBER&quot; -n &quot;$CF_APP-$BUILD_NUMBER&quot; -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
 
-<p>. Deploy the green v2 and delete the blue v1 of the app.
-+</p>
+  // Map the route to point to the new app
+  $cf map-route &quot;$CF_APP-${BUILD_NUMBER}&quot; $CF_APPS_DOMAIN -n $CF_APP
 
-<h2 id="source-bash-38:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+  // Get the deployed version of the app
+  $export DEPLOYED_VERSION=`cf apps | grep $CF_APP- | cut -d&quot; &quot; -f1`
 
-<p>// Push the new version of the app, with the version number and route
-$cf push &ldquo;$CF_APP-$BUILD_NUMBER&rdquo; -n &ldquo;$CF_APP-$BUILD_NUMBER&rdquo; -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST</p>
+  // Un-map an existing routes and delete the app / routes
 
-<p>// Map the route to point to the new app
-$cf map-route &ldquo;$CF_APP-${BUILD_NUMBER}&rdquo; $CF_APPS_DOMAIN -n $CF_APP</p>
+  $cf unmap-route &quot;$DEPLOYED_VERSION&quot; $CF_APPS_DOMAIN -n $CF_APP
+  $cf delete &quot;$DEPLOYED_VERSION&quot; -f
+  $cf delete-route $CF_APPS_DOMAIN -n &quot;$DEPLOYED_VERSION&quot; -f
 
-<p>// Get the deployed version of the app
-$export DEPLOYED_VERSION=<code>cf apps | grep $CF_APP- | cut -d&quot; &quot; -f1</code></p>
+</code></pre>
 
-<p>// Un-map an existing routes and delete the app / routes</p>
+<ol>
+<li>Alternatively, use the bash script <code>blue-green.sh</code> in the cities-ui directory, deploy the green v2 and delete the blue v1 of the app. <br>
+If you are using the script make sure you increment the BUILD_NUMBER in the env file and change the VERSION number in the manifest.blue-green.</li>
+</ol>
 
-<p>$cf unmap-route &ldquo;$DEPLOYED_VERSION&rdquo; $CF_APPS_DOMAIN -n $CF_APP
-$cf delete &ldquo;$DEPLOYED_VERSION&rdquo; -f
-$cf delete-route $CF_APPS_DOMAIN -n &ldquo;$DEPLOYED_VERSION&rdquo; -f</p>
+<pre><code class="language-bash">  $ cat blue-green.sh
 
-<hr />
+  source env
+  cf login -a https://api.$CF_SYSTEM_DOMAIN -u $CF_USER -o $CF_ORG -s $CF_SPACE --skip-ssl-validation
 
-<p>. Alternatively, use the bash script <code>blue-green.sh</code> in the cities-ui directory, deploy the green v2 and delete the blue v1 of the app. +
-If you are using the script make sure you increment the BUILD_NUMBER in the env file and change the VERSION number in the manifest.blue-green.</p>
+  DEPLOYED_VERSION_CMD=$(CF_COLOR=false cf apps | grep $CF_APP- | cut -d&quot; &quot; -f1)
+  DEPLOYED_VERSION=&quot;$DEPLOYED_VERSION_CMD&quot;
+  ROUTE_VERSION=$(echo &quot;${BUILD_NUMBER}&quot; | cut -d&quot;.&quot; -f1-3 | tr '.' '-')
+  echo &quot;Deployed Version: $DEPLOYED_VERSION&quot;
+  echo &quot;Route Version: $ROUTE_VERSION&quot;
 
-<p>+</p>
+  # push a new version and map the route
+  cf push &quot;$CF_APP-$BUILD_NUMBER&quot; -n &quot;$CF_APP-$ROUTE_VERSION&quot; -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
+  cf map-route &quot;$CF_APP-${BUILD_NUMBER}&quot; $CF_APPS_DOMAIN -n $CF_APP
 
-<h2 id="source-bash-39:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+  if [ ! -z &quot;$DEPLOYED_VERSION&quot; -a &quot;$DEPLOYED_VERSION&quot; != &quot; &quot; -a &quot;$DEPLOYED_VERSION&quot; != &quot;$CF_APP-${BUILD_NUMBER}&quot; ]; then
+    echo &quot;Performing zero-downtime cutover to $BUILD_NUMBER&quot;
+    echo &quot;$DEPLOYED_VERSION&quot; | while read line
+    do
+      if [ ! -z &quot;$line&quot; -a &quot;$line&quot; != &quot; &quot; -a &quot;$line&quot; != &quot;$CF_APP-${BUILD_NUMBER}&quot; ]; then
+        echo &quot;Scaling down, unmapping and removing $line&quot;
+        # Unmap the route and delete
+        cf unmap-route &quot;$line&quot; $CF_APPS_DOMAIN -n $CF_APP
+        cf delete &quot;$line&quot; -f
+        cf delete-route $CF_APPS_DOMAIN -n &quot;$line&quot; -f
+      else
+        echo &quot;Skipping $line&quot;
+      fi
+    done
+  fi
+</code></pre>
 
-<p>$ cat blue-green.sh</p>
+<h2 id="verify-the-app-zero-downtime:8bd1bf82bb668bb452ca3d0d6b4e19bc">Verify the app, zero downtime</h2>
 
-<p>source env
-cf login -a <a href="https://api.$CF_SYSTEM_DOMAIN">https://api.$CF_SYSTEM_DOMAIN</a> -u $CF_USER -o $CF_ORG -s $CF_SPACE &ndash;skip-ssl-validation</p>
+<pre><code class="language-bash">  $cf apps | grep -i cities-ui
+  rj-cities-ui-1001                       started           1/1         512M     1G     rj-cities-ui.cfapps.io, rj-cities-ui-5001.cfapps.io
 
-<p>DEPLOYED_VERSION_CMD=$(CF_COLOR=false cf apps | grep $CF_APP- | cut -d&rdquo; &ldquo; -f1)
-DEPLOYED_VERSION=&ldquo;$DEPLOYED_VERSION_CMD&rdquo;
-ROUTE_VERSION=$(echo &ldquo;${BUILD_NUMBER}&rdquo; | cut -d&rdquo;.&rdquo; -f1-3 | tr &lsquo;.&rsquo; &lsquo;-&rsquo;)
-echo &ldquo;Deployed Version: $DEPLOYED_VERSION&rdquo;
-echo &ldquo;Route Version: $ROUTE_VERSION&rdquo;</p>
+</code></pre>
 
-<h1 id="push-a-new-version-and-map-the-route:8bd1bf82bb668bb452ca3d0d6b4e19bc">push a new version and map the route</h1>
+<pre><code class="language-bash">  $cf routes | grep -i cities-ui
 
-<p>cf push &ldquo;$CF_APP-$BUILD_NUMBER&rdquo; -n &ldquo;$CF_APP-$ROUTE_VERSION&rdquo; -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
-cf map-route &ldquo;$CF_APP-${BUILD_NUMBER}&rdquo; $CF_APPS_DOMAIN -n $CF_APP</p>
+  development   rj-cities-ui                                           cfapps.io   rj-cities-ui-2001
+  development   rj-cities-ui-1001                                      cfapps.io   rj-cities-ui-2001
 
-<p>if [ ! -z &ldquo;$DEPLOYED_VERSION&rdquo; -a &ldquo;$DEPLOYED_VERSION&rdquo; != &ldquo; &rdquo; -a &ldquo;$DEPLOYED_VERSION&rdquo; != &ldquo;$CF_APP-${BUILD_NUMBER}&rdquo; ]; then
-  echo &ldquo;Performing zero-downtime cutover to $BUILD_NUMBER&rdquo;
-  echo &ldquo;$DEPLOYED_VERSION&rdquo; | while read line
-  do
-    if [ ! -z &ldquo;$line&rdquo; -a &ldquo;$line&rdquo; != &ldquo; &rdquo; -a &ldquo;$line&rdquo; != &ldquo;$CF_APP-${BUILD_NUMBER}&rdquo; ]; then
-      echo &ldquo;Scaling down, unmapping and removing $line&rdquo;
-      # Unmap the route and delete
-      cf unmap-route &ldquo;$line&rdquo; $CF_APPS_DOMAIN -n $CF_APP
-      cf delete &ldquo;$line&rdquo; -f
-      cf delete-route $CF_APPS_DOMAIN -n &ldquo;$line&rdquo; -f
-    else
-      echo &ldquo;Skipping $line&rdquo;
-    fi
-  done</p>
+</code></pre>
 
-<h2 id="fi:8bd1bf82bb668bb452ca3d0d6b4e19bc">fi</h2>
+<pre><code class="language-bash">
+  $ curl -i http://&lt;first-initial&gt;&lt;last-initial&gt;-cities-ui.cfapps.io/cities/version
 
-<p>&mdash; Verify the app, zero downtime</p>
+  HTTP/1.1 200 OK
+  Content-Type: text/plain;charset=ISO-8859-1
+  Date: Thu, 21 May 2015 02:22:29 GMT
+  Server: Apache-Coyote/1.1
+  X-Application-Context: rj-cities-ui-1001:cloud:0
+  X-Cf-Requestid: d9fa0481-5cb4-47cd-6335-35adf575a0b6
+  Content-Length: 4
+  Connection: keep-alive
 
-<h2 id="source-bash-40:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+  CITIES_APP_2_0
 
-<p>$cf apps | grep -i cities-ui
-rj-cities-ui-1001                       started           <sup>1</sup>&frasl;<sub>1</sub>         512M     1G     rj-cities-ui.cfapps.io, rj-cities-ui-5001.cfapps.io</p>
+</code></pre>
 
-<hr />
+<h2 id="repeat-the-process:8bd1bf82bb668bb452ca3d0d6b4e19bc">Repeat the Process</h2>
 
-<h2 id="source-bash-41:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<p>Change the version (in the manifest) and build numbers (in the env file) and run the script to do blue-green deployment. Check the output using curl.</p>
 
-<p>$cf routes | grep -i cities-ui</p>
-
-<p>development   rj-cities-ui                                           cfapps.io   rj-cities-ui-2001
-development   rj-cities-ui-1001                                      cfapps.io   rj-cities-ui-2001</p>
-
-<hr />
-
-<h2 id="source-bash-42:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
-
-<p>$ curl -i http://<first-initial><last-initial>-cities-ui.cfapps.io/cities/version</p>
-
-<p>HTTP/1.1 200 OK
-Content-Type: text/plain;charset=ISO-8859-1
-Date: Thu, 21 May 2015 02:22:29 GMT
-Server: Apache-Coyote/1.1
-X-Application-Context: rj-cities-ui-1001:cloud:0
-X-Cf-Requestid: d9fa0481-5cb4-47cd-6335-35adf575a0b6
-Content-Length: 4
-Connection: keep-alive</p>
-
-<p>CITIES_APP_2_0</p>
-
-<hr />
-
-<p>&mdash; Repeat the Process
-Change the version (in the manifest) and build numbers (in the env file) and run the script to do blue-green deployment. Check the output using curl.</p>
-
-<p>&mdash; Process of Blue Green Deployment</p>
+<h2 id="process-of-blue-green-deployment:8bd1bf82bb668bb452ca3d0d6b4e19bc">Process of Blue Green Deployment</h2>
 
 <p>Review the CF Document for blue green deployment link:<a href="http://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html[Using">http://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html[Using</a> Blue-Green Deployment to Reduce Downtime and Risk]</p>
 
-<p>In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.
-image:./images/blue-green-process.png[Blue Green Deployment Process]</p>
+<p>In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.</p>
 
-<p>&mdash; Newsworthy: Automated Blue Green with cf plugin
-Cloud Foundry plugin link:<a href="https://github.com/concourse/autopilot[Autopilot">https://github.com/concourse/autopilot[Autopilot</a>] does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It doesn&rsquo;t perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.</p>
+<p><img src="/images/blue-green-process.png" alt="Blue Green Deployment Process" /></p>
 
-<h2 id="source-bash-43:8bd1bf82bb668bb452ca3d0d6b4e19bc">[source,bash]</h2>
+<h2 id="newsworthy-automated-blue-green-with-cf-plugin:8bd1bf82bb668bb452ca3d0d6b4e19bc">Newsworthy: Automated Blue Green with cf plugin</h2>
 
-<p>$ mkdir $HOME/go
-$ export GOPATH=$HOME/go
-$ export PATH=$PATH:$GOPATH/bin</p>
+<p>Cloud Foundry plugin <a href="https://github.com/concourse/autopilot">Autopilot</a> does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It doesn&rsquo;t perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.</p>
 
-<p>$ go get github.com/concourse/autopilot
-$ cf install-plugin $GOPATH/bin/autopilot
-$ cd cities-services
-// Increment the Build
-$ cf zero-downtime-push cities-services \
-    -f manifest.blue-green \
-    -p build/libs//cities-service-0.0.1-SNAPSHOT.jar</p>
+<pre><code class="language-bash">
+  $ mkdir $HOME/go
+  $ export GOPATH=$HOME/go
+  $ export PATH=$PATH:$GOPATH/bin
 
-<hr />
+  $ go get github.com/concourse/autopilot
+  $ cf install-plugin $GOPATH/bin/autopilot
+  $ cd cities-services
+  // Increment the Build
+  $ cf zero-downtime-push cities-services \
+      -f manifest.blue-green \
+      -p build/libs//cities-service-0.0.1-SNAPSHOT.jar
 
-<p>&mdash; Discussion: Part 4
-In this part of the workshop did deployment using a blue green script without any downtime.
+</code></pre>
+
+<h2 id="discussion-part-4:8bd1bf82bb668bb452ca3d0d6b4e19bc">Discussion: Part 4</h2>
+
+<p>In this part of the workshop did deployment using a blue green script without any downtime.
 This script / methodology can be used in your CD pipeline to build and deploy Cloud Native Apps with zero downtime.</p>
 
-<h2 id="note-3:8bd1bf82bb668bb452ca3d0d6b4e19bc">[NOTE]</h2>
+<ol>
+<li>Discussion on how do you do Continous Deployment and Delivery with zero downtime today.</li>
+</ol>
 
-<ul>
-<li>Discussion on how do you do Continous Deployment and Delivery with zero downtime today.
-&mdash;-</li>
-</ul>
-
-<p>&ndash; Recap</p>
+<h2 id="recap:8bd1bf82bb668bb452ca3d0d6b4e19bc">Recap</h2>
 
 <p>In this workshop we saw how to build, deploy, bind, scale, monitor apps on Cloud foundry and manage the lifecycle of the application</p>
 
-<p>image:./images/devops-cf.png[DevOps on CF]</p>
+<p><img src="/images/devops-cf.png" alt="DevOps on CF" /></p>
 
-<p>&ndash; Q/A</p>
+<h2 id="q-a:8bd1bf82bb668bb452ca3d0d6b4e19bc">Q/A</h2>
 
-<p>&ndash; Feedback
-Please provide your feedback using this form link:<a href="https://docs.google.com/a/pivotal.io/forms/d/1qWlLtTuoULomw9DAW0tuhn7YVWXwVILaMTNKfXkcq0s/viewform?usp=send_form[Feedback">https://docs.google.com/a/pivotal.io/forms/d/1qWlLtTuoULomw9DAW0tuhn7YVWXwVILaMTNKfXkcq0s/viewform?usp=send_form[Feedback</a> Form]</p>
+<h2 id="feedback:8bd1bf82bb668bb452ca3d0d6b4e19bc">Feedback</h2>
+
+<p>Please provide your feedback using this form <a href="https://docs.google.com/a/pivotal.io/forms/d/1qWlLtTuoULomw9DAW0tuhn7YVWXwVILaMTNKfXkcq0s/viewform?usp=send_form">Feedback Form</a></p>
 </p>
           <p>15 Mar 2016
             
