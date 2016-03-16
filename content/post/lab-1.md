@@ -67,9 +67,7 @@ Windows:
 cd pcf-workspace-devops\cities
 gradlew.bat clean build
 ```
-
-<br>
-<hr>
+***
 # PART 1: Introduction to CF, Push an App.
 
 ### Login to the Cloud Platform
@@ -77,33 +75,28 @@ Use `cf help` and/or `cf <command> --help` for details on each of the commands b
 
 1. Review the docs: http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html
 2. Login to the Pivotal Cloud Foundry.
+  Using the Kroger HDC instance of Cloud Foundry (everyone will use the same credentials, username and password is kroger):
   ```bash
-  // Assuming you are using PWS, your system domain is run.pivotal.io and Use the interactive prompts to login in.
-  $ cf login -a https://api.run.pivotal.io
+  $ cf login -a api.cfhdc.kroger.com --skip-ssl-validation
   ```
-
-3. Alternatively, you can set the env variables in the `env` file in `cities` folder and source the `env` file
+  If you would prefer to use Pivotal Web Services:
   ```bash
-  $nano env.sh
-  export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
-  export CF_APPS_DOMAIN=       //CF_APPS_DOMAIN will look similar to cfapps.io
-  export CF_USER=              //CF_USER is the user account to sign into Pivotal Cloud Foundry, which is usually your email address.
-  export CF_ORG=               //CF_ORG is the name of the Organization within Pivotal Cloud Foundry where you want to deploy your applications.
-  export CF_SPACE=             //CF_SPACE is the name of the Space within the above Organization where you want your application deployed.
+  $ cf login -a api.run.pivotal.io
   ```
-  ```bash
-    $ source ./env
-    $ cf login -a https://api.$CF_SYSTEM_DOMAIN -u $CF_USER -o $CF_ORG -s $CF_SPACE
-  ```
-
 
 4. Verify you are logged in with your own userid (*not admin*) and targeted to your PCF instance:
   ```bash
   $ cf target
   ```
+> the switch `--skip-ssl-validation` is used in HDC because of self signed certificates
 
-> <i>add `--skip-ssl-validation` if you are pointing to CF installation which is using self signed certificates.</i>
-
+### Create a Space
+This will allow you to have your own environment.
+```bash
+$ cf create-space <first-initial><lastname>
+$ cf target -o KrogerHDC -s <first-initial><lastname>
+```
+> This can also be done from the web ui at: [console.cfhdc.kroger.com](http://console.cfhdc.kroger.com)
 
 ### Push the app
 
