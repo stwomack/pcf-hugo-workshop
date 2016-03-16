@@ -101,7 +101,7 @@ $ cf target -o KrogerHDC -s <first-initial><lastname>
 ### Push the app
 
 
-1. Push the cities-hello
+1. Push the cities-hello, put your initials in the app name so we don't get conflicts
 
     ```bash
     $ cd cities-hello
@@ -117,7 +117,7 @@ $ cf target -o KrogerHDC -s <first-initial><lastname>
 2. Open the app url
   + When you push the apps, it will give the url route to the app.
   ![Welcome to PCF Workshop](/images/welcome.png)
-3. Walk through the App Console and the Ops Manager
+3. If you haven't already it is a good time to walk through the AppsManager: [console.cfhdc.kroger.com](http://console.cfhdc.kroger.com) 
 
 
 Recap: Part 1
