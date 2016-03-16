@@ -1,5 +1,5 @@
 +++
-Categories = ["kroger","workshop"]
+Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
 title = "Workshop Details"
