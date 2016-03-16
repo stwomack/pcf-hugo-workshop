@@ -117,7 +117,7 @@ $ cf target -o KrogerHDC -s <first-initial><lastname>
 2. Open the app url
   + When you push the apps, it will give the url route to the app.
   ![Welcome to PCF Workshop](/images/welcome.png)
-3. If you haven't already it is a good time to walk through the AppsManager: [console.cfhdc.kroger.com](http://console.cfhdc.kroger.com) 
+3. If you haven't already it is a good time to walk through the AppsManager: [console.cfhdc.kroger.com](http://console.cfhdc.kroger.com)
 
 
 Recap: Part 1
@@ -133,35 +133,32 @@ Discussion: Part 1
 + How do you push an app to the cloud today?
 + How does the cloud platform understand which runtime to use to run the app?
 
-<br>
-<hr>
+***
 
-PART 2: Build, Push, Bind, Monitor and Scale an App.
+PART 2: Push/Bind/Monitor/Scale
 --
 
 The cities-service app requires a database service to store and fetch cities info.
 
 
-Create a Database Service from Marketplace
+Create a Database from Marketplace
 ---
 1. Review the docs on Services:
 
     [Adding a Service](http://docs.pivotal.io/pivotalcf/devguide/services/adding-a-service.html) <br>
     [Managing Services](http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html)
 
-2. Create a mysql service instance, name it as `<YOUR INITIALS>-cities-db`
+2. If you are using the Kroger instance areate a mysql service, name it as `<YOUR INITIALS>-cities-db`
 
-    You can create the service from the `cli` or launch the App Manager http://console.run.pivotal.io and login. <br>
+    You can create the service from the `cli` or launch the App Manager [console.cfhdc.kroger.com](http://console.cfhdc.kroger.com) and login.
+
     Navigate to the marketplace and see the available services. Here you will create the service using the CLI.
   ```bash
-    $ cf marketplace // check if cleardb mysql service is available
-    $ cf create-service cleardb spark <first-initial><last-initial>-cities-db
+    $ cf marketplace // check if mysql service is available
+    $ cf create-service p-mysql 100mb-dev <first-initial><last-initial>-cities-db
   ```
 
 3. Launch the DB console via the `Manage` link in the App Manager.  Note the database is empty.
-
-
-<br>
 
 Push the App
 ---
@@ -175,9 +172,6 @@ Push the App
     ```bash
     $ cf logs <first-initial><last-initial>-cities-service --recent
     ```
-
-
-<br>
 
 Manually Binding the Service Instance
 ---
