@@ -4,6 +4,7 @@ title = "Cloud Foundry Workshop at Kroger"
 
 
 
+#theme="hyde-y"
 #theme="material-design"
 MetaDataFormat = "toml"
 paginate = 9 # To specify a multiple of 3
