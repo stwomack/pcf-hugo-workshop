@@ -115,9 +115,19 @@ $ cf target -o KrogerHDC -s <first-initial><lastname>
     stack: cflinuxfs2
     ```
 2. Open the app url
+<<<<<<< HEAD
   + When you push the apps, it will give the url route to the app.
   ![Welcome to PCF Workshop](/images/welcome.png)
 3. If you haven't already it is a good time to walk through the AppsManager: [console.cfhdc.kroger.com](http://console.cfhdc.kroger.com)
+=======
+
+    When you push the apps, it will give the url route to the app. <br>
+
+    <img src="/images/welcome.png" alt="Welcome to PCF Workshop" style="width: 600px;"/>
+
+
+3. Walk through the App Console and the Ops Manager
+>>>>>>> 81a6939a4f87cf4073c0a92e17e83b6d7dd8f6f0
 
 
 Recap: Part 1
@@ -559,7 +569,9 @@ Access the cities-ui to verify it is connected to your microservice.
 ---
 Open the App Manager (Console) and navigate to your apps. You will see the cities-ui app, with a link to launch the cities-ui application. Alternatively you can open up your browser and navigate to the URL listed from a successful cf push command.
 
-![Cities UI](/images/cities-ui.png)
+
+<img src="/images/cities-ui.png" alt="Cities UI" style="width: 600px;"/>
+
 
 
 
@@ -578,7 +590,7 @@ PART 4: Deploy Version 2 of the App
 --
 
 In this section we are going to do a green-blue deployment using a shell script. The same can be done by executing the commands one at a time.
-
+<br>
 Delete the unversioned app and the route
 ---
 
@@ -586,149 +598,149 @@ Delete the unversioned app and the route
   cf delete <first-initial><last-initial>-cities-ui
   cf delete-route cfapps.io -n <first-initial><last-initial>-cities-ui
   ```
-
+<br>
 Push Version 2 and Delete the Old Route using the script
 ---
 We are going to deploy the next version of the `cities-ui` app. The deployment typically is automated using a CD pipeline built with Jenkins or any CD automation tool, but in this workshop we will walk through a simple version number change in the deployment manifest.
 
 1. Edit the `manifest.blue-green` with the following variables
   ```bash
-   VERSION: CITIES_APP_1_0
+  VERSION: CITIES_APP_1_0
   ```
+
 2. Edit and source the `env` file from the cities-ui folder with the following variables
   ```bash
-  export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
-  export CF_APPS_DOMAIN=       //CF_APPS_DOMAIN will look similar to cfapps.io
-  export CF_USER=              //CF_USER is the user account to sign into Pivotal Cloud Foundry, which is usually your email address.
-  export CF_ORG=               //CF_ORG is the name of the Organization within Pivotal Cloud Foundry where you want to deploy your applications.
-  export CF_SPACE=             //CF_SPACE is the name of the Space within the above Organization where you want your application deployed.
-  export CF_APP=<first-initial><last-initial>-cities-ui
-  export CF_JAR=build/libs/cities-ui.jar
-  export CF_MANIFEST=manifest.blue-green
-  export BUILD_NUMBER=1001
-```
+    export CF_SYSTEM_DOMAIN=     //CF_SYSTEM_DOMAIN will look similar to run.pivotal.io
+    export CF_APPS_DOMAIN=       //CF_APPS_DOMAIN will look similar to cfapps.io
+    export CF_USER=              //CF_USER is the user account to sign into Pivotal Cloud Foundry, which is usually your email address.
+    export CF_ORG=               //CF_ORG is the name of the Organization within Pivotal Cloud Foundry where you want to deploy your applications.
+    export CF_SPACE=             //CF_SPACE is the name of the Space within the above Organization where you want your application deployed.
+    export CF_APP=<first-initial><last-initial>-cities-ui
+    export CF_JAR=build/libs/cities-ui.jar
+    export CF_MANIFEST=manifest.blue-green
+    export BUILD_NUMBER=1001
+  ```
+    __Note__
 
-__Note__
-
-> Be sure to change the CF_APP name to match your application and add the BUILD_NUMBER to the env file. Add the Version number in the manifest.blue-green
+    > Be sure to change the CF_APP name to match your application and add the BUILD_NUMBER to the env file. Add the Version number >in the manifest.blue-green
 
 3. First deploy the blue v1 of the app.
   ```bash
   // Push the new version of the app, with the version number and route
   $cf push "$CF_APP-$BUILD_NUMBER" -n "$CF_APP-$BUILD_NUMBER" -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
   ```
-
 4. Next, increment the BUILD_NUMBER in the env file and source it. Change the VERSION number in the manifest.blue-green
   ```bash
   ....
   export BUILD_NUMBER=2001
-
   $nano manifest.yml
   ....
   VERSION: CITIES_APP_2_0
   ```
 
 5. Deploy the green v2 and delete the blue v1 of the app.
-  ```bash
-  // Push the new version of the app, with the version number and route
-  $cf push "$CF_APP-$BUILD_NUMBER" -n "$CF_APP-$BUILD_NUMBER" -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
 
-  // Map the route to point to the new app
-  $cf map-route "$CF_APP-${BUILD_NUMBER}" $CF_APPS_DOMAIN -n $CF_APP
+    ```bash
+    // Push the new version of the app, with the version number and route
+    $cf push "$CF_APP-$BUILD_NUMBER" -n "$CF_APP-$BUILD_NUMBER" -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
 
-  // Get the deployed version of the app
-  $export DEPLOYED_VERSION=`cf apps | grep $CF_APP- | cut -d" " -f1`
+    // Map the route to point to the new app
+    $cf map-route "$CF_APP-${BUILD_NUMBER}" $CF_APPS_DOMAIN -n $CF_APP
 
-  // Un-map an existing routes and delete the app / routes
+    // Get the deployed version of the app
+    $export DEPLOYED_VERSION=`cf apps | grep $CF_APP- | cut -d" " -f1`
 
-  $cf unmap-route "$DEPLOYED_VERSION" $CF_APPS_DOMAIN -n $CF_APP
-  $cf delete "$DEPLOYED_VERSION" -f
-  $cf delete-route $CF_APPS_DOMAIN -n "$DEPLOYED_VERSION" -f
+    // Un-map an existing routes and delete the app / routes
 
-  ```
+    $cf unmap-route "$DEPLOYED_VERSION" $CF_APPS_DOMAIN -n $CF_APP
+    $cf delete "$DEPLOYED_VERSION" -f
+    $cf delete-route $CF_APPS_DOMAIN -n "$DEPLOYED_VERSION" -f
+    ```
 
 6. Alternatively, use the bash script `blue-green.sh` in the cities-ui directory, deploy the green v2 and delete the blue v1 of the app. <br>
 If you are using the script make sure you increment the BUILD_NUMBER in the env file and change the VERSION number in the manifest.blue-green.
 
 
-```bash
-  $ cat blue-green.sh
+    ```bash
+    $ cat blue-green.sh
 
-  source env
-  cf login -a https://api.$CF_SYSTEM_DOMAIN -u $CF_USER -o $CF_ORG -s $CF_SPACE --skip-ssl-validation
+    source env
+    cf login -a https://api.$CF_SYSTEM_DOMAIN -u $CF_USER -o $CF_ORG -s $CF_SPACE --skip-ssl-validation
 
-  DEPLOYED_VERSION_CMD=$(CF_COLOR=false cf apps | grep $CF_APP- | cut -d" " -f1)
-  DEPLOYED_VERSION="$DEPLOYED_VERSION_CMD"
-  ROUTE_VERSION=$(echo "${BUILD_NUMBER}" | cut -d"." -f1-3 | tr '.' '-')
-  echo "Deployed Version: $DEPLOYED_VERSION"
-  echo "Route Version: $ROUTE_VERSION"
+    DEPLOYED_VERSION_CMD=$(CF_COLOR=false cf apps | grep $CF_APP- | cut -d" " -f1)
+    DEPLOYED_VERSION="$DEPLOYED_VERSION_CMD"
+    ROUTE_VERSION=$(echo "${BUILD_NUMBER}" | cut -d"." -f1-3 | tr '.' '-')
+    echo "Deployed Version: $DEPLOYED_VERSION"
+    echo "Route Version: $ROUTE_VERSION"
 
-  # push a new version and map the route
-  cf push "$CF_APP-$BUILD_NUMBER" -n "$CF_APP-$ROUTE_VERSION" -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
-  cf map-route "$CF_APP-${BUILD_NUMBER}" $CF_APPS_DOMAIN -n $CF_APP
+    # push a new version and map the route
+    cf push "$CF_APP-$BUILD_NUMBER" -n "$CF_APP-$ROUTE_VERSION" -d $CF_APPS_DOMAIN -p $CF_JAR -f $CF_MANIFEST
+    cf map-route "$CF_APP-${BUILD_NUMBER}" $CF_APPS_DOMAIN -n $CF_APP
 
-  if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSION" != "$CF_APP-${BUILD_NUMBER}" ]; then
-    echo "Performing zero-downtime cutover to $BUILD_NUMBER"
-    echo "$DEPLOYED_VERSION" | while read line
-    do
-      if [ ! -z "$line" -a "$line" != " " -a "$line" != "$CF_APP-${BUILD_NUMBER}" ]; then
-        echo "Scaling down, unmapping and removing $line"
-        # Unmap the route and delete
-        cf unmap-route "$line" $CF_APPS_DOMAIN -n $CF_APP
-        cf delete "$line" -f
-        cf delete-route $CF_APPS_DOMAIN -n "$line" -f
-      else
-        echo "Skipping $line"
-      fi
-    done
-  fi
-```
-
+    if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSION" != "$CF_APP-${BUILD_NUMBER}" ]; then
+      echo "Performing zero-downtime cutover to $BUILD_NUMBER"
+      echo "$DEPLOYED_VERSION" | while read line
+      do
+        if [ ! -z "$line" -a "$line" != " " -a "$line" != "$CF_APP-${BUILD_NUMBER}" ]; then
+          echo "Scaling down, unmapping and removing $line"
+          # Unmap the route and delete
+          cf unmap-route "$line" $CF_APPS_DOMAIN -n $CF_APP
+          cf delete "$line" -f
+          cf delete-route $CF_APPS_DOMAIN -n "$line" -f
+        else
+          echo "Skipping $line"
+        fi
+      done
+    fi
+    ```
+<br>
 Verify the app, zero downtime
 ---
 
-  ```bash
-  $cf apps | grep -i cities-ui
-  rj-cities-ui-1001                       started           1/1         512M     1G     rj-cities-ui.cfapps.io, rj-cities-ui-5001.cfapps.io
+    ```bash
+    $cf apps | grep -i cities-ui
+    rj-cities-ui-1001                       started           1/1         512M     1G     rj-cities-ui.cfapps.io, rj-cities-ui-5001.cfapps.io
 
-  ```
+    ```
 
-  ```bash
-  $cf routes | grep -i cities-ui
+    ```bash
+    $cf routes | grep -i cities-ui
 
-  development   rj-cities-ui                                           cfapps.io   rj-cities-ui-2001
-  development   rj-cities-ui-1001                                      cfapps.io   rj-cities-ui-2001
+    development   rj-cities-ui                                           cfapps.io   rj-cities-ui-2001
+    development   rj-cities-ui-1001                                      cfapps.io   rj-cities-ui-2001
 
-  ```
+    ```
 
-  ```bash
+    ```bash
 
-  $ curl -i http://<first-initial><last-initial>-cities-ui.cfapps.io/cities/version
+    $ curl -i http://<first-initial><last-initial>-cities-ui.cfapps.io/cities/version
 
-  HTTP/1.1 200 OK
-  Content-Type: text/plain;charset=ISO-8859-1
-  Date: Thu, 21 May 2015 02:22:29 GMT
-  Server: Apache-Coyote/1.1
-  X-Application-Context: rj-cities-ui-1001:cloud:0
-  X-Cf-Requestid: d9fa0481-5cb4-47cd-6335-35adf575a0b6
-  Content-Length: 4
-  Connection: keep-alive
+    HTTP/1.1 200 OK
+    Content-Type: text/plain;charset=ISO-8859-1
+    Date: Thu, 21 May 2015 02:22:29 GMT
+    Server: Apache-Coyote/1.1
+    X-Application-Context: rj-cities-ui-1001:cloud:0
+    X-Cf-Requestid: d9fa0481-5cb4-47cd-6335-35adf575a0b6
+    Content-Length: 4
+    Connection: keep-alive
 
-  CITIES_APP_2_0
+    CITIES_APP_2_0
 
-  ```
+    ```
+<br>
 Repeat the Process
 ---
 Change the version (in the manifest) and build numbers (in the env file) and run the script to do blue-green deployment. Check the output using curl.
 
-
+<br>
 Process of Blue Green Deployment
 ---
-Review the CF Document for blue green deployment link:http://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html[Using Blue-Green Deployment to Reduce Downtime and Risk]
+  Review the CF Document for blue green deployment link:http://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html[Using Blue-Green Deployment to Reduce Downtime and Risk]
 
-In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.
+  In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.
 
-![Blue Green Deployment Process](/images/blue-green-process.png)
+
+  <img src="/images/blue-green-process.png" alt="Blue Green Deployment Process" style="width: 600px;"/>
 
 
 Newsworthy: Automated Blue Green with cf plugin
