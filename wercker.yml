@@ -1,4 +1,4 @@
-box: ubuntu/trusty
+box: ubuntu
 build:
   steps:
     - arjen/hugo-build:
