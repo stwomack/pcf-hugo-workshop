@@ -5,8 +5,6 @@ build:
         version: 0.14
         theme: material-design
         flags: --destination=public
-    - install-packages:
-        packages: wget unzip
 deploy:
   steps:
     - dlapiduz/cloud-foundry-deploy:
