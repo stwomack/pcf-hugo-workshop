@@ -5,11 +5,8 @@ build:
         version: 0.14
         theme: material-design
         flags: --destination=public
-    - script:
-        name: install wget
-        code: |
-          sudo apt-get update -y
-          sudo apt-get install -y wget
+    - install-packages:
+        packages: wget unzip
 deploy:
   steps:
     - dlapiduz/cloud-foundry-deploy:
