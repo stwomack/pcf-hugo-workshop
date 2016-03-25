@@ -6,10 +6,6 @@ build:
         theme: material-design
         flags: --destination=public
     - script:
-        name: Use NVM to install version
-        code: |
-          nvm install v4.2.3
-    - script:
         name: install wget
         code: |
           sudo apt-get update -y
