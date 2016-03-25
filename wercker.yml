@@ -32,7 +32,7 @@ deploy:
         password: $CF_PASS
         organization: $CF_ORG
         space: $CF_SPACE
-        appname: pcf-kroger-workshop
+        appname: pcf-kroger-workshop-a
         alt_appname: pcf-kroger-workshop-b
         domain: cfapps.io
-        hostname: pcf-kroger-workshop
+        hostname: pcf-kroger-workshop-a
