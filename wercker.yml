@@ -5,6 +5,15 @@ build:
         version: 0.14
         theme: material-design
         flags: --destination=public
+    - script:
+        name: Use NVM to install version
+        code: |
+          nvm install v4.2.3
+    - script:
+        name: install wget
+        code: |
+          sudo apt-get update -y
+          sudo apt-get install -y wget
 deploy:
   steps:
     - dlapiduz/cloud-foundry-deploy:
