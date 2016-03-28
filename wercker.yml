@@ -13,7 +13,7 @@ deploy:
           apt-get update
     - install-packages:
         packages: wget
-    - dlapiduz/cloud-foundry-deploy:
+    - joshuamckenty/cloud-foundry-deploy:
         api: $CF_API
         username: $CF_USER
         password: $CF_PASS
