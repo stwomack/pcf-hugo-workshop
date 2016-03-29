@@ -1,9 +1,9 @@
 ---
 applications:
-- name: kroger-workshop
+- name: pcf-hugo-workshop
   memory: 64M
   instances: 1
-  host: kroger-workshop
+  host: pcf-hugo-workshop
   domain: cfapps.io
   path: public
   buildpack: staticfile_buildpack
