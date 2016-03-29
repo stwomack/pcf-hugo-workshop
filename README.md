@@ -3,7 +3,23 @@ Building the workshop site for a customer
 ---
 
 We will use Hugo for this website.  
-The code for workshop is available on github: [pcf-kroger-workshop](https://github.com/rjain-pivotal/pcf-kroger-workshop).
+The code for workshop is available on github: [pcf-hugo-workshop](https://github.com/rjain-pivotal/pcf-hugo-workshop).
+
+
+# Dev Process
+
+## Step 1: Create a branch per customer
+
+When you create a branch, update the manifest.yml file on the branch to reflect the CF app name/route. 
+Update the wercker application https://app.wercker.com/#applications/56f1931f368950932900a530 to reflect the new branch and target deployment. For this, send me a note (rajesh.jain@pivotal.io) to add to the wercker project. 
+
+## Step 2: Submit a lab
+
+When you have a lab exercise to submit to the master/dev branch, submit a pull request. 
+
+
+
+# How to build with Hugo
 
 ## Step 1: Getting started with Hugo
 
