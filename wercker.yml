@@ -22,4 +22,4 @@ deploy:
         appname: pcf-hugo-workshop-a
         alt_appname: pcf-hugo-workshop-b
         domain: cfapps.io
-        route: pcf-hugo-workshop
+        hostname: pcf-hugo-workshop
