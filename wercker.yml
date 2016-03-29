@@ -19,7 +19,7 @@ deploy:
         password: $CF_PASS
         organization: $CF_ORG
         space: $CF_SPACE
-        appname: pcf-kroger-workshop-a
-        alt_appname: pcf-kroger-workshop-b
+        appname: pcf-kroger-workshop-blue
+        alt_appname: pcf-kroger-workshop-green
         domain: cfapps.io
         hostname: pcf-kroger-workshop
