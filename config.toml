@@ -1,6 +1,6 @@
-baseurl = "https://kroger-workshop.cfapps.io"
+baseurl = "http://pcf-hugo-dev-workshop.cfapps.io/"
 languageCode = "en-us"
-title = "Cloud Foundry Workshop at Kroger"
+title = "Cloud Foundry Workshop"
 
 
 
@@ -16,8 +16,8 @@ copyright = "© 2015 Copyright Text"
 #
 [params]
     # You can use markdown here.
-    brand = "Kroger"
-    topline = "Right Store, Right Price"
+    brand = "Pivotal"
+    topline = "Do the right thing"
     footline = "code with <i class='fa fa-heart'></i>"
 
     # Sidebar position
@@ -30,7 +30,7 @@ copyright = "© 2015 Copyright Text"
 
     description = "Pivotal Cloud Foundry" # optional
     twitter = "pivotal" # optional
-    customer = "kroger"
+    customer = ""
     # headerCover = "images/headerCover.png" # optional
     # footerCover = "images/footerCover.png" # optional
     googleAnalyticsUserID = "UA-75133856-1" # optional
