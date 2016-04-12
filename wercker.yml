@@ -10,7 +10,7 @@ deploy:
     - script:
         name: Install packages
         code: |
-          apt-get update
+          apt-get update --fix-missing
     - install-packages:
         packages: wget
     - joshuamckenty/cloud-foundry-deploy:
