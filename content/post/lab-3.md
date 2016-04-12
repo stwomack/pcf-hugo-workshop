@@ -21,7 +21,8 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 The big picture : Use Spring Cloud Services design patterns to build cloud Native applications
 
-![Cloud Native Spring Application Architecture](/images/spring-1.png)
+<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 600px;"/>
+
 
 
 Prerequisites
