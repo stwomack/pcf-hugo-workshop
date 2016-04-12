@@ -8,11 +8,11 @@ weight = 3
 +++
 
 
-Run Docker Containers in Cloud Foundry
--
+## Run Docker Containers in Cloud Foundry
 
 
-### Goals
+
+### Goal
 
 To deploy and configure a spring boot app in Docker container and run it in Cloud Foundry.
 
