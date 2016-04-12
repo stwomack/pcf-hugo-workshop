@@ -1,13 +1,10 @@
 +++
-
 Categories = ["lab"]
 Tags = ["spring","config-server","cloudfoundry"]
-date = "2016-03-15T14:54:11-04:00"
-title = "Lab 3"
+date = "2016-04-11T23:37:14-04:00"
+title = "lab 3"
 weight = 2
-
 +++
-
 
 Cloud Native App development using Spring Cloud Config Server on Pivotal Cloud Foundry
 -
@@ -465,3 +462,4 @@ http://route-to-app/dump
 Performs a thread dump.
 
 http://route-to-app/trace
+
