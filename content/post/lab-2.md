@@ -2,17 +2,12 @@
 Categories = ["lab"]
 Tags = ["docker","cloudfoundry"]
 date = "2016-03-15T14:54:22-04:00"
-title = "Lab 2"
-weight = 3
+title = "Lab 2: Run Docker Containers in Cloud Foundry"
+weight = 4
 
 +++
 
-
-Run Docker Containers in Cloud Foundry
--
-
-
-### Goals
+### Goal
 
 To deploy and configure a spring boot app in Docker container and run it in Cloud Foundry.
 
