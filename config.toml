@@ -9,7 +9,7 @@ theme="material-design"
 MetaDataFormat = "toml"
 paginate = 9 # To specify a multiple of 3
 disqusShortname = "Rajesh Jain" # optional
-copyright = "© 2015 Copyright Text"
+copyright = "© Copyright 2016 Pivotal Software, Inc. All Rights Reserved. Sitemap"
 
 #
 # All parameters below here are optional and can be mixed and matched.
@@ -30,7 +30,7 @@ copyright = "© 2015 Copyright Text"
 
     description = "Pivotal Cloud Foundry" # optional
     twitter = "pivotal" # optional
-    customer = ""
+    customer = "detroit"
     # headerCover = "images/headerCover.png" # optional
     # footerCover = "images/footerCover.png" # optional
     googleAnalyticsUserID = "UA-75133856-1" # optional

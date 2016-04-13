@@ -3,14 +3,10 @@
 Categories = ["lab"]
 Tags = ["spring","microservices","cloudfoundry"]
 date = "2016-03-15T14:54:11-04:00"
-title = "Lab 1"
+title = "Lab 1: Build and Deploy Apps on PCF"
 weight = 2
 
 +++
-
-
-## Build and Deploy Apps on PCF
-
 
 ### Goal
 
@@ -473,7 +469,7 @@ In this section we will create a backend microservice end point for cities-servi
 
 4. Refer to the CitiesWebServiceInfoCreator class for the necessary tag value.
 
-  ```bash
+  ````bash
   // Use the interactive prompt to create user defined service
   // It will prompt you for the parameters
 
@@ -483,7 +479,7 @@ In this section we will create a backend microservice end point for cities-servi
   tag>   cities
 
   Creating user provided service....
-  ```
+  ````
 
 <br>
 ### Step 15
@@ -493,7 +489,7 @@ In this section we will create a backend microservice end point for cities-servi
 A `manifest.yml` is included in the cities-ui app.  Edit this manifest with your initials and add the service binding to your cities-service
 
 
-  ```bash
+  ````bash
   ---
   applications:
   - name: <YOUR INITIALS>-cities-ui
@@ -503,12 +499,12 @@ A `manifest.yml` is included in the cities-ui app.  Edit this manifest with your
     services: [ <YOUR INITIALS>-cities-ws ]
     env:
       SPRING_PROFILES_ACTIVE: cloud
-  ```
+  ````
 
 Push the `cities-ui` without specifying the manifest.yml. It will by default pick the manifest.yml file and deploy the app.
-  ```bash
+  ````bash
   $ cf push
-  ```
+  ````
 
 Note the URL once the application has been successfully pushed.
 
@@ -516,7 +512,7 @@ Note the URL once the application has been successfully pushed.
 ##### Verify the backend service is bound to cities-ui
 
 
-```bash
+````bash
 ----
 $ cf env <first-initial><last-initial>-cities-ui
 
@@ -563,7 +559,7 @@ System-Provided:
 
 User-Provided:
 SPRING_PROFILES_ACTIVE: cloud
-```
+````
 
 ### Step 17
 ##### Access the cities-ui to verify it is connected to your microservice.
@@ -583,8 +579,6 @@ In this part of the workshop we created a cities-ui app which is loosely bound a
 
 1. Discussion on loose coupling of your services from your app and 12 Factor App design principles.
 
-<br>
-
 
 ***
 ## PART 4: Deploy Version 2 of the App
@@ -595,9 +589,9 @@ In this section we are going to do a green-blue deployment using a shell script.
 ### Step 18
 ##### Delete the unversioned app and the route
 
-  ```bash
+  ````bash
   cf delete -r <first-initial><last-initial>-cities-ui
-  ```
+  ````
 
 ### Step 19
 ##### Process of Blue Green Deployment
@@ -622,10 +616,7 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
   $ cf install-plugin $GOPATH/bin/autopilot
   $ cd cities-services
   // Increment the Build
-  $ cf zero-downtime-push cities-services \
-      -f manifest.blue-green \
-      -p build/libs//cities-service-0.0.1-SNAPSHOT.jar
-
+  $ cf zero-downtime-push cities-services
   ```
 
 ##### Discussion: Part 4

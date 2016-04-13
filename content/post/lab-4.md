@@ -1,16 +1,16 @@
 +++
 Categories = ["lab"]
-Tags = ["spring","config-server","cloudfoundry"]
-date = "2016-04-11T23:37:14-04:00"
-title = "Lab 3: Spring Cloud Config Server"
-weight = 3
+Tags = ["spring","registry-server","cloudfoundry"]
+date = "2016-04-13T00:19:42-04:00"
+title = "Lab 4: Spring Cloud Registry Server"
+weight = 4
+
 +++
 
 
 ### Goal
 
-To create a Spring boot application using Spring Cloud Config Server to store and fetch configuration information and deploy it on the Pivotal Cloud Foundry Platform.
-
+To create a Spring boot application using Spring Cloud Registry Server and deploy it on the Cloud Foundry Platform.
 
 <!--more-->
 
@@ -42,24 +42,20 @@ Prerequisites
 
 Steps
 --
-In this workshop we are going to follow these steps to build our first Cloud Native Spring Boot app on Cloud foundry using the Spring Cloud Config Server.
+In this workshop we are going to follow these steps to build our first Cloud Native Spring Boot app on Cloud foundry using the Spring Cloud Registry Server.
 
 
 Learn how to
 
-    - Set up a Git repository to hold configuration data
-    - Configure Spring Cloud Config server (config-server) on Pivotal Cloud Foundry with a Git backend
-    - Set up a client (greeting-config) to pull configuration from the config-server
-    - Use @ConfigurationProperties to capture configuration changes (greeting-config)
-    - Use @RefreshScope to capture configuration changes (greeting-config)
-    - Use Cloud Bus to notify applications (greeting-config) to refresh configuration at scale
+
     - Config a Spring Cloud Service Registry
 
 Desired the architecture of this Cloud Native Spring boot app is:
-<img src="/images/spring-2.png" alt="Config Server with Cloud Native Spring App" style="width: 600px;"/>
+<img src="/images/spring-3.png" alt="Registry Server with Cloud Native Spring App" style="width: 600px;"/>
 
 
 * * *
+----- TO BE COMPLETED -----
 
 ### Step 1
 ##### Get the greeting-config app

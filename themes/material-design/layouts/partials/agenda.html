@@ -1,16 +1,11 @@
 {{ $baseurl := .Site.BaseURL }}
 <div class="row">
-  {{range $index, $page := .Paginator.Pages}}
-    {{if eq .Params.categories "agenda"}}
-</div>
-<div class="row">
-  <div class="col m4 s12">
-    <div class="card-panel">
+  {{ range where .Data.Pages "Type"  "Introduction" }}
+    <div class="card-panel hoverable light-blue lighten-4">
       <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
-      <p>{{ .Content }}</p>
+
+      <p>{{ .Summary }}</p>
+
     </div>
-  </div>
   {{ end }}
-</div>
-{{ end }}
 </div>

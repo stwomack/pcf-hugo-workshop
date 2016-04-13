@@ -2,12 +2,18 @@
 
 <div class="container">
   <div class="section">
-
-{{ partial "agenda.html" .}}
-{{ partial "content.html" . }}
-
-{{ partial "pagination.html" .Paginator }}
-
+    {{ partial "agenda.html" .}}
+  </div>
+  <div class="section">
+    <div class="row">
+          {{ range .Site.Pages}}
+            {{ if in .Params.categories "lab" }}
+              {{ partial "labs.html" . }}
+            {{end}}
+          {{end}}
+    </div>
+  </div>
+    {{ partial "pagination.html" .Paginator }}
   </div>
 </div>
 
