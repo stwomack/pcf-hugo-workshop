@@ -457,17 +457,7 @@ In this section we will create a backend microservice end point for cities-servi
 1. Review the documentation on link:http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html[User Provided Service Instances]
 2. Look for the details by running `cf cups --help`.
 
-3. You will need to specify two parameters when you create the service instance: `uri` and `tag` (see: CitiesWebServiceInfoCreator.java in the cities-client project). <br>
-  The `uri` should point to your deployed microservice <br>
-  The `tag` is a property specified in the CitiesWebServiceInfoCreator.  Tags have a special meaning in CF: <br>
-
-    _Tags_ provide a flexible mechanism to expose a classification, attribute, or base technology of a service, enabling equivalent services to be swapped out without changes to dependent logic in applications, buildpacks, or other services. <br>
-     Eg. mysql, relational, redis, key-value, caching, messaging, amqp.  
-     <br>
-     Tags also allow application configurations to be independent of a service instance name._
-
-
-4. Refer to the CitiesWebServiceInfoCreator class for the necessary tag value.
+3. You will need to specify the parameter citiesuri to the user defined service instance .
 
   ````bash
   // Use the interactive prompt to create user defined service
