@@ -284,7 +284,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
 
 ### Step 6
-##### Push the app and set the cf set-env
+##### Push the app 
 
 1. Change the manifest.yml file in the greeting-config/ to reflect the name of the app and the config-service
 
@@ -314,19 +314,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
       cf push
       ````
 
-4. Set the ENV property
-
-      ````
-      cf set-env student1-greeting-config CF_TARGET https://api.pcf2.cloud.fe.pivotal.io
-      ````
-
-5. Restage the app to reflect the new env variables
-
-      ````
-      cf restage student1-greeting-config
-      ````
-
-6. Open in the browser the App
+4. Open in the browser the App
 
       ````
       http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
