@@ -64,14 +64,14 @@ By this point, you should have cloned (or forked, or downloaded) the [workspace 
 For Linux/Mac:
 ```bash
 
-cd pcf-workspace-devops/cities
+cd pcf-workspace-devops
 ./gradlew clean build
 
 ```
 
 Windows:
 ```bash
-cd pcf-workspace-devops\cities
+cd pcf-workspace-devops
 gradlew.bat clean build
 ```
 ### Step 3
@@ -161,7 +161,7 @@ The cities-service app requires a database service to store and fetch cities inf
 1. Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.
 
     ````bash
-    $ cf push <first-initial><last-initial>-cities-service -i 1 -m 512M -p build/libs/cities-service-0.0.1-SNAPSHOT.jar
+    $ cf push <first-initial><last-initial>-cities-service -i 1 -m 512M -p build/libs/cities-service.jar
     ````
 2. Check the logs to learn more about why the application is not starting
 
@@ -473,10 +473,9 @@ In this section we will create a backend microservice end point for cities-servi
   // Use the interactive prompt to create user defined service
   // It will prompt you for the parameters
 
-  $ cf create-user-provided-service <first-initial><last-initial>-cities-ws -p "uri,tag"
+  $ cf create-user-provided-service <first-initial><last-initial>-cities-ws -p "citiesuri"
 
-  uri>   http://<first-initial><last-initial>-cities-service.cfapps.io/
-  tag>   cities
+  citiesuri>   http://<first-initial><last-initial>-cities-service.cfapps.io/
 
   Creating user provided service....
   ````
@@ -604,9 +603,9 @@ In this section we are going to do a green-blue deployment using a shell script.
   <img src="/images/blue-green-process.png" alt="Blue Green Deployment Process" style="width: 600px;"/>
 
 
-Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It doesn't perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.
+Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It does not perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.
 
-  ```bash
+  ````bash
 
   $ mkdir $HOME/go
   $ export GOPATH=$HOME/go
@@ -617,7 +616,7 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
   $ cd cities-services
   // Increment the Build
   $ cf zero-downtime-push cities-services
-  ```
+  ````
 
 ##### Discussion: Part 4
 
