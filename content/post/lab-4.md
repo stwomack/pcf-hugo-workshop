@@ -55,6 +55,7 @@ Learn how to
 
 
 Desired the architecture of this Cloud Native Spring boot app is:
+
 <img src="/images/spring-3.png" alt="Registry Server with Cloud Native Spring App" style="width: 600px;"/>
 
 
@@ -73,6 +74,7 @@ git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ````
 
 More info on Spring Initializer (http://start.spring.io/)
+
 <img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 600px;"/>
 
 
@@ -98,13 +100,16 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 ##### Configure the Spring Cloud Registry Service Instance from the marketplace
 
 1. In the PCF App Console, create a instance of the Registry Service from the marketplace.
+
 <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-registry-service'
+
 <img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 600px;"/>
 
 4. This will create the studentXX-registry-service service instance. To view the configuration of this service by clicking manage.
+
 <img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 600px;"/>
 
 
@@ -283,6 +288,7 @@ Lets walk through the code
       ````
       http://greeting-feign-noncompetitive-dairy.pcf2.cloud.fe.pivotal.io/
       ````
+
       <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 600px;"/>
 
 ### Step 9
