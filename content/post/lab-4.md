@@ -49,16 +49,20 @@ Learn how to
 
 
     - Config a Spring Cloud Service Registry
+    - Use Service Registry (Eureka) in a Spring Boot application
+    - Register services (fortune-service) with Service Registry (Eureka)
+    - Discover and Consume services (greeting-feign) with Service Registry (Eureka)
+
 
 Desired the architecture of this Cloud Native Spring boot app is:
 <img src="/images/spring-3.png" alt="Registry Server with Cloud Native Spring App" style="width: 600px;"/>
 
 
-* * *
------ TO BE COMPLETED -----
+***
+## PART 1: Register a service.
 
 ### Step 1
-##### Get the greeting-config app
+##### Get the fortune-service app
 
 Clone the git repo which has a simple boilerplate Spring boot app built using Spring Initializer.
 
@@ -89,213 +93,79 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
 
 
+
 ### Step 3
-##### Set the config data
+##### Configure the Spring Cloud Registry Service Instance from the marketplace
 
-The greeting-config app uses the Spring Cloud Services Config Server to read config data.
-Clone the git repo which has the config properties which are read by the greeting-config
-
-
-````
-git clone https://github.com/rjain-pivotal/workshop-app-config.git
-cd workshop-app-config/
-````
-
-Set the Remote URL to your own/new repo you would like to create or you can fork the workshop-app-config repo
-
-````
-git remote set-url origin https://rjain-pivotal@github.com/rjain-pivotal/student1-workshop-app-config.git
-git push origin master
-````
-
-In this repo you have the following config files:
-
-<img src="/images/git-1.png" alt="Git Config Server Files" style="width: 200px;"/>
-
-The config server serves the configuration request using the following path formats, where the application name is set in the application.yml for the client application, profile and label are set as environment variables.
-
-````
-/{application}/{profile}[/{label}]
-/{application}-{profile}.yml
-/{label}/{application}-{profile}.yml
-/{application}-{profile}.properties
-/{label}/{application}-{profile}.Properties
-````
-For more details on the Config Server config files refer to the documentation (http://docs.pivotal.io/spring-cloud-services/config-server/server.html)
-
-You could also have multiple branches in your Git repo, and in the Config Service instance, you can configure which branch to read the config information.
-
-````
-master
-------
-https://github.com/myorg/configurations
-|- myapp.yml
-|- myapp-development.yml
-|- myapp-production.yml
-
-tag v1.0.0
-----------
-https://github.com/myorg/configurations
-|- myapp.yml
-|- myapp-development.yml
-|- myapp-production.yml
-
-````
-
-### Step 4
-##### Configure the Spring Cloud Config Service Instance from the marketplace
-
-1. In the PCF App Console, create a instance of the Config Server service from the marketplace.
-<img src="/images/pcf-console-1.png" alt="Marketplace Services" style="width: 600px;"/>
+1. In the PCF App Console, create a instance of the Registry Service from the marketplace.
+<img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
 
 2. Select the default plan.
-3. Name the service instance as 'studentXX-config-service'
-<img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 600px;"/>
+3. Name the service instance as 'studentXX-registry-service'
+<img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 600px;"/>
 
-4. This will create the studentXX-config-service service instance. Next configure this service by clicking manage.
-<img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 600px;"/>
+4. This will create the studentXX-registry-service service instance. To view the configuration of this service by clicking manage.
+<img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 600px;"/>
 
-The Git repository URL is the URL of your cloned git repo in Step 3.
 
-````
-https://github.com/rjain-pivotal//student1-workshop-app-config.git
-````
+### Step 4
 
-We are using defaults for the rest, hence leave them blank.
-For detailed documentation on the other configuration items, refer to the product documentation.
-http://docs.pivotal.io/spring-cloud-services/config-server/creating-an-instance.html
+##### Code walk through (fortune-service)
+
+Let's walk through the code in the fortune-service app in the source repo (Step #1) using your favorite editor (Atom/Sublime/Eclipse/IntelliJ/STS)
+
+1. Review the *fortune-service/src/main/resources/bootstrap.yml* file. The name of this app is fortune-service.
+
+      ````
+      server:
+       port: 8787
+      spring:
+       application:
+         name: fortune-service
+      ````
+      spring.application.name is the name the application will use when registering with Eureka.
+
+2. Review the *fortune-service/pom.xml* file. By adding *spring-cloud-services-starter-service-registry* to the classpath this application is eligible to register and discover services with the service-registry.
+
+      ````
+      <dependency>
+      	<groupId>io.pivotal.spring.cloud</groupId>
+      	<artifactId>spring-cloud-services-starter-service-registry</artifactId>
+      </dependency>
+      ````
+
+3. Review the *fortune-service/src/main/java/io/pivotal/FortuneServiceApplication.java*
+
+      Notice the ````@EnableDiscoveryClient.```` This enables a discovery client that registers the fortune-service with the service-registry application.
+
+        @SpringBootApplication
+        @EnableDiscoveryClient
+        public class FortuneServiceApplication {
+
+            public static void main(String[] args) {
+                SpringApplication.run(FortuneServiceApplication.class, args);
+            }
+        }
+
 
 
 ### Step 5
+##### Push the app to cloud Foundry
 
-##### Code walk through (greeting-config)
-
-Let's walk through the code in the greeting-config app in the source repo (Step #1) using your favorite editor (Atom/Sublime/Eclipse/IntelliJ/STS)
-
-1. greeting-service
-
-      In GreetingProperties.java, @ConfigurationProperties annotation allows for reading of configuration values. Configuration keys are a combination of the prefix and the field names. In this case, there is one field (displayFortune). Therefore greeting.displayFortune is used to turn the display of fortunes on/off. Remaining code is typical getter/setters for the fields.
-
-      ````
-      @ConfigurationProperties(prefix="greeting")
-      public class GreetingProperties {
-
-      	private boolean displayFortune;
-
-      	public boolean isDisplayFortune() {
-      		return displayFortune;
-      	}
-
-      	public void setDisplayFortune(boolean displayFortune) {
-      		this.displayFortune = displayFortune;
-      	}
-      }
-      ````
-
-      greetingProperties.isDisplayFortune() is used to turn the display of fortunes on/off. There are times when you want to turn features on/off on demand.
-
-      ````
-      @EnableConfigurationProperties(GreetingProperties.class)
-      public class GreetingController {
-
-      	Logger logger = LoggerFactory
-      			.getLogger(GreetingController.class);
-
-
-      	@Autowired
-      	GreetingProperties greetingProperties;
-
-      	@Autowired
-      	FortuneService fortuneService;
-
-      	@RequestMapping("/")
-      	String getGreeting(Model model){
-
-      		logger.debug("Adding greeting");
-      		model.addAttribute("msg", "Greetings!!!");
-
-      		if(greetingProperties.isDisplayFortune()){
-      			logger.debug("Adding fortune");
-      			model.addAttribute("fortune", fortuneService.getFortune());
-      		}
-
-      		//resolves to the greeting.vm velocity template
-      		return "greeting";
-      	}
-
-      }
-      ````
-
-2. quote-service
-
-      QuoteService uses the @RefreshScope annotation. Beans with the @RefreshScope annotation will be recreated when refreshing configuration. The @Value annotation allows for injecting the value of the quoteServiceURL configuration parameter.
-
-      ````
-      @Service
-      @RefreshScope
-      public class QuoteService {
-      	Logger logger = LoggerFactory
-      			.getLogger(QuoteController.class);
-
-      	@Value("${quoteServiceURL}")
-      	private String quoteServiceURL;
-
-      	public String getQuoteServiceURI() {
-      		return quoteServiceURL;
-      	}
-
-      	public Quote getQuote(){
-      		logger.info("quoteServiceURL: {}", quoteServiceURL);
-      		RestTemplate restTemplate = new RestTemplate();
-      		Quote quote = restTemplate.getForObject(
-      				quoteServiceURL, Quote.class);
-      		return quote;
-      	}
-      }
-      ````
-
-3. greeting-config.yml
-
-      In the app-config repo in the Github, review the greeting-config.yml file, which has the displayFortune turned on and the quoteService point to an existing URL.
-
-      ````
-      security:
-        basic:
-          enabled: false
-
-      management:
-        security:
-          enabled: false
-
-      logging:
-        level:
-          io:
-            pivotal: DEBUG
-
-      greeting:
-        displayFortune: true # <----Change to true
-
-      quoteServiceURL: http://quote-service-dev.cfapps.io/quote
-      ````
-
-
-### Step 6
-##### Push the app and set the cf set-env
-
-1. Change the manifest.yml file in the greeting-config/ to reflect the name of the app and the config-service
+1. Change the manifest.yml file in the greeting-config/ to reflect the name of the app and the service-registry
 
         ---
         applications:
-        - name: student1-greeting-config
-          memory: 512M
-          buildpack: https://github.com/cloudfoundry/java-buildpack
+        - name: <studentXXX>-fortune-service
+          memory: 512MB
           instances: 1
-          host: student1-greeting-config
-          path: target/greeting-config-0.0.1-SNAPSHOT.jar
+          host: fortune-service-${random-word}
+          path: ./target/fortune-service-0.0.1-SNAPSHOT.jar
           services:
-            - student1-config-service
+          - rj-service-registry
           env:
-            SPRING_PROFILES_ACTIVE: dev
+            CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+
 
 
 2. Build the app using maven
@@ -310,154 +180,114 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
       cf push
       ````
 
-4. Set the ENV property
-
-      ````
-      cf set-env student1-greeting-config CF_TARGET https://api.pcf2.cloud.fe.pivotal.io
-      ````
-
-5. Restage the app to reflect the new env variables
-
-      ````
-      cf restage student1-greeting-config
-      ````
-
 6. Open in the browser the App
+   Get the route to your app
 
       ````
-      http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-      http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+      http://fortune-service-decompressive-retrenchment.pcf2.cloud.fe.pivotal.io/
       ````
+
+### Step 6
+##### Verify the App is registered in the Service Registry
+
+After the a few moments, check the service-registry dashboard. Confirm the fortune-service is registered.
+
+<img src="/images/pcf-registry-service-3.png" alt="Service Registry" style="width: 600px;"/>
+
+
+
+
+***
+## PART 2: Consume a service.
 
 ### Step 7
-##### Change the property and curl to RefreshScope
+##### Build Restful interface for consuming services using Netflix Feign
 
-1. In the app-config repo, edit the greeting-config.yml file.
+You have the greeting-service app in the cloned repo (Step 1) which has the client to consume service.
 
-      ````
-      greeting:
-        displayFortune: false # <----Change to true
+Lets walk through the code
 
-      quoteServiceURL: http://quote-service-qa.cfapps.io/quote
-      ````
-
-2. Force refresh the beans
-
-      ````
-      curl -X POST http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/refresh
-      ````
-
-      This will output the properties which changed
-      ````
-      ["quoteServiceURL","greeting.displayFortune"]
-      ````
-
-3. Open in the browser the App
-
-      You will see the Greetings doesn't have any fortune and the random-quote is from qa service
-
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
-
-
-### Step 8
-##### Change the profile and Push
-
-1. Next, update the manifest.yml to point to the SPRING_PROFILES_ACTIVE to qa
-
-        ---
-        applications:
-        - name: student1-greeting-config
-          memory: 512M
-          buildpack: https://github.com/cloudfoundry/java-buildpack
-          instances: 1
-          host: student1-greeting-config
-          path: target/greeting-config-0.0.1-SNAPSHOT.jar
-          services:
-            - student1-config-service
-          env:
-            SPRING_PROFILES_ACTIVE: qa
-
-
-2. Now the properties will be served by app-config/greeting-config-qa.yml
-
-      You can verify by opening the two URLs
-
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
-
-
-### Step 9
-##### Refreshing Application Configuration at Scale with Cloud Bus
-
-When running several instances of your application, this poses several problems:
-
-1. Refreshing each individual instance is time consuming and too much overhead
-2. When running on Cloud Foundry you don’t have control over which instances you hit when sending the POST request due to load balancing provided by the router
-
-Spring Cloud Bus addresses the issues listed above by providing a single endpoint to refresh all application instances via a pub/sub notification.
-
-1. Create a RabbitMQ service instance, bind it to greeting-config
-
-      ````
-      $ cf cs p-rabbitmq standard cloud-bus
-      $ cf bs greeting-config cloud-bus
-      ````
-
-2. Add the dependency to the pom.xml
-
+1. In the greeting-service/pom.xml file , with the *spring-cloud-starter-feign*  dependency,  this application is eligible to discover services with the service-registry.
       ````
       <dependency>
-          <groupId>org.springframework.cloud</groupId>
-          <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-feign</artifactId>
       </dependency>
       ````
 
-3. Build the app and push 3 app instances
+2. In the *GreetingFeignApplication.java* includes the @EnableDiscoveryClient annotation on a configuration class. To have Feign client interfaces automatically configured, it must also use the @EnableFeignClients annotation.
 
       ````
-      $mvn clean package
-      $cf push -i 3
+      @SpringBootApplication
+      @EnableDiscoveryClient
+      @EnableFeignClients
+      public class GreetingFeignApplication {
+
+          public static void main(String[] args) {
+              SpringApplication.run(GreetingFeignApplication.class, args);
+          }
+
+      }
       ````
 
-4. Change the app-config/greeting-config.yml and refresh all the app instances using Cloud Bus
+
+3. To call a registered service, a consuming application can use a URI with a hostname matching the name with which the service is registered in the Service Registry. This way, the consuming application does not need to know the service application’s actual URL; the Registry will take care of finding and routing to the service.
+
+      Pivotal Cloud Foundry installation is configured to only allow HTTPS traffic, you must specify the https:// scheme in the base URI used by your client application.
 
       ````
-      curl -X POST http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/bus/refresh
+      @FeignClient("https://fortune-service")
+      public interface FortuneServiceClient {
+
+      	 @RequestMapping(method = RequestMethod.GET, value = "/")
+      	 String getFortune();
+      }
       ````
 
-5. Verify by opening the two URLs
 
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+### Step 8
+##### Build and Push the Consuming app
 
-### Step 10
-##### Spring Actuator Endpoints
+1. Next, update the manifest.yml
 
-Check the Actuator Endpoints
+        ---
+        applications:
+        - name: greeting-feign
+          memory: 512MB
+          instances: 1
+          host: greeting-feign-${random-word}
+          path: ./target/greeting-feign-0.0.1-SNAPSHOT.jar
+          services:
+          - rj-service-registry
+          env:
+            CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
-http://route-to-app/beans
 
-Dumps all of the beans in the Spring context.
 
-http://route-to-app/autoconfig
 
-Dumps all of the auto-configuration performed as part of application bootstrapping.
+2. Build the app using maven
 
-http://route-to-app/configprops
+      ````
+      mvn clean package
+      ````
 
-Displays a collated list of all @ConfigurationProperties.
+3. Push the app using cf cli
 
-http://route-to-app/env
+      ````
+      cf push
+      ````
 
-Dumps the application’s shell environment as well as all Java system properties.
+6. Open in the browser the App
+   Get the route to your app
 
-http://route-to-app/mappings
+      ````
+      http://greeting-feign-noncompetitive-dairy.pcf2.cloud.fe.pivotal.io/
+      ````
+      <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 600px;"/>
 
-Dumps all URI request mappings and the controller methods to which they are mapped.
+### Step 9
+##### Verify the App is registered in the Service Registry
 
-http://route-to-app/dump
+This app is also registered as a service in the Service registry. Check the service-registry dashboard. Confirm the fortune-service and greeting-feign is registered.
 
-Performs a thread dump.
-
-http://route-to-app/trace
+<img src="/images/pcf-registry-service-4.png" alt="Service Registry" style="width: 600px;"/>
