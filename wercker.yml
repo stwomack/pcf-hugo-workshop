@@ -10,7 +10,7 @@ deploy:
     - script:
         name: Install packages
         code: |
-          apt-get update
+          apt-get update --fix-missing
     - install-packages:
         packages: wget
     - joshuamckenty/cloud-foundry-deploy:
@@ -19,7 +19,7 @@ deploy:
         password: $CF_PASS
         organization: $CF_ORG
         space: $CF_SPACE
-        appname: pcf-hugo-dev-workshop-blue
-        alt_appname: pcf-hugo-dev-workshop-green
+        appname: pcf-detroit-workshop-blue
+        alt_appname: pcf-detroit-workshop-green
         domain: cfapps.io
-        hostname: pcf-hugo-dev-workshop
+        hostname: pcf-detroit-workshop
