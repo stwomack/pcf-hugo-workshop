@@ -56,6 +56,7 @@ Learn how to
     - Config a Spring Cloud Service Registry
 
 Desired the architecture of this Cloud Native Spring boot app is:
+
 <img src="/images/spring-2.png" alt="Config Server with Cloud Native Spring App" style="width: 600px;"/>
 
 
@@ -73,6 +74,7 @@ git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ````
 
 More info on Spring Initializer (http://start.spring.io/)
+
 <img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 600px;"/>
 
 
@@ -150,13 +152,16 @@ https://github.com/myorg/configurations
 ##### Configure the Spring Cloud Config Service Instance from the marketplace
 
 1. In the PCF App Console, create a instance of the Config Server service from the marketplace.
+
 <img src="/images/pcf-console-1.png" alt="Marketplace Services" style="width: 600px;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-config-service'
+
 <img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 600px;"/>
 
 4. This will create the studentXX-config-service service instance. Next configure this service by clicking manage.
+
 <img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 600px;"/>
 
 The Git repository URL is the URL of your cloned git repo in Step 3.
@@ -284,7 +289,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
 
 ### Step 6
-##### Push the app 
+##### Push the app
 
 1. Change the manifest.yml file in the greeting-config/ to reflect the name of the app and the config-service
 
