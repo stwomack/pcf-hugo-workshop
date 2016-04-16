@@ -67,7 +67,7 @@ Desired the architecture of this Cloud Native Spring boot app is:
 
 Clone the git repo which has a simple boilerplate Spring boot app built using Spring Initializer.
 
-The Spring Labs repo contains multiple apps, we are going to focus on greeting-config app in this exercise.
+The Spring Labs repo contains multiple apps, we are going to focus on fortune-service app in this exercise.
 
 ````
 git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
@@ -101,16 +101,16 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
 1. In the PCF App Console, create a instance of the Registry Service from the marketplace.
 
-<img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
+      <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-registry-service'
 
-<img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 600px;"/>
+      <img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 600px;"/>
 
 4. This will create the studentXX-registry-service service instance. To view the configuration of this service by clicking manage.
 
-<img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 600px;"/>
+      <img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 600px;"/>
 
 
 ### Step 4
@@ -157,17 +157,17 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
 ### Step 5
 ##### Push the app to cloud Foundry
 
-1. Change the manifest.yml file in the greeting-config/ to reflect the name of the app and the service-registry
+1. Change the manifest.yml file in the fortune-service/ to reflect the name of the app and the service-registry
 
         ---
         applications:
         - name: <studentXXX>-fortune-service
           memory: 512MB
           instances: 1
-          host: fortune-service-${random-word}
+          host: <studentXXX>-fortune-service
           path: ./target/fortune-service-0.0.1-SNAPSHOT.jar
           services:
-          - rj-service-registry
+          - <studentXXX>-service-registry
           env:
             CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
@@ -212,7 +212,7 @@ You have the greeting-service app in the cloned repo (Step 1) which has the clie
 
 Lets walk through the code
 
-1. In the greeting-service/pom.xml file , with the *spring-cloud-starter-feign*  dependency,  this application is eligible to discover services with the service-registry.
+1. In the greeting-feign/pom.xml file , with the *spring-cloud-starter-feign*  dependency,  this application is eligible to discover services with the service-registry.
       ````
       <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -260,7 +260,7 @@ Lets walk through the code
         - name: greeting-feign
           memory: 512MB
           instances: 1
-          host: greeting-feign-${random-word}
+          host: <studentXXX>-greeting-feign
           path: ./target/greeting-feign-0.0.1-SNAPSHOT.jar
           services:
           - rj-service-registry
