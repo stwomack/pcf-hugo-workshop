@@ -3,7 +3,7 @@ Categories = ["lab"]
 Tags = ["docker","cloudfoundry"]
 date = "2016-03-15T14:54:22-04:00"
 title = "Lab 2: Run Docker Containers in Cloud Foundry"
-weight = 4
+weight = 6
 
 +++
 

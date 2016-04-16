@@ -104,7 +104,7 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
     requested state: started
     instances: 1/1
     usage: 512M x 1 instances
-    urls: cities-hello-lactiferous-unanswerableness.cfapps.io
+    urls: cities-hello-lactiferous-unanswerableness.pcf2.cloud.fe.pivotal.io
     last uploaded: Mon Jun 15 14:53:10 UTC 2015
     stack: cflinuxfs2
     ```
@@ -140,7 +140,6 @@ The cities-service app requires a database service to store and fetch cities inf
 
 1. Review the docs on Services:
 
-    [Adding a Service](http://docs.pivotal.io/pivotalcf/devguide/services/adding-a-service.html) <br>
     [Managing Services](http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html)
 
 2. Create a mysql service, name it as `<YOUR INITIALS>-cities-db`
@@ -161,13 +160,17 @@ The cities-service app requires a database service to store and fetch cities inf
 1. Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.
 
     ````bash
+    $ cd cities-service
     $ cf push <first-initial><last-initial>-cities-service -i 1 -m 512M -p build/libs/cities-service.jar
     ````
 2. Check the logs to learn more about why the application is not starting
+    You can look at the recent logs from the cli or open up the App Console and view the log files for the app.
 
     ````bash
     $ cf logs <first-initial><last-initial>-cities-service --recent
     ````
+    <img src="/images/pcf-console-log.png" alt="Logs for the App" style="width: 600px;"/>
+
 
 ### Step 7
 ##### Manually Binding the Service Instance
@@ -180,10 +183,10 @@ The cities-service app requires a database service to store and fetch cities inf
     $ cf bind-service <first-initial><last-initial>-cities-service <first-initial><last-initial>-cities-db
     ````
 
-3. Restage your cities-service application to inject the new database.
+3. Restart your cities-service application to inject the new database.
 
     ````bash
-    $ cf restage <first-initial><last-initial>-cities-service
+    $ cf restart <first-initial><last-initial>-cities-service
     ````
 
     Notice that the application is now running.
@@ -201,9 +204,9 @@ The cities-service app requires a database service to store and fetch cities inf
 
 __NOTE__
 
->This app is an Spring Cloud app which uses Spring Cloud Configuration to bind to a database service provided by the cloud platform.
-For more information refer to link:Spring-Cloud.adoc[this document] on Spring Cloud configuration.
+>    a. This app is an Spring Cloud app which uses Spring Cloud Configuration to bind to a database service provided by the cloud platform.
 
+>    b. Difference between app `restage` and `restart`. An app `restage` will stop your application, run the application bits through the staging process to create a new droplet, and then start the new droplet.  `restart` will simply stop your application and start it with the existing droplet.  You typically `restart` when you need your application's' environment refreshed and you typically `restage` when you need/want the `buildpack` to run without updating the application source.
 
 <br>
 
@@ -237,12 +240,15 @@ Next, lets push the cities-service app with a manifest to help automate deployme
 
     Notice that using a manifest, you have moved the command line parameters (number of instances, memory, etc) into the manifest.
 7. Verify you can access your application via a curl request:
+   You will have to get the route to your app
 
     ````bash
-    $ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io
+       // This will list your apps and the last column is the route.
+       $cf apps
+          url: cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io  
+          $ curl -i http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io
     ````
-
-    We must be able to access your application at https://<first-initial><last-initial>-cities-service.cfapps.io for the next steps to work properly.
+    We must be able to access your application at  http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io for the next steps to work properly.
 
 __NOTE__
 
@@ -263,7 +269,7 @@ To tail the logs of your application perform this command:
 
 Notice that nothing is showing because there isn't' any activity. Use the following curl command to see the application working:
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities/
+  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities/
   ````
 
 For other ways of viewing logs check out the documentation here: [Streaming Logs](http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view)
@@ -287,7 +293,7 @@ You will get detailed output of the health
   requested state: started
   instances: 1/1
   usage: 512M x 1 instances
-  urls: cities-service.cfapps.io
+  urls: cities-service.pcf2.cloud.fe.pivotal.io
   last uploaded: Wed May 27 15:53:32 UTC 2015
   stack: cflinuxfs2
 
@@ -345,7 +351,7 @@ You will get the output similar to this on your terminal
    "VCAP_APPLICATION": {
     "application_name": "rj-cities-service",
     "application_uris": [
-     "rj-cities-service.cfapps.io"
+     "rj-cities-service.pcf2.cloud.fe.pivotal.io"
     ],
     "application_version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d",
     "limits": {
@@ -357,7 +363,7 @@ You will get the output similar to this on your terminal
     "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
     "space_name": "development",
     "uris": [
-     "rj-cities-service.cfapps.io"
+     "rj-cities-service.pcf2.cloud.fe.pivotal.io"
     ],
     "users": null,
     "version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d"
@@ -410,15 +416,15 @@ Once the second instance as started, scale the app back down to one instance.
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities
+  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities/162
+  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities/162
   ````
 
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.cfapps.io/cities?size=5
+  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -446,7 +452,7 @@ The goal of this exercise is to use what you have learned to deploy the `cities-
 ##### Build the Cities UI and Cities Client App
 
 
-The cities-ui and cities-client can be both built at once by running `./gradlew assemble` in the parent `cities` directory. Run this command now.
+The cities-ui and cities-client can be both built at once by running `./gradlew assemble` in the parent directory. Run this command now.
 
 
 ### Step 14
@@ -465,7 +471,7 @@ In this section we will create a backend microservice end point for cities-servi
 
   $ cf create-user-provided-service <first-initial><last-initial>-cities-ws -p "citiesuri"
 
-  citiesuri>   http://<first-initial><last-initial>-cities-service.cfapps.io/
+  citiesuri>   http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/
 
   Creating user provided service....
   ````
@@ -479,6 +485,9 @@ A `manifest.yml` is included in the cities-ui app.  Edit this manifest with your
 
 
   ````bash
+  $cd cities-ui
+  $nano manifest.yml (Or your favorite editor)
+
   ---
   applications:
   - name: <YOUR INITIALS>-cities-ui
@@ -512,7 +521,7 @@ System-Provided:
    {
     "credentials": {
      "tag": "cities",
-     "uri": "http://rj-cities-service.cfapps.io/"
+     "uri": "http://rj-cities-service.pcf2.cloud.fe.pivotal.io/"
     },
     "label": "user-provided",
     "name": "cities-ws",
@@ -527,7 +536,7 @@ System-Provided:
  "VCAP_APPLICATION": {
   "application_name": "rj-cities-ui",
   "application_uris": [
-   "rj-cities-ui.cfapps.io"
+   "rj-cities-ui.pcf2.cloud.fe.pivotal.io"
   ],
   "application_version": "dceb111b-3a68-45ad-83fd-3b8b836ebbe7",
   "limits": {
@@ -539,7 +548,7 @@ System-Provided:
   "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
   "space_name": "development",
   "uris": [
-   "rj-cities-ui.cfapps.io"
+   "rj-cities-ui.pcf2.cloud.fe.pivotal.io"
   ],
   "users": null,
   "version": "dceb111b-3a68-45ad-83fd-3b8b836ebbe7"
@@ -573,19 +582,20 @@ In this part of the workshop we created a cities-ui app which is loosely bound a
 ## PART 4: Deploy Version 2 of the App
 
 
-In this section we are going to do a green-blue deployment using a shell script. The same can be done by executing the commands one at a time.
+In this section we are going to do a green-blue deployment using cf plugin `autopilot`. The same can be done by executing cf commands.
+
 <br>
 ### Step 18
 ##### Delete the unversioned app and the route
 
   ````bash
-  cf delete -r <first-initial><last-initial>-cities-ui
+  cf delete -r <first-initial><last-initial>-cities-service
   ````
 
 ### Step 19
 ##### Process of Blue Green Deployment
 
-  Review the CF Document for blue green deployment link:http://docs.cloudfoundry.org/devguide/deploy-apps/blue-green.html[Using Blue-Green Deployment to Reduce Downtime and Risk]
+  Review the CF Document for blue green deployment link:https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/blue-green.html[Using Blue-Green Deployment to Reduce Downtime and Risk]
 
   In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.
 
@@ -603,9 +613,29 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
 
   $ go get github.com/concourse/autopilot
   $ cf install-plugin $GOPATH/bin/autopilot
-  $ cd cities-services
-  // Increment the Build
-  $ cf zero-downtime-push cities-services
+  $ cd cities-service
+  // Append the build number to the app Name
+
+  $ cf zero-downtime-push <first-initial><last-initial>-cities-service
+  ````
+
+If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory
+
+    Usage: blue-green.sh <app-name> <build-number> <domain>
+
+
+  ````bash
+
+  $ ./blue-green.sh  cities-service 1001 pcf2.cloud.fe.pivotal.io
+  $ cf apps // You should see your app build 1001 and the Route
+  ````
+
+  Now push the new build 1002 of the app
+
+  ````bash
+  $ ./blue-green.sh  cities-service 1002 pcf2.cloud.fe.pivotal.io
+  $ cf apps // You should see your app build 1002 and the same route mapped to the new build
+
   ````
 
 ##### Discussion: Part 4
