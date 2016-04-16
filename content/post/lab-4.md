@@ -164,10 +164,10 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
         - name: <studentXXX>-fortune-service
           memory: 512MB
           instances: 1
-          host: fortune-service-${random-word}
+          host: <studentXXX>-fortune-service
           path: ./target/fortune-service-0.0.1-SNAPSHOT.jar
           services:
-          - rj-service-registry
+          - <studentXXX>-service-registry
           env:
             CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
@@ -212,7 +212,7 @@ You have the greeting-service app in the cloned repo (Step 1) which has the clie
 
 Lets walk through the code
 
-1. In the greeting-service/pom.xml file , with the *spring-cloud-starter-feign*  dependency,  this application is eligible to discover services with the service-registry.
+1. In the greeting-feign/pom.xml file , with the *spring-cloud-starter-feign*  dependency,  this application is eligible to discover services with the service-registry.
       ````
       <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -260,7 +260,7 @@ Lets walk through the code
         - name: greeting-feign
           memory: 512MB
           instances: 1
-          host: greeting-feign-${random-word}
+          host: <studentXXX>-greeting-feign
           path: ./target/greeting-feign-0.0.1-SNAPSHOT.jar
           services:
           - rj-service-registry

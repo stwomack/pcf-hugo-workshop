@@ -118,185 +118,179 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
 Let's walk through the code in the traveler app in the source repo (Step #1) using your favorite editor (Atom/Sublime/Eclipse/IntelliJ/STS)
 
-1. Review the *traveler/agency/src/main/java/agency/AgencyApplication.java* file.
+1. Review the *traveler/feign-agency/src/main/java/agency/AgencyApplication.java* file.
 
-      To work with a Circuit Breaker Dashboard instance, your application must include the `@EnableCircuitBreaker` annotation on a configuration class.
+      To work with a Circuit Breaker Dashboard instance, your application must include the `@EnableCircuitBreaker` annotation on a configuration class. This client application also using service registry to discover the Company service and Feign to build the interace for accessing the services
 
       ````
       import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+      import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+
+      import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
       @SpringBootApplication
       @EnableDiscoveryClient
       @RestController
       @EnableCircuitBreaker
+      @EnableFeignClients
       public class AgencyApplication {
-
       ````
 
-2. Review the *traveler/pom.xml* file. By adding *spring-cloud-services-starter-service-registry* to the classpath this application is eligible to register and discover services with the service-registry.
+2. Review the *traveler/feign-agency/pom.xml* file. By adding *spring-cloud-services-starter-circuit-breaker* to the classpath this application is able to use the circuit breaker.
 
-      ````
-      <dependency>
-      	<groupId>io.pivotal.spring.cloud</groupId>
-      	<artifactId>spring-cloud-services-starter-service-registry</artifactId>
-      </dependency>
-      ````
-
-3. Review the *traveler/src/main/java/io/pivotal/FortuneServiceApplication.java*
-
-      Notice the ````@EnableDiscoveryClient.```` This enables a discovery client that registers the traveler with the service-registry application.
-
-        @SpringBootApplication
-        @EnableDiscoveryClient
-        public class FortuneServiceApplication {
-
-            public static void main(String[] args) {
-                SpringApplication.run(FortuneServiceApplication.class, args);
-            }
-        }
-
-
-
-### Step 5
-##### Push the app to cloud Foundry
-
-1. Change the manifest.yml file in the traveler/ to reflect the name of the app and the service-registry
-
-        ---
-        applications:
-        - name: <studentXXX>-traveler
-          memory: 512MB
-          instances: 1
-          host: traveler-${random-word}
-          path: ./target/traveler-0.0.1-SNAPSHOT.jar
-          services:
-          - rj-service-registry
-          env:
-            CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
-
-
-
-2. Build the app using maven
-
-      ````
-      mvn clean package
-      ````
-
-3. Push the app using cf cli
-
-      ````
-      cf push
-      ````
-
-6. Open in the browser the App
-   Get the route to your app
-
-      ````
-      http://traveler-decompressive-retrenchment.pcf2.cloud.fe.pivotal.io/
-      ````
-
-### Step 6
-##### Verify the App is registered in the Service Registry
-
-After the a few moments, check the service-registry dashboard. Confirm the traveler is registered.
-
-<img src="/images/pcf-circuit-breaker-dashboard-3.png" alt="Service Registry" style="width: 600px;"/>
-
-
-
-
-***
-## PART 2: Consume a service.
-
-### Step 7
-##### Build Restful interface for consuming services using Netflix Feign
-
-You have the greeting-service app in the cloned repo (Step 1) which has the client to consume service.
-
-Lets walk through the code
-
-1. In the greeting-service/pom.xml file , with the *spring-cloud-starter-feign*  dependency,  this application is eligible to discover services with the service-registry.
       ````
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-feign</artifactId>
       </dependency>
-      ````
 
-2. In the *GreetingFeignApplication.java* includes the @EnableDiscoveryClient annotation on a configuration class. To have Feign client interfaces automatically configured, it must also use the @EnableFeignClients annotation.
+      <dependency>
+        <groupId>io.pivotal.spring.cloud</groupId>
+        <artifactId>spring-cloud-services-starter-service-registry</artifactId>
+      </dependency>
 
-      ````
-      @SpringBootApplication
-      @EnableDiscoveryClient
-      @EnableFeignClients
-      public class GreetingFeignApplication {
-
-          public static void main(String[] args) {
-              SpringApplication.run(GreetingFeignApplication.class, args);
-          }
-
-      }
-      ````
-
-
-3. To call a registered service, a consuming application can use a URI with a hostname matching the name with which the service is registered in the Service Registry. This way, the consuming application does not need to know the service application’s actual URL; the Registry will take care of finding and routing to the service.
-
-      Pivotal Cloud Foundry installation is configured to only allow HTTPS traffic, you must specify the https:// scheme in the base URI used by your client application.
+      <dependency>
+        <groupId>io.pivotal.spring.cloud</groupId>
+        <artifactId>spring-cloud-services-starter-circuit-breaker</artifactId>
+      </dependency>
 
       ````
-      @FeignClient("https://traveler")
-      public interface FortuneServiceClient {
 
-      	 @RequestMapping(method = RequestMethod.GET, value = "/")
-      	 String getFortune();
-      }
-      ````
+3. Review the *traveler/feign-agency/src/main/java/agency/TravelAgent.java*
 
+      To apply a circuit breaker to a method, annotate the method with ```@HystrixCommand```, giving the annotation the name of a fallbackMethod.
 
-### Step 8
-##### Build and Push the Consuming app
+        @HystrixCommand(fallbackMethod = "getBackupGuide")
+        public String getGuide() {
+            return company.availableGuide();
+        }
 
-1. Next, update the manifest.yml
+        String getBackupGuide() {
+            return "None available! Your backup guide is: Cookie";
+        }
+
+      The `getGuide()` method uses a RestTemplate to obtain a guide name from another application called Company, which is registered with a Service Registry instance.
+
+      The method thus relies on the Company application to return a response, and if the Company application fails to do so, calls to `getGuide()` will fail. When the failures exceed the threshold, the breaker on `getGuide()` will open the circuit.
+
+      While the circuit is open, the breaker redirects calls to the annotated method, and they instead call the designated fallbackMethod. The fallback method must be in the same class and have the same method signature (i.e., have the same return type and accept the same parameters) as the annotated method.
+
+For more details, refer to the documentation of the Circuit Breaker configuration here (https://docs.pivotal.io/spring-cloud-services/circuit-breaker/writing-client-applications.html)
+
+### Step 5
+##### Push the app to cloud Foundry
+
+1. Change the manifest.yml file in the traveler/company to reflect the name of the app and the service-registry
 
         ---
+        memory: 512M
         applications:
-        - name: greeting-feign
-          memory: 512MB
-          instances: 1
-          host: greeting-feign-${random-word}
-          path: ./target/greeting-feign-0.0.1-SNAPSHOT.jar
-          services:
-          - rj-service-registry
-          env:
-            CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+          - name: rj-company
+            services:
+              - rj-service-registry
+            path: ./target/company-0.0.1-SNAPSHOT.jar
+            env:
+              SPRING_PROFILES_ACTIVE: dev
+              CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+
+
+2. Change the manifest.yml file in the traveler/feign-agency to reflect the name of the app and the circuit-breaker and service-registry Services
+
+
+        ---
+        instances: 1
+        memory: 512M
+        applications:
+          - name: rj-agency
+            path: ./target/agency-0.0.1-SNAPSHOT.jar
+            services:
+              - rj-service-registry
+              - rj-circuit-breaker-dashboard
+            env:
+              SPRING_PROFILES_ACTIVE: dev
+              CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
 
 
-
-2. Build the app using maven
+2. Build the app using maven in the parent traveler directory
 
       ````
-      mvn clean package
+      $cd traveler
+      $mvn clean package
       ````
 
-3. Push the app using cf cli
+3. Push the apps using scripts/deploy_mvn.sh or scripts/deploy_mvn.bat
+
+    First check and change the service names in the script. If the script registry is already created don't create a new one.
+
 
       ````
-      cf push
+      #cf create-service p-service-registry standard rj-service-registry
+      cf create-service p-circuit-breaker-dashboard standard rj-circuit-breaker-dashboard
+      sleep 120
+      pushd company && cf push -p target/company-0.0.1-SNAPSHOT.jar
+      popd; sleep 30
+      pushd feign-agency && cf push -p target/agency-0.0.1-SNAPSHOT.jar
+      popd
+      echo "" && echo "Done!" && echo ""
+      ````
+
+    Now, push using this scripts
+
+      ````bash
+      $cd traveler
+      $./script/deploy_mvn.sh
       ````
 
 6. Open in the browser the App
    Get the route to your app
 
       ````
-      http://greeting-feign-noncompetitive-dairy.pcf2.cloud.fe.pivotal.io/
+      http://rj-agency.pcf2.cloud.fe.pivotal.io/
+
+      http://rj-company.pcf2.cloud.fe.pivotal.io/available
       ````
 
-      <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 600px;"/>
 
-### Step 9
-##### Verify the App is registered in the Service Registry
+7.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
 
-This app is also registered as a service in the Service registry. Check the service-registry dashboard. Confirm the traveler and greeting-feign is registered.
+      When service calls are succeeding, the circuit is closed, and the dashboard graph shows the rate of calls per second and successful calls per 10 seconds.   
 
-<img src="/images/pcf-circuit-breaker-dashboard-4.png" alt="Service Registry" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-4.png" alt="Circuit Breaker Open" style="width: 600px;"/>
+
+
+### Step 6
+##### Shut down the Company Service
+
+1. If the Company application becomes unavailable or if the Agency application cannot access it, calls to getGuide() will fail.
+
+      When successive failures build up to the threshold, Hystrix will open the circuit, and subsequent calls will be redirected to the getBackupGuide() method until the Company application is accessible again and the circuit is closed.
+
+        $cf stop rj-company
+
+      Now check the app status, the agency app will fall back to the backup.
+
+        http://rj-agency.pcf2.cloud.fe.pivotal.io/
+
+        Your guide will be: None available! Your backup guide is: Cookie
+
+2. Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
+
+      When calls begin to fail, the graph shows the rate of failed calls in red.
+
+
+      <img src="/images/circuit-breaker-5.png" alt="Circuit Breaker Open" style="width: 600px;"/>
+
+      Load the circuit
+
+        while true; do curl http://rj-agency.pcf2.cloud.fe.pivotal.io/; done
+
+
+3. When failures exceed the configured threshold (the default is 20 failures in 5 seconds), the breaker opens the circuit.
+
+      The dashboard shows the rate of short-circuited calls—calls which are going straight to the fallback method—in blue.
+
+      The application is still allowing calls to the failing method at a rate of 1 every 5 seconds, as indicated in red; this is necessary to determine if calls are succeeding again and if the circuit can be closed.
+
+      <img src="/images/circuit-breaker-6.png" alt="Circuit Breaker Open" style="width: 600px;"/>

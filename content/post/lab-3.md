@@ -295,14 +295,14 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
         ---
         applications:
-        - name: student1-greeting-config
+        - name: <studentXXX>-greeting-config
           memory: 512M
           buildpack: https://github.com/cloudfoundry/java-buildpack
           instances: 1
           host: student1-greeting-config
           path: target/greeting-config-0.0.1-SNAPSHOT.jar
           services:
-            - student1-config-service
+            - <studentXXX>-config-service
           env:
             SPRING_PROFILES_ACTIVE: dev
 
@@ -364,14 +364,14 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
         ---
         applications:
-        - name: student1-greeting-config
+        - name: <studentXXX>-greeting-config
           memory: 512M
           buildpack: https://github.com/cloudfoundry/java-buildpack
           instances: 1
-          host: student1-greeting-config
+          host: <studentXXX>-greeting-config
           path: target/greeting-config-0.0.1-SNAPSHOT.jar
           services:
-            - student1-config-service
+            - <studentXXX>-config-service
           env:
             SPRING_PROFILES_ACTIVE: qa
 
