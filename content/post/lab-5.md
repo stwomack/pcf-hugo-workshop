@@ -1,16 +1,13 @@
 +++
 Categories = ["lab"]
-Tags = ["spring","registry-server","cloudfoundry"]
-date = "2016-04-13T00:19:42-04:00"
-title = "Lab 4: Spring Cloud Registry Server"
-weight = 4
-
+Tags = ["spring","circuit-breaker","cloudfoundry"]
+date = "2016-04-15T11:28:20-04:00"
+title = "Lab 5: Spring Cloud Circuit Breaker"
+weight = 5
 +++
 
-
 ### Goal
-
-To create a Spring boot application using Spring Cloud Registry Server and deploy it on the Cloud Foundry Platform.
+In this workshop, you will learn how to apply the circuit breaker pattern in your Spring boot apps.
 
 <!--more-->
 
@@ -23,6 +20,7 @@ The big picture : Use Spring Cloud Services design patterns to build cloud Nativ
 <img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 600px;"/>
 
 
+Circuit Breaker Dashboard for Pivotal Cloud Foundry® (PCF) provides Spring applications with an implementation of the Circuit Breaker pattern. Cloud-native architectures are typically composed of multiple layers of distributed services. End-user requests may comprise multiple calls to these services, and if a lower-level service fails, the failure can cascade up to the end user and spread to other dependent services. Heavy traffic to a failing service can also make it difficult to repair. Using Circuit Breaker Dashboard, you can prevent failures from cascading and provide fallback behavior until a failing service is restored to normal operation.
 
 Prerequisites
 --
@@ -42,32 +40,33 @@ Prerequisites
 
 Steps
 --
-In this workshop we are going to follow these steps to build our first Cloud Native Spring Boot app on Cloud foundry using the Spring Cloud Registry Server.
+In this workshop we are going to follow these steps to use the circuit-breaker in a Cloud Native Spring Boot app on Cloud foundry using the Spring Cloud Circuit Breaker Service.
 
 
 Learn how to
 
 
-    - Config a Spring Cloud Service Registry
-    - Use Service Registry (Eureka) in a Spring Boot application
-    - Register services (fortune-service) with Service Registry (Eureka)
-    - Discover and Consume services (greeting-feign) with Service Registry (Eureka)
+    - Config a Spring Cloud Circuit Breaker Service
+    - Use Circuit Breaker  (Hysterix) in a Spring Boot application
+    - Simulate a failure and watch the circuit breaker manage failures
+    - Restore the service and watch the circuit breaker restore back the circuit
 
+
+When applied to a service, a circuit breaker watches for failing calls to the service. If failures reach a certain threshold, it “opens” the circuit and automatically redirects calls to the specified fallback mechanism. This gives the failing service time to recover.
 
 Desired the architecture of this Cloud Native Spring boot app is:
 
-<img src="/images/spring-3.png" alt="Registry Server with Cloud Native Spring App" style="width: 600px;"/>
+<img src="/images/circuit-breaker-1.png" alt="Circuit Breaker with Cloud Native Spring App" style="width: 600px;"/>
 
 
 ***
-## PART 1: Register a service.
 
 ### Step 1
-##### Get the fortune-service app
+##### Get the traveler app
 
 Clone the git repo which has a simple boilerplate Spring boot app built using Spring Initializer.
 
-The Spring Labs repo contains multiple apps, we are going to focus on fortune-service app in this exercise.
+The Spring Labs repo contains multiple apps, we are going to focus on traveler app in this exercise.
 
 ````
 git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
@@ -92,45 +91,49 @@ cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
 
 Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
-<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
+  <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
 
 
 
 ### Step 3
-##### Configure the Spring Cloud Registry Service Instance from the marketplace
+##### Configure the Spring Cloud Circuit Breaker Instance from the marketplace
 
 1. In the PCF App Console, create a instance of the Registry Service from the marketplace.
 
       <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
 
 2. Select the default plan.
-3. Name the service instance as 'studentXX-registry-service'
+3. Name the service instance as 'studentXX-circuit-breaker-dashboard'
 
-      <img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-2.png" alt="Circuit Breaker" style="width: 600px;"/>
 
-4. This will create the studentXX-registry-service service instance. To view the configuration of this service by clicking manage.
+4. This will create the studentXX-circuit-breaker-dashboard service instance. To view the configuration of this service by clicking manage.
 
-      <img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-3.png" alt="Circuit Breaker" style="width: 600px;"/>
 
 
 ### Step 4
 
-##### Code walk through (fortune-service)
+##### Code walk through (traveler)
 
-Let's walk through the code in the fortune-service app in the source repo (Step #1) using your favorite editor (Atom/Sublime/Eclipse/IntelliJ/STS)
+Let's walk through the code in the traveler app in the source repo (Step #1) using your favorite editor (Atom/Sublime/Eclipse/IntelliJ/STS)
 
-1. Review the *fortune-service/src/main/resources/bootstrap.yml* file. The name of this app is fortune-service.
+1. Review the *traveler/agency/src/main/java/agency/AgencyApplication.java* file.
+
+      To work with a Circuit Breaker Dashboard instance, your application must include the `@EnableCircuitBreaker` annotation on a configuration class.
 
       ````
-      server:
-       port: 8787
-      spring:
-       application:
-         name: fortune-service
-      ````
-      spring.application.name is the name the application will use when registering with Eureka.
+      import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-2. Review the *fortune-service/pom.xml* file. By adding *spring-cloud-services-starter-service-registry* to the classpath this application is eligible to register and discover services with the service-registry.
+      @SpringBootApplication
+      @EnableDiscoveryClient
+      @RestController
+      @EnableCircuitBreaker
+      public class AgencyApplication {
+
+      ````
+
+2. Review the *traveler/pom.xml* file. By adding *spring-cloud-services-starter-service-registry* to the classpath this application is eligible to register and discover services with the service-registry.
 
       ````
       <dependency>
@@ -139,9 +142,9 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
       </dependency>
       ````
 
-3. Review the *fortune-service/src/main/java/io/pivotal/FortuneServiceApplication.java*
+3. Review the *traveler/src/main/java/io/pivotal/FortuneServiceApplication.java*
 
-      Notice the ````@EnableDiscoveryClient.```` This enables a discovery client that registers the fortune-service with the service-registry application.
+      Notice the ````@EnableDiscoveryClient.```` This enables a discovery client that registers the traveler with the service-registry application.
 
         @SpringBootApplication
         @EnableDiscoveryClient
@@ -157,15 +160,15 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
 ### Step 5
 ##### Push the app to cloud Foundry
 
-1. Change the manifest.yml file in the fortune-service/ to reflect the name of the app and the service-registry
+1. Change the manifest.yml file in the traveler/ to reflect the name of the app and the service-registry
 
         ---
         applications:
-        - name: <studentXXX>-fortune-service
+        - name: <studentXXX>-traveler
           memory: 512MB
           instances: 1
-          host: fortune-service-${random-word}
-          path: ./target/fortune-service-0.0.1-SNAPSHOT.jar
+          host: traveler-${random-word}
+          path: ./target/traveler-0.0.1-SNAPSHOT.jar
           services:
           - rj-service-registry
           env:
@@ -189,15 +192,15 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
    Get the route to your app
 
       ````
-      http://fortune-service-decompressive-retrenchment.pcf2.cloud.fe.pivotal.io/
+      http://traveler-decompressive-retrenchment.pcf2.cloud.fe.pivotal.io/
       ````
 
 ### Step 6
 ##### Verify the App is registered in the Service Registry
 
-After the a few moments, check the service-registry dashboard. Confirm the fortune-service is registered.
+After the a few moments, check the service-registry dashboard. Confirm the traveler is registered.
 
-<img src="/images/pcf-registry-service-3.png" alt="Service Registry" style="width: 600px;"/>
+<img src="/images/pcf-circuit-breaker-dashboard-3.png" alt="Service Registry" style="width: 600px;"/>
 
 
 
@@ -241,7 +244,7 @@ Lets walk through the code
       Pivotal Cloud Foundry installation is configured to only allow HTTPS traffic, you must specify the https:// scheme in the base URI used by your client application.
 
       ````
-      @FeignClient("https://fortune-service")
+      @FeignClient("https://traveler")
       public interface FortuneServiceClient {
 
       	 @RequestMapping(method = RequestMethod.GET, value = "/")
@@ -294,6 +297,6 @@ Lets walk through the code
 ### Step 9
 ##### Verify the App is registered in the Service Registry
 
-This app is also registered as a service in the Service registry. Check the service-registry dashboard. Confirm the fortune-service and greeting-feign is registered.
+This app is also registered as a service in the Service registry. Check the service-registry dashboard. Confirm the traveler and greeting-feign is registered.
 
-<img src="/images/pcf-registry-service-4.png" alt="Service Registry" style="width: 600px;"/>
+<img src="/images/pcf-circuit-breaker-dashboard-4.png" alt="Service Registry" style="width: 600px;"/>

@@ -64,10 +64,14 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 
 2. Check if you are able to use the cf cli to connect to the PCF Workshop Env. Alternatively, you can create a PWS account and check the firewall/connectivity before the Workshop
 
-          cf login -a https://api.run.pivotal.io --skip-ssl-validation
+          cf login -a https://api.pcf2.cloud.fe.pivotal.io  --skip-ssl-validation
 
 3. Check if you are able to connect to Git repo and download / clone the repo using CLI
-4. Note: Tiles preinstalled in the PCF Workshop environment which we will be using the workshop. You don't need any setup for these tiles.
+4. Login to the App Manager Console at
+
+        https://apps.pcf2.cloud.fe.pivotal.io
+
+5. Note: Tiles preinstalled in the PCF Workshop environment which we will be using the workshop. You don't need any setup for these tiles.
 
           ER
           Spring Cloud Services
