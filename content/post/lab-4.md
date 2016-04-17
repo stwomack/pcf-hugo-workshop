@@ -73,10 +73,6 @@ The Spring Labs repo contains multiple apps, we are going to focus on fortune-se
 git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ````
 
-More info on Spring Initializer (http://start.spring.io/)
-
-<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 100%;"/>
-
 
 ### Step 2
 ##### Login into Pivotal Cloud Foundry
@@ -263,7 +259,7 @@ Lets walk through the code
           host: <studentXXX>-greeting-feign
           path: ./target/greeting-feign-0.0.1-SNAPSHOT.jar
           services:
-          - rj-service-registry
+          - <studentXX>-service-registry
           env:
             CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
@@ -282,11 +278,12 @@ Lets walk through the code
       cf push
       ````
 
-6. Open in the browser the App
-   Get the route to your app
+4. Open in the browser the App
+
+      Get the route to your app
 
       ````
-      http://greeting-feign-noncompetitive-dairy.pcf2.cloud.fe.pivotal.io/
+      http://studentXXX-greeting-feign.pcf2.cloud.fe.pivotal.io/
       ````
 
       <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 100%;"/>
