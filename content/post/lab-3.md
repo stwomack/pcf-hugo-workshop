@@ -433,28 +433,28 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
 
 Check the Actuator Endpoints
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/beans
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/beans``
 
 Dumps all of the beans in the Spring context.
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/autoconfig
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/autoconfig``
 
 Dumps all of the auto-configuration performed as part of application bootstrapping.
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/configprops
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/configprops``
 
 Displays a collated list of all @ConfigurationProperties.
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/env
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/env``
 
 Dumps the application’s shell environment as well as all Java system properties.
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/mappings
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/mappings``
 
 Dumps all URI request mappings and the controller methods to which they are mapped.
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/dump
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/dump``
 
 Performs a thread dump.
 
-http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/trace
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/trace``
