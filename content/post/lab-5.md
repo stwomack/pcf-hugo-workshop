@@ -73,11 +73,6 @@ The Spring Labs repo contains multiple apps, we are going to focus on traveler a
 git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ````
 
-More info on Spring Initializer (http://start.spring.io/)
-
-<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 100%;"/>
-
-
 ### Step 2
 ##### Login into Pivotal Cloud Foundry
 
@@ -187,9 +182,9 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
         ---
         memory: 512M
         applications:
-          - name: rj-company
+          - name: <studentXX>-company
             services:
-              - rj-service-registry
+              - <studentXX>-service-registry
             path: ./target/company-0.0.1-SNAPSHOT.jar
             env:
               SPRING_PROFILES_ACTIVE: dev
@@ -203,32 +198,32 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
         instances: 1
         memory: 512M
         applications:
-          - name: rj-agency
+          - name:  <studentXX>-agency
             path: ./target/agency-0.0.1-SNAPSHOT.jar
             services:
-              - rj-service-registry
-              - rj-circuit-breaker-dashboard
+              -  <studentXX>-service-registry
+              -  <studentXX>-circuit-breaker-dashboard
             env:
               SPRING_PROFILES_ACTIVE: dev
               CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
 
 
-2. Build the app using maven in the parent traveler directory
+3. Build the app using maven in the parent traveler directory
 
       ````
       $cd traveler
       $mvn clean package
       ````
 
-3. Push the apps using scripts/deploy_mvn.sh or scripts/deploy_mvn.bat
+4. Push the apps using scripts/deploy_mvn.sh or scripts/deploy_mvn.bat
 
     First check and change the service names in the script. If the script registry is already created don't create a new one.
 
 
       ````
-      #cf create-service p-service-registry standard rj-service-registry
-      cf create-service p-circuit-breaker-dashboard standard rj-circuit-breaker-dashboard
+      #cf create-service p-service-registry standard <studentXX>-service-registry
+      cf create-service p-circuit-breaker-dashboard standard <studentXX>-circuit-breaker-dashboard
       sleep 120
       pushd company && cf push -p target/company-0.0.1-SNAPSHOT.jar
       popd; sleep 30
@@ -241,20 +236,22 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       ````bash
       $cd traveler
-      $./script/deploy_mvn.sh
+      $./scripts/deploy_mvn.sh
       ````
 
-6. Open in the browser the App
-   Get the route to your app
+5. Open in the browser the App
+
+    First, Get the route to your app
 
       ````
-      http://rj-agency.pcf2.cloud.fe.pivotal.io/
+      // This is the agency app
+      http://<studentXX>-agency.pcf2.cloud.fe.pivotal.io/
 
-      http://rj-company.pcf2.cloud.fe.pivotal.io/available
+      // Note this is the company app
+      http://<studentXX>-company.pcf2.cloud.fe.pivotal.io/available
       ````
 
-
-7.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
+6.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
 
       When service calls are succeeding, the circuit is closed, and the dashboard graph shows the rate of calls per second and successful calls per 10 seconds.   
 
@@ -268,11 +265,11 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       When successive failures build up to the threshold, Hystrix will open the circuit, and subsequent calls will be redirected to the getBackupGuide() method until the Company application is accessible again and the circuit is closed.
 
-        $cf stop rj-company
+        $cf stop  <studentXX>-company
 
       Now check the app status, the agency app will fall back to the backup.
 
-        http://rj-agency.pcf2.cloud.fe.pivotal.io/
+        http:// <studentXX>-agency.pcf2.cloud.fe.pivotal.io/
 
         Your guide will be: None available! Your backup guide is: Cookie
 
@@ -285,7 +282,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Load the circuit
 
-        while true; do curl http://rj-agency.pcf2.cloud.fe.pivotal.io/; done
+        while true; do curl http://<studentXX>-agency.pcf2.cloud.fe.pivotal.io/; done
 
 
 3. When failures exceed the configured threshold (the default is 20 failures in 5 seconds), the breaker opens the circuit.
