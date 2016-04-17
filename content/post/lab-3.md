@@ -20,7 +20,7 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 The big picture : Use Spring Cloud Services design patterns to build cloud Native applications
 
-<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 600px;"/>
+<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 100%;"/>
 
 
 
@@ -57,7 +57,7 @@ Learn how to
 
 Desired the architecture of this Cloud Native Spring boot app is:
 
-<img src="/images/spring-2.png" alt="Config Server with Cloud Native Spring App" style="width: 600px;"/>
+<img src="/images/spring-2.png" alt="Config Server with Cloud Native Spring App" style="width: 100%;"/>
 
 
 * * *
@@ -75,7 +75,7 @@ git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 
 More info on Spring Initializer (http://start.spring.io/)
 
-<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 600px;"/>
+<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 100%;"/>
 
 
 ### Step 2
@@ -92,7 +92,7 @@ cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
 
 Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
-<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
+<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
 
 ### Step 3
@@ -153,16 +153,16 @@ https://github.com/myorg/configurations
 
 1. In the PCF App Console, create a instance of the Config Server service from the marketplace.
 
-<img src="/images/pcf-console-1.png" alt="Marketplace Services" style="width: 600px;"/>
+<img src="/images/pcf-console-1.png" alt="Marketplace Services" style="width: 100%;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-config-service'
 
-<img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 600px;"/>
+<img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 100%;"/>
 
 4. This will create the studentXX-config-service service instance. Next configure this service by clicking manage.
 
-<img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 600px;"/>
+<img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 100%;"/>
 
 The Git repository URL is the URL of your cloned git repo in Step 3.
 
