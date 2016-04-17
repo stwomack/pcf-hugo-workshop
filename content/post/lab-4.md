@@ -20,7 +20,7 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 The big picture : Use Spring Cloud Services design patterns to build cloud Native applications
 
-<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 600px;"/>
+<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 100%;"/>
 
 
 
@@ -56,7 +56,7 @@ Learn how to
 
 Desired the architecture of this Cloud Native Spring boot app is:
 
-<img src="/images/spring-3.png" alt="Registry Server with Cloud Native Spring App" style="width: 600px;"/>
+<img src="/images/spring-3.png" alt="Registry Server with Cloud Native Spring App" style="width: 100%;"/>
 
 
 ***
@@ -75,7 +75,7 @@ git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 
 More info on Spring Initializer (http://start.spring.io/)
 
-<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 600px;"/>
+<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 100%;"/>
 
 
 ### Step 2
@@ -92,7 +92,7 @@ cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
 
 Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
-<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
+<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
 
 
@@ -101,16 +101,16 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
 1. In the PCF App Console, create a instance of the Registry Service from the marketplace.
 
-      <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
+      <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 100%;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-registry-service'
 
-      <img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 600px;"/>
+      <img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 100%;"/>
 
 4. This will create the studentXX-registry-service service instance. To view the configuration of this service by clicking manage.
 
-      <img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 600px;"/>
+      <img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 100%;"/>
 
 
 ### Step 4
@@ -197,7 +197,7 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
 
 After the a few moments, check the service-registry dashboard. Confirm the fortune-service is registered.
 
-<img src="/images/pcf-registry-service-3.png" alt="Service Registry" style="width: 600px;"/>
+<img src="/images/pcf-registry-service-3.png" alt="Service Registry" style="width: 100%;"/>
 
 
 
@@ -289,11 +289,11 @@ Lets walk through the code
       http://greeting-feign-noncompetitive-dairy.pcf2.cloud.fe.pivotal.io/
       ````
 
-      <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 600px;"/>
+      <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 100%;"/>
 
 ### Step 9
 ##### Verify the App is registered in the Service Registry
 
 This app is also registered as a service in the Service registry. Check the service-registry dashboard. Confirm the fortune-service and greeting-feign is registered.
 
-<img src="/images/pcf-registry-service-4.png" alt="Service Registry" style="width: 600px;"/>
+<img src="/images/pcf-registry-service-4.png" alt="Service Registry" style="width: 100%;"/>
