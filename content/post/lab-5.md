@@ -17,7 +17,7 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 The big picture : Use Spring Cloud Services design patterns to build cloud Native applications
 
-<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 600px;"/>
+<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 100%;"/>
 
 
 Circuit Breaker Dashboard for Pivotal Cloud Foundry® (PCF) provides Spring applications with an implementation of the Circuit Breaker pattern. Cloud-native architectures are typically composed of multiple layers of distributed services. End-user requests may comprise multiple calls to these services, and if a lower-level service fails, the failure can cascade up to the end user and spread to other dependent services. Heavy traffic to a failing service can also make it difficult to repair. Using Circuit Breaker Dashboard, you can prevent failures from cascading and provide fallback behavior until a failing service is restored to normal operation.
@@ -56,7 +56,8 @@ When applied to a service, a circuit breaker watches for failing calls to the se
 
 Desired the architecture of this Cloud Native Spring boot app is:
 
-<img src="/images/circuit-breaker-1.png" alt="Circuit Breaker with Cloud Native Spring App" style="width: 600px;"/>
+<img src="/images/circuit-breaker-1.png" alt="Circuit Breaker with Cloud Native Spring App" style="width: 100%;"/>
+
 
 
 ***
@@ -72,11 +73,6 @@ The Spring Labs repo contains multiple apps, we are going to focus on traveler a
 git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ````
 
-More info on Spring Initializer (http://start.spring.io/)
-
-<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 600px;"/>
-
-
 ### Step 2
 ##### Login into Pivotal Cloud Foundry
 
@@ -91,7 +87,7 @@ cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
 
 Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
-  <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
+  <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
 
 
@@ -100,16 +96,16 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
 1. In the PCF App Console, create a instance of the Registry Service from the marketplace.
 
-      <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 600px;"/>
+      <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 100%;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-circuit-breaker-dashboard'
 
-      <img src="/images/circuit-breaker-2.png" alt="Circuit Breaker" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-2.png" alt="Circuit Breaker" style="width: 100%;"/>
 
 4. This will create the studentXX-circuit-breaker-dashboard service instance. To view the configuration of this service by clicking manage.
 
-      <img src="/images/circuit-breaker-3.png" alt="Circuit Breaker" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-3.png" alt="Circuit Breaker" style="width: 100%;"/>
 
 
 ### Step 4
@@ -186,9 +182,9 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
         ---
         memory: 512M
         applications:
-          - name: rj-company
+          - name: <studentXX>-company
             services:
-              - rj-service-registry
+              - <studentXX>-service-registry
             path: ./target/company-0.0.1-SNAPSHOT.jar
             env:
               SPRING_PROFILES_ACTIVE: dev
@@ -202,32 +198,32 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
         instances: 1
         memory: 512M
         applications:
-          - name: rj-agency
+          - name:  <studentXX>-agency
             path: ./target/agency-0.0.1-SNAPSHOT.jar
             services:
-              - rj-service-registry
-              - rj-circuit-breaker-dashboard
+              -  <studentXX>-service-registry
+              -  <studentXX>-circuit-breaker-dashboard
             env:
               SPRING_PROFILES_ACTIVE: dev
               CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
 
 
 
-2. Build the app using maven in the parent traveler directory
+3. Build the app using maven in the parent traveler directory
 
       ````
       $cd traveler
       $mvn clean package
       ````
 
-3. Push the apps using scripts/deploy_mvn.sh or scripts/deploy_mvn.bat
+4. Push the apps using scripts/deploy_mvn.sh or scripts/deploy_mvn.bat
 
     First check and change the service names in the script. If the script registry is already created don't create a new one.
 
 
       ````
-      #cf create-service p-service-registry standard rj-service-registry
-      cf create-service p-circuit-breaker-dashboard standard rj-circuit-breaker-dashboard
+      #cf create-service p-service-registry standard <studentXX>-service-registry
+      cf create-service p-circuit-breaker-dashboard standard <studentXX>-circuit-breaker-dashboard
       sleep 120
       pushd company && cf push -p target/company-0.0.1-SNAPSHOT.jar
       popd; sleep 30
@@ -240,24 +236,26 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       ````bash
       $cd traveler
-      $./script/deploy_mvn.sh
+      $./scripts/deploy_mvn.sh
       ````
 
-6. Open in the browser the App
-   Get the route to your app
+5. Open in the browser the App
+
+    First, Get the route to your app
 
       ````
-      http://rj-agency.pcf2.cloud.fe.pivotal.io/
+      // This is the agency app
+      http://<studentXX>-agency.pcf2.cloud.fe.pivotal.io/
 
-      http://rj-company.pcf2.cloud.fe.pivotal.io/available
+      // Note this is the company app
+      http://<studentXX>-company.pcf2.cloud.fe.pivotal.io/available
       ````
 
-
-7.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
+6.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
 
       When service calls are succeeding, the circuit is closed, and the dashboard graph shows the rate of calls per second and successful calls per 10 seconds.   
 
-      <img src="/images/circuit-breaker-4.png" alt="Circuit Breaker Open" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-4.png" alt="Circuit Breaker Open" style="width: 100%;"/>
 
 
 ### Step 6
@@ -267,11 +265,11 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       When successive failures build up to the threshold, Hystrix will open the circuit, and subsequent calls will be redirected to the getBackupGuide() method until the Company application is accessible again and the circuit is closed.
 
-        $cf stop rj-company
+        $cf stop  <studentXX>-company
 
       Now check the app status, the agency app will fall back to the backup.
 
-        http://rj-agency.pcf2.cloud.fe.pivotal.io/
+        http:// <studentXX>-agency.pcf2.cloud.fe.pivotal.io/
 
         Your guide will be: None available! Your backup guide is: Cookie
 
@@ -280,11 +278,11 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
       When calls begin to fail, the graph shows the rate of failed calls in red.
 
 
-      <img src="/images/circuit-breaker-5.png" alt="Circuit Breaker Open" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-5.png" alt="Circuit Breaker Open" style="width: 100%;"/>
 
       Load the circuit
 
-        while true; do curl http://rj-agency.pcf2.cloud.fe.pivotal.io/; done
+        while true; do curl http://<studentXX>-agency.pcf2.cloud.fe.pivotal.io/; done
 
 
 3. When failures exceed the configured threshold (the default is 20 failures in 5 seconds), the breaker opens the circuit.
@@ -293,4 +291,4 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       The application is still allowing calls to the failing method at a rate of 1 every 5 seconds, as indicated in red; this is necessary to determine if calls are succeeding again and if the circuit can be closed.
 
-      <img src="/images/circuit-breaker-6.png" alt="Circuit Breaker Open" style="width: 600px;"/>
+      <img src="/images/circuit-breaker-6.png" alt="Circuit Breaker Open" style="width: 100%;"/>
