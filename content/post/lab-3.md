@@ -20,7 +20,7 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 The big picture : Use Spring Cloud Services design patterns to build cloud Native applications
 
-<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 600px;"/>
+<img src="/images/spring-1.png" alt="Cloud Native Spring Application Architecture" style="width: 100%;"/>
 
 
 
@@ -57,7 +57,7 @@ Learn how to
 
 Desired the architecture of this Cloud Native Spring boot app is:
 
-<img src="/images/spring-2.png" alt="Config Server with Cloud Native Spring App" style="width: 600px;"/>
+<img src="/images/spring-2.png" alt="Config Server with Cloud Native Spring App" style="width: 100%;"/>
 
 
 * * *
@@ -72,10 +72,6 @@ The Spring Labs repo contains multiple apps, we are going to focus on greeting-c
 ````
 git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ````
-
-More info on Spring Initializer (http://start.spring.io/)
-
-<img src="/images/Spring-Initializer.png" alt="Spring Initializer" style="width: 600px;"/>
 
 
 ### Step 2
@@ -92,26 +88,25 @@ cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
 
 Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
-<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
+<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
 
 ### Step 3
 ##### Set the config data
 
 The greeting-config app uses the Spring Cloud Services Config Server to read config data.
-Clone the git repo which has the config properties which are read by the greeting-config
 
+Fork the repo (http://www.github.com/rjain-pivotal/workshop-app-config)
 
-````
-git clone https://github.com/rjain-pivotal/workshop-app-config.git
-cd workshop-app-config/
-````
+<img src="/images/config-server-fork.png" alt="Fork" style="width: 100%;"/>
 
-Set the Remote URL to your own/new repo you would like to create or you can fork the workshop-app-config repo
+You can make changes to the application config files in the forked repo at http://github.com/your-github-account/workshop-app-config
 
-````
-git remote set-url origin https://rjain-pivotal@github.com/rjain-pivotal/student1-workshop-app-config.git
-git push origin master
+In case you want to make local changes and commit to the repo, then clone the git repo which has the config properties which are read by the greeting-config
+
+````bash
+$git clone https://github.com/your-github-account/workshop-app-config.git
+$cd workshop-app-config/
 ````
 
 In this repo you have the following config files:
@@ -153,16 +148,16 @@ https://github.com/myorg/configurations
 
 1. In the PCF App Console, create a instance of the Config Server service from the marketplace.
 
-<img src="/images/pcf-console-1.png" alt="Marketplace Services" style="width: 600px;"/>
+<img src="/images/pcf-console-1.png" alt="Marketplace Services" style="width: 100%;"/>
 
 2. Select the default plan.
 3. Name the service instance as 'studentXX-config-service'
 
-<img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 600px;"/>
+<img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 100%;"/>
 
 4. This will create the studentXX-config-service service instance. Next configure this service by clicking manage.
 
-<img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 600px;"/>
+<img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 100%;"/>
 
 The Git repository URL is the URL of your cloned git repo in Step 3.
 
@@ -299,7 +294,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
           memory: 512M
           buildpack: https://github.com/cloudfoundry/java-buildpack
           instances: 1
-          host: student1-greeting-config
+          host: <studentXXX>-greeting-config
           path: target/greeting-config-0.0.1-SNAPSHOT.jar
           services:
             - <studentXXX>-config-service
@@ -375,8 +370,14 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
           env:
             SPRING_PROFILES_ACTIVE: qa
 
+2. Push the app using cf cli
 
-2. Now the properties will be served by app-config/greeting-config-qa.yml
+      ````
+      cf push
+      ````
+
+
+3. Now the properties will be served by app-config/greeting-config-qa.yml
 
       You can verify by opening the two URLs
 
@@ -397,8 +398,8 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
 1. Create a RabbitMQ service instance, bind it to greeting-config
 
       ````
-      $ cf cs p-rabbitmq standard cloud-bus
-      $ cf bs greeting-config cloud-bus
+      $ cf create-service p-rabbitmq standard cloud-bus
+      $ cf bind-service <studentXXX>-greeting-config cloud-bus
       ````
 
 2. Add the dependency to the pom.xml
@@ -420,41 +421,41 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
 4. Change the app-config/greeting-config.yml and refresh all the app instances using Cloud Bus
 
       ````
-      curl -X POST http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/bus/refresh
+      curl -X POST http://<studentXXX>-greeting-config.pcf2.cloud.fe.pivotal.io/bus/refresh
       ````
 
 5. Verify by opening the two URLs
 
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+        http://<studentXXX>-greeting-config.pcf2.cloud.fe.pivotal.io/
+        http://<studentXXX>-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
 
 ### Step 10
 ##### Spring Actuator Endpoints
 
 Check the Actuator Endpoints
 
-http://route-to-app/beans
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/beans``
 
 Dumps all of the beans in the Spring context.
 
-http://route-to-app/autoconfig
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/autoconfig``
 
 Dumps all of the auto-configuration performed as part of application bootstrapping.
 
-http://route-to-app/configprops
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/configprops``
 
 Displays a collated list of all @ConfigurationProperties.
 
-http://route-to-app/env
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/env``
 
 Dumps the application’s shell environment as well as all Java system properties.
 
-http://route-to-app/mappings
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/mappings``
 
 Dumps all URI request mappings and the controller methods to which they are mapped.
 
-http://route-to-app/dump
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/dump``
 
 Performs a thread dump.
 
-http://route-to-app/trace
+``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/trace``

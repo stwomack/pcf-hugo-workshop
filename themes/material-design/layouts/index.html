@@ -8,7 +8,9 @@
     <div class="row">
           {{ range .Site.Pages}}
             {{ if in .Params.categories "lab" }}
-              {{ partial "labs.html" . }}
+              {{ if in .Params.tags "spring" }}
+                {{ partial "labs.html" . }}
+              {{end}}
             {{end}}
           {{end}}
     </div>

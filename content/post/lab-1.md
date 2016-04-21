@@ -37,7 +37,7 @@ Steps
 --
 In this workshop we are going to follow these steps to deploy apps on Cloud foundry and manage the lifecycle of the application.
 
-<img src="/images/devops-cf.png" alt="DevOps on CF" style="width: 600px;"/>
+<img src="/images/devops-cf.png" alt="DevOps on CF" style="width: 100%;"/>
 
 Learn how to
 
@@ -78,7 +78,7 @@ gradlew.bat clean build
 ##### Login into Pivotal Cloud Foundry
 
 The students have userId's (student1-student25) and the passwords will be distributed in the workshop.
-Each student is assigned their own Organization (student1-org)
+Each student is assigned an userId within their own organization (student1-org). Please refer to the handout you have been given.
 
 ````
 cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
@@ -88,7 +88,7 @@ cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
 
 Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
-<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 600px;"/>
+<img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
 
 ### Step 4
@@ -99,7 +99,7 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
     ```bash
     $ cd cities-hello
-    $ cf push <first-initial><last-initial>-cities-hello
+    $ cf push <studentXX>-cities-hello
     // This will give an output which is similar to this
     requested state: started
     instances: 1/1
@@ -111,7 +111,7 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 2. Open the app url
 
     When you push the apps, it will give the url route to the app.
-    <img src="/images/welcome.png" alt="Welcome to PCF Workshop" style="width: 600px;"/>
+    <img src="/images/welcome.png" alt="Welcome to PCF Workshop" style="width: 100%;"/>
 
 3. If you haven't already it is a good time to walk through the AppsManager:
 
@@ -144,12 +144,12 @@ The cities-service app requires a database service to store and fetch cities inf
 
 2. Create a mysql service, name it as `<YOUR INITIALS>-cities-db`
 
-    You can create the service from the `cli` or launch the App Manager [https://apps.pcf2.cloud.fe.pivotal.io](https://apps.pcf2.cloud.fe.pivotal.io) and login.
+    You can create the service from the `cli` or launch the App Manager-> Select the Development Space [https://apps.pcf2.cloud.fe.pivotal.io](https://apps.pcf2.cloud.fe.pivotal.io) and login.
 
     Navigate to the marketplace and see the available services. Here you will create the service using the CLI.
   ````bash
     $ cf marketplace // check if mysql service is available
-    $ cf create-service p-mysql 100mb-dev <first-initial><last-initial>-cities-db
+    $ cf create-service p-mysql 100mb-dev <studentXX>-cities-db
   ````
 
 3. Launch the DB console via the `Manage` link in the App Manager.  Note the database is empty.
@@ -160,16 +160,16 @@ The cities-service app requires a database service to store and fetch cities inf
 1. Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.
 
     ````bash
-    $ cd cities-service
-    $ cf push <first-initial><last-initial>-cities-service -i 1 -m 512M -p build/libs/cities-service.jar
+    $ cd ../cities-service
+    $ cf push <studentXX>-cities-service -i 1 -m 512M -p build/libs/cities-service.jar
     ````
 2. Check the logs to learn more about why the application is not starting
     You can look at the recent logs from the cli or open up the App Console and view the log files for the app.
 
     ````bash
-    $ cf logs <first-initial><last-initial>-cities-service --recent
+    $ cf logs <studentXX>-cities-service --recent
     ````
-    <img src="/images/pcf-console-log.png" alt="Logs for the App" style="width: 600px;"/>
+    <img src="/images/pcf-console-log.png" alt="Logs for the App" style="width: 100%;"/>
 
 
 ### Step 7
@@ -180,13 +180,13 @@ The cities-service app requires a database service to store and fetch cities inf
     You can bind from the App Manager or from the `cli`
 
     ````bash
-    $ cf bind-service <first-initial><last-initial>-cities-service <first-initial><last-initial>-cities-db
+    $ cf bind-service <studentXX>-cities-service <studentXX>-cities-db
     ````
 
 3. Restart your cities-service application to inject the new database.
 
     ````bash
-    $ cf restart <first-initial><last-initial>-cities-service
+    $ cf restart <studentXX>-cities-service
     ````
 
     Notice that the application is now running.
@@ -195,7 +195,7 @@ The cities-service app requires a database service to store and fetch cities inf
     You can do it from App Manager or from the `cli`
 
     ````bash
-    $ cf env <first-initial><last-initial>-cities-service
+    $ cf env <studentXX>-cities-service
     ````
 
 5. Check the MySQL database to see that it now contains data using MySQL Workbench or a similar tool.
@@ -223,12 +223,12 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     ````
 
 3. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
-*Be sure to name your application '<first-initial><last-initial>-cities-service' and use this as the host value.*
+*Be sure to name your application '<studentXX>-cities-service' *
 4. Add the services binding `<YOUR INITIALS>-cities-db` to your deployment manifest for cities-service .
 5. Now, manually unbind the service and re-push your app using the manifest.
 
     ````bash
-    $ cf unbind-service <first-initial><last-initial>-cities-service <first-initial><last-initial>-cities-db
+    $ cf unbind-service <studentXX>-cities-service <studentXX>-cities-db
     ````
 
 
@@ -263,13 +263,13 @@ Learning about how your application is performing is critical to help you diagno
 
 To tail the logs of your application perform this command:
   ````bash
-  $ cf logs <first-initial><last-initial>-cities-service
+  $ cf logs <studentXX>-cities-service
   ````
 
 
 Notice that nothing is showing because there isn't' any activity. Use the following curl command to see the application working:
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities/
+  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/
   ````
 
 For other ways of viewing logs check out the documentation here: [Streaming Logs](http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view)
@@ -277,12 +277,12 @@ For other ways of viewing logs check out the documentation here: [Streaming Logs
 To view recent events, including application crashes, and error codes, you can see them from the App Manager or from the cli.
 
   ````bash
-  $ cf events <first-initial><last-initial>-cities-service
+  $ cf events <studentXX>-cities-service
   ````
 
 To view the health of the application you can see from the App Manager or from the cli:
   ````bash
-  $ cf app <first-initial><last-initial>-cities-service
+  $ cf app <studentXX>-cities-service
   ````
 
 You will get detailed output of the health
@@ -308,7 +308,7 @@ You will get detailed output of the health
 View the environment variable and explanation of [VCAP Env](http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env)
 
   ````bash
-  $ cf env <first-initial><last-initial>-cities-service
+  $ cf env <studentXX>-cities-service
   ````
 
 
@@ -389,7 +389,7 @@ Scaling your application horizontally means that you are adding application inst
 
 Lets vertically scale the application to 1 GB of RAM.
   ````bash
-  $ cf scale <first-initial><last-initial>-cities-service -m 1G
+  $ cf scale <studentXX>-cities-service -m 1G
   ````
 
 
@@ -397,13 +397,13 @@ Now scale your application down to 512 MB.
 
 Next, lets scale up your application to 2 instances
   ````bash
-  $ cf scale <first-initial><last-initial>-cities-service -i 2
+  $ cf scale <studentXX>-cities-service -i 2
   ````
 
 
 To check the status of your applications you can check from the command line to see how many instances your app is running and their current state
   ````bash
-  $ cf app <first-initial><last-initial>-cities-service
+  $ cf app <studentXX>-cities-service
   ````
 
 
@@ -416,15 +416,15 @@ Once the second instance as started, scale the app back down to one instance.
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities
+  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities/162
+  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/162
   ````
 
   ````bash
-  $ curl -i http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
+  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -469,9 +469,9 @@ In this section we will create a backend microservice end point for cities-servi
   // Use the interactive prompt to create user defined service
   // It will prompt you for the parameters
 
-  $ cf create-user-provided-service <first-initial><last-initial>-cities-ws -p "citiesuri"
+  $ cf create-user-provided-service <studentXX>-cities-ws -p "citiesuri"
 
-  citiesuri>   http://<first-initial><last-initial>-cities-service.pcf2.cloud.fe.pivotal.io/
+  citiesuri>   http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/
 
   Creating user provided service....
   ````
@@ -512,7 +512,7 @@ Note the URL once the application has been successfully pushed.
 
 ````bash
 ----
-$ cf env <first-initial><last-initial>-cities-ui
+$ cf env <studentXX>-cities-ui
 
 System-Provided:
 {
@@ -565,7 +565,7 @@ SPRING_PROFILES_ACTIVE: cloud
 Open the App Manager (Console) and navigate to your apps. You will see the cities-ui app, with a link to launch the cities-ui application. Alternatively you can open up your browser and navigate to the URL listed from a successful cf push command.
 
 
-<img src="/images/cities-ui.png" alt="Cities UI" style="width: 600px;"/>
+<img src="/images/cities-ui.png" alt="Cities UI" style="width: 100%;"/>
 
 
 
@@ -589,7 +589,7 @@ In this section we are going to do a green-blue deployment using cf plugin `auto
 ##### Delete the unversioned app and the route
 
   ````bash
-  cf delete -r <first-initial><last-initial>-cities-service
+  cf delete -r <studentXX>-cities-service
   ````
 
 ### Step 19
@@ -600,7 +600,7 @@ In this section we are going to do a green-blue deployment using cf plugin `auto
   In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.
 
 
-  <img src="/images/blue-green-process.png" alt="Blue Green Deployment Process" style="width: 600px;"/>
+  <img src="/images/blue-green-process.png" alt="Blue Green Deployment Process" style="width: 100%;"/>
 
 
 Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It does not perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.
@@ -616,7 +616,7 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
   $ cd cities-service
   // Append the build number to the app Name
 
-  $ cf zero-downtime-push <first-initial><last-initial>-cities-service
+  $ cf zero-downtime-push <studentXX>-cities-service
   ````
 
 If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory
@@ -650,7 +650,7 @@ This script / methodology can be used in your CD pipeline to build and deploy Cl
 
 In this workshop we saw how to build, deploy, bind, scale, monitor apps on Cloud foundry and manage the lifecycle of the application
 
-<img src="/images/devops-cf.png" alt="DevOps on CF" style="width: 600px;"/>
+<img src="/images/devops-cf.png" alt="DevOps on CF" style="width: 100%;"/>
 
 
 ### Q/A
