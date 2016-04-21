@@ -20,24 +20,15 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 ##### Agenda
 
-        8:00 AM—9:00 AM		Registration and Breakfast
 
-        9:00 AM—9:45 AM		Overview of Cloud Native architecture
+        1:00 AM—2:00 PM	Overview of Ops Manager, Apps Manager, Logging and Demo
 
-        9:45 AM—10:30 AM	Introduction to Pivotal Cloud Foundry
+        2:00 AM—2:30 PM   Break
 
-        10:30 AM—10:45 AM	Break
-
-        10:45 AM—12:00 PM	Hands-on experience with Pivotal Cloud Foundry
+        2:00 PM—4:30 PM	Hands-on experience with Pivotal Cloud Foundry
         (push, bind, scale, monitor)
 
-        12:00 PM—12:45 PM	Lunch and Networking
-
-        12:45 PM—1:45 PM	Overview of Spring Boot and Spring Cloud
-
-        1:45 PM—3:30 PM		Hands-on experience developing Spring Boot and Spring Cloud applications
-
-        3:30 PM—4:00 PM		Wrap Up, Q&A, Feedback
+        4:30 PM—5:00 PM		Wrap Up, Q&A, Feedback
 
 Prior to the event you will be contacted to confirm if you have dietary restrictions.
 
