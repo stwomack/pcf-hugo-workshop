@@ -100,14 +100,12 @@ Fork the repo (http://www.github.com/rjain-pivotal/workshop-app-config)
 
 <img src="/images/config-server-fork.png" alt="Fork" style="width: 100%;"/>
 
-You can make changes to the application config files in the forked repo at http://github.com/<your-github-account>/workshop-app-config
-
-
+You can make changes to the application config files in the forked repo at http://github.com/your-github-account/workshop-app-config
 
 In case you want to make local changes and commit to the repo, then clone the git repo which has the config properties which are read by the greeting-config
 
 ````bash
-$git clone https://github.com/<your-github-account>/workshop-app-config.git
+$git clone https://github.com/your-github-account/workshop-app-config.git
 $cd workshop-app-config/
 ````
 
