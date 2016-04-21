@@ -2,20 +2,17 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop in Metro Detroit"
+title = "Welcome to the Pivotal Cloud Foundry Workshop@Dell"
 type = "Introduction"
 weight = 1
 +++
 ##### Location
 
-Automation Alley
-2675 Bellingham Dr
-Troy, MI 48083
-
+Oahu CR - RR5
 
 ##### Date and Time
-Date: April 18 , 2016
-Time: 18 APRIL · 8:00AM—4:00PM
+Date: April 21 , 2016
+Time: 18 APRIL · 1:00PM—5:00PM
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -84,9 +81,5 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 
 ##### Speakers
 
-    Chris Johnson, Platform Architect
-    Rick Ross, Platform Architect
     Rajesh Jain, Platform Architect
-
-##### Workshop Partner
-<a href="http://www.csc.com"><img src="/images/logo-csc.png" alt="CSC" style="width: 60px;"></a>
+    Parker Fleming, Customer Success Director
