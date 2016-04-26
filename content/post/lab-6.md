@@ -177,22 +177,73 @@ $fly -t lite set-pipeline -p flight-school -c ci/pipeline.yml -l ~/.concourse/fl
 ### Step 4
 ##### Trigger the Pipeline and stage the app
 
+Test the tasks manually before you run the whole Pipelines
+````
+fly -t lite execute -c ci/tasks/build.yml
+````
+
 
 ````
 fly -t lite trigger-job --job flight-school/test-app
 ````
+
+
+<img src="/images/concourse-2.png" alt="Concourse CI" style="width: 100%;"/>
+
 
 ## Part 2: Running a real world pipeline
 
 ### Step 5
 ##### Configure a multi step pipeline
 
-Clone the git repo which has a sample app PCFDemo with a real world pipeline.
+1. Clone the git repo which has a sample app PCFDemo with a real world pipeline.
 
-Configure the properties files and assign it to the pipeline
+````
+https://github.com/rjain-pivotal/PCF-demo
+````
 
-Make sure you have an S3 bucket configured to save your artifacts and the IAM user credentials to access the bucket.
+2. Make sure you have an S3 bucket configured to save your artifacts and the IAM user credentials to access the bucket.
 
-Configure your
+3. Configure the properties files and assign it to the pipeline
 
-Trigger the pipeline
+Copy the pcfdemo-properties-sample.yml to your ~/.concourse/pcfdemo-properties.yml
+Change the cf properties, github properties and s3 properties.
+
+````
+github-uri: https://github.com/<github-user>/PCF-demo.git
+github-branch: master
+s3-access-key-id: SAMPLEDF99FSWEBF9DW9  # AWS or S3 compatible access key id
+s3-secret-access-key: sampleaxfdpiA98FG8u7ahd08Sdgf8AFG8gh8S0F  # AWS or S3 compatible secret access key
+s3-endpoint: s3.amazonaws.com
+s3-bucket-version: pcfdemo-releases
+s3-bucket-releases: pcfdemo-releases
+s3-bucket-release-candidates: pcfdemo-release-candidates
+maven-opts: # -Xms256m -Xmx512m
+maven-config: # -s path/to/settings.xml
+cf-api: https://api.local.micropcf.io
+cf-username: admin
+cf-password: admin
+cf-org: micropcf-org
+cf-space: micropcf-space
+cf-manifest-host: pcfdemo-ci
+````
+
+
+
+4. Set the pipeline
+
+
+````
+fly -t lite set-pipeline -p pcfdemo -c ci/pipeline.yml -l ~/.concourse/pcfdemo-properties.yml
+````
+
+5. Trigger the pipeline
+
+
+````
+fly -t lite trigger-job --job pcfdemo/unit-test
+````
+
+
+
+<img src="/images/concourse-3.png" alt="Concourse CI" style="width: 100%;"/>
