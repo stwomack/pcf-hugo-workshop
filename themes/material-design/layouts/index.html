@@ -20,6 +20,9 @@
               {{ if in .Params.tags "docker" }}
                   {{ partial "docker-labs.html" . }}
               {{end}}
+              {{ if in .Params.tags "concourse" }}
+                  {{ partial "concourse-labs.html" . }}
+              {{end}}
             {{end}}
           {{end}}
     </div>

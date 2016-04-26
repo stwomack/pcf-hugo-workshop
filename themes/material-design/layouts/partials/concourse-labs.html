@@ -1,0 +1,17 @@
+{{ $baseurl := .Site.BaseURL }}
+<div class="col s6">
+  <div class="card-panel hoverable blue lighten-1">
+      <div class="card-content white-text">
+  <!-- Card Content -->
+      <h4><a href="{{ .Permalink }}"><span  class="amber-text darken-4">{{ .Title }}</span></a></span></h4>
+      <p>{{ .Summary }}</p>
+      <p>
+      {{if .Params.tags }}
+        {{ range $index, $tag := .Params.tags }}
+          <a href="{{$baseurl}}/tags/{{ $tag | urlize }}/">#{{ $tag }}</a>
+        {{ end }}
+      {{end}}
+      </p>
+  </div>
+</div>
+</div>

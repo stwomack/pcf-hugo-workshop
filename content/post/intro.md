@@ -2,17 +2,18 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop@Dell"
+title = "Welcome to the Pivotal Cloud Foundry Workshop@GM Austin"
 type = "Introduction"
 weight = 1
 +++
 ##### Location
 
-Oahu CR - RR5
+Corvette 2nd Floor Austin
 
 ##### Date and Time
-Date: April 21 , 2016
-Time: 18 APRIL · 1:00PM—5:00PM
+Date: **April 26 , 2016**
+
+Time: **9:30AM—4:30PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -20,22 +21,28 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 ##### Agenda
 
+        Broad Agenda (We will have breaks in between sessions)
 
-        1:00 AM—2:00 PM	Overview of Ops Manager, Apps Manager, Logging and Demo
+        9:30 - 10:30: GM's Current and Desired Model of Software Delivery (3 Use Cases) -- Mano and GM Team
 
-        2:00 AM—2:30 PM   Break
+        10:30 - 11:30: Pivotal (and VMWare)'s approach to GM's desired state (Fulfilment of Use Cases)- Pivotal
 
-        2:00 PM—4:30 PM	Hands-on experience with Pivotal Cloud Foundry
-        (push, bind, scale, monitor)
+        == LUNCH ==
 
-        4:30 PM—5:00 PM		Wrap Up, Q&A, Feedback
+        12:30 - 2:00: Walkthrough (and Hands on)  Push/Bind/Scale/Blue Green Deployment of Spring boot apps provided by Pivotal Cloud Foundry hosted by Pivotal
 
-Prior to the event you will be contacted to confirm if you have dietary restrictions.
+        2:00 - 3:00: Build Pipelines for continuous deployment, Bosh/Ops Manager walk through and discussion on CI/CD.
+
+        3:30 - 4:30: Lessons learned and Scoping for POC - Apps, Infrastructure vSphere, Sizing, Timelines and Project Plan
+
+        4:30 and beyond : Open discussion on various topics - Spring Cloud Services, Security, APM, K8, Docker
+                          Wrap Up, Q&A, Feedback
+
 
 ##### Prerequisites
 1. Java SDK 1.7+
 
-2. Git from [github.com](https://mac.github.com/)
+2. Git CLI from [github.com](https://mac.github.com/)
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
@@ -45,6 +52,7 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 
 6. Maven for build (https://maven.apache.org/install.html)
 
+7. Vagrant (In case you want to run Concourse CI/CD using Vagrant)
 
 ##### Setup
 
@@ -73,4 +81,9 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 ##### Speakers
 
     Rajesh Jain, Platform Architect
-    Parker Fleming, Customer Success Director
+    Marcelo Borges, Platform Architect
+    Edward Mikuszewski, Platform Architect
+
+
+
+{{< speakerdeck 01015ef688264f7da77d572e2d38fc22 >}}

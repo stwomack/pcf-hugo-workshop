@@ -42,7 +42,6 @@ In this workshop we are going to follow these steps to deploy apps on Cloud foun
 Learn how to
 
     - Get a Spring boot app and deploy it to Pivotal Cloud foundry
-    -
 
 __NOTE__
 
