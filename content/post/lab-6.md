@@ -198,51 +198,51 @@ fly -t lite trigger-job --job flight-school/test-app
 
 1. Clone the git repo which has a sample app PCFDemo with a real world pipeline.
 
-````
-https://github.com/rjain-pivotal/PCF-demo
-````
+    ````
+    https://github.com/rjain-pivotal/PCF-demo
+    ````
 
 2. Make sure you have an S3 bucket configured to save your artifacts and the IAM user credentials to access the bucket.
 
 3. Configure the properties files and assign it to the pipeline
 
-Copy the pcfdemo-properties-sample.yml to your ~/.concourse/pcfdemo-properties.yml
-Change the cf properties, github properties and s3 properties.
+    Copy the pcfdemo-properties-sample.yml to your ~/.concourse/pcfdemo-properties.yml
+    Change the cf properties, github properties and s3 properties.
 
-````
-github-uri: https://github.com/<github-user>/PCF-demo.git
-github-branch: master
-s3-access-key-id: SAMPLEDF99FSWEBF9DW9  # AWS or S3 compatible access key id
-s3-secret-access-key: sampleaxfdpiA98FG8u7ahd08Sdgf8AFG8gh8S0F  # AWS or S3 compatible secret access key
-s3-endpoint: s3.amazonaws.com
-s3-bucket-version: pcfdemo-releases
-s3-bucket-releases: pcfdemo-releases
-s3-bucket-release-candidates: pcfdemo-release-candidates
-maven-opts: # -Xms256m -Xmx512m
-maven-config: # -s path/to/settings.xml
-cf-api: https://api.local.micropcf.io
-cf-username: admin
-cf-password: admin
-cf-org: micropcf-org
-cf-space: micropcf-space
-cf-manifest-host: pcfdemo-ci
-````
+    ````
+    github-uri: https://github.com/<github-user>/PCF-demo.git
+    github-branch: master
+    s3-access-key-id: SAMPLEDF99FSWEBF9DW9  # AWS or S3 compatible access key id
+    s3-secret-access-key: sampleaxfdpiA98FG8u7ahd08Sdgf8AFG8gh8S0F  # AWS or S3 compatible secret access key
+    s3-endpoint: s3.amazonaws.com
+    s3-bucket-version: pcfdemo-releases
+    s3-bucket-releases: pcfdemo-releases
+    s3-bucket-release-candidates: pcfdemo-release-candidates
+    maven-opts: # -Xms256m -Xmx512m
+    maven-config: # -s path/to/settings.xml
+    cf-api: https://api.local.micropcf.io
+    cf-username: admin
+    cf-password: admin
+    cf-org: micropcf-org
+    cf-space: micropcf-space
+    cf-manifest-host: pcfdemo-ci
+    ````
 
 
 
 4. Set the pipeline
 
 
-````
-fly -t lite set-pipeline -p pcfdemo -c ci/pipeline.yml -l ~/.concourse/pcfdemo-properties.yml
-````
+    ````
+    fly -t lite set-pipeline -p pcfdemo -c ci/pipeline.yml -l ~/.concourse/pcfdemo-properties.yml
+    ````
 
 5. Trigger the pipeline
 
 
-````
-fly -t lite trigger-job --job pcfdemo/unit-test
-````
+    ````
+    fly -t lite trigger-job --job pcfdemo/unit-test
+    ````
 
 
 
