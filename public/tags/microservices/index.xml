@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Microservices on Cloud Foundry Workshop</title>
+    <link>http://pcf-dell-workshop.cfapps.io/tags/microservices/</link>
+    <description>Recent content in Microservices on Cloud Foundry Workshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Copyright 2016 Pivotal Software, Inc. All Rights Reserved. Sitemap</copyright>
+    <lastBuildDate>Tue, 15 Mar 2016 14:54:11 -0400</lastBuildDate>
+    <atom:link href="http://pcf-dell-workshop.cfapps.io/tags/microservices/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Lab 1: Build and Deploy Apps on PCF</title>
+      <link>http://pcf-dell-workshop.cfapps.io/2016/03/15/lab-1-build-and-deploy-apps-on-pcf/</link>
+      <pubDate>Tue, 15 Mar 2016 14:54:11 -0400</pubDate>
+      
+      <guid>http://pcf-dell-workshop.cfapps.io/2016/03/15/lab-1-build-and-deploy-apps-on-pcf/</guid>
+      <description>
+
+&lt;h3 id=&#34;goal:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Goal&lt;/h3&gt;
+
+&lt;p&gt;To deploy and configure a microservice and UI, leverage the platform for monitoring &amp;amp; management of the microservice, and do a blue green deployment with zero downtime.&lt;/p&gt;
+
+&lt;h2 id=&#34;prerequisites:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Java SDK 1.7+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Git from &lt;a href=&#34;https://mac.github.com/&#34;&gt;github.com&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Cloud Foundry CLI for &lt;a href=&#34;https://github.com/cloudfoundry/cli/releases&#34;&gt;Mac&lt;/a&gt; or &lt;a href=&#34;http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows&#34;&gt;Windows&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Curl from &lt;a href=&#34;http://curl.haxx.se/&#34;&gt;curl&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Use Workshop PCF Env or Pivotal Web Services Account.  Create a free trial account here &lt;a href=&#34;http://run.pivotal.io/&#34;&gt;Pivotal Web Services&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Maven for build (&lt;a href=&#34;https://maven.apache.org/install.html&#34;&gt;https://maven.apache.org/install.html&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;steps:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Steps&lt;/h2&gt;
+
+&lt;p&gt;In this workshop we are going to follow these steps to deploy apps on Cloud foundry and manage the lifecycle of the application.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/devops-cf.png&#34; alt=&#34;DevOps on CF&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Learn how to&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;- Get a Spring boot app and deploy it to Pivotal Cloud foundry
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The instructions in this document are for Mac/Linux based CLI/Shell. If you are using Windows, you may need to adjust your slashes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;part-1-introduction-to-cf-push-an-app:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;PART 1: Introduction to CF, Push an App.&lt;/h2&gt;
+
+&lt;h3 id=&#34;step-1:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 1&lt;/h3&gt;
+
+&lt;h5 id=&#34;get-the-cities-app:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Get the cities app&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Fork and Clone &lt;a href=&#34;https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/&#34;&gt;PCF Workspace&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Review the &lt;a href=&#34;https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/tree/master&#34;&gt;cities&lt;/a&gt; application.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;step-2:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 2&lt;/h3&gt;
+
+&lt;h5 id=&#34;build-the-app:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Build the app&lt;/h5&gt;
+
+&lt;p&gt;By this point, you should have cloned (or forked, or downloaded) the &lt;a href=&#34;https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/&#34;&gt;workspace repo&lt;/a&gt;.  Now you will build the project and deploy it to Cloud Foundry.&lt;/p&gt;
+
+&lt;p&gt;For Linux/Mac:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+cd pcf-workspace-devops
+./gradlew clean build
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Windows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd pcf-workspace-devops
+gradlew.bat clean build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-3:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 3&lt;/h3&gt;
+
+&lt;h5 id=&#34;login-into-pivotal-cloud-foundry:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Login into Pivotal Cloud Foundry&lt;/h5&gt;
+
+&lt;p&gt;The students have userId&amp;rsquo;s (student1-student25) and the passwords will be distributed in the workshop.
+Each student is assigned an userId within their own organization (student1-org). Please refer to the handout you have been given.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
+  Email: student1
+  Password: ••••••••
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Login to the App Console at &lt;a href=&#34;https://apps.pcf2.cloud.fe.pivotal.io&#34;&gt;https://apps.pcf2.cloud.fe.pivotal.io&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/pcf-console.png&#34; alt=&#34;PCF App Console&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-4:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 4&lt;/h3&gt;
+
+&lt;h5 id=&#34;push-the-app:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Push the app&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Push the cities-hello, put your initials in the app name so we don&amp;rsquo;t get conflicts&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cd cities-hello
+$ cf push &amp;lt;studentXX&amp;gt;-cities-hello
+// This will give an output which is similar to this
+requested state: started
+instances: 1/1
+usage: 512M x 1 instances
+urls: cities-hello-lactiferous-unanswerableness.pcf2.cloud.fe.pivotal.io
+last uploaded: Mon Jun 15 14:53:10 UTC 2015
+stack: cflinuxfs2
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Open the app url&lt;/p&gt;
+
+&lt;p&gt;When you push the apps, it will give the url route to the app.
+&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/welcome.png&#34; alt=&#34;Welcome to PCF Workshop&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If you haven&amp;rsquo;t already it is a good time to walk through the AppsManager:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;https://apps.pcf2.cloud.fe.pivotal.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&#34;recap-part-1:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Recap: Part 1&lt;/h5&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Cloud Foundry Haiku &lt;/br&gt;
+  Here is my source code &lt;/br&gt;
+  Run it on the cloud for me &lt;/br&gt;
+  I do not care how&lt;/br&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&#34;discussion-part-1:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Discussion: Part 1&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;How do you push an app to the cloud today?&lt;/li&gt;
+&lt;li&gt;How does the cloud platform understand which runtime to use to run the app?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;part-2-push-bind-monitor-scale:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;PART 2: Push/Bind/Monitor/Scale&lt;/h2&gt;
+
+&lt;p&gt;The cities-service app requires a database service to store and fetch cities info.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-5:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 5&lt;/h3&gt;
+
+&lt;h5 id=&#34;create-a-database-from-marketplace:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Create a Database from Marketplace&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Review the docs on Services:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html&#34;&gt;Managing Services&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create a mysql service, name it as &lt;code&gt;&amp;lt;YOUR INITIALS&amp;gt;-cities-db&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;You can create the service from the &lt;code&gt;cli&lt;/code&gt; or launch the App Manager-&amp;gt; Select the Development Space &lt;a href=&#34;https://apps.pcf2.cloud.fe.pivotal.io&#34;&gt;https://apps.pcf2.cloud.fe.pivotal.io&lt;/a&gt; and login.&lt;/p&gt;
+
+&lt;p&gt;Navigate to the marketplace and see the available services. Here you will create the service using the CLI.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf marketplace // check if mysql service is available
+$ cf create-service p-mysql 100mb-dev &amp;lt;studentXX&amp;gt;-cities-db
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Launch the DB console via the &lt;code&gt;Manage&lt;/code&gt; link in the App Manager.  Note the database is empty.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;step-6:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 6&lt;/h3&gt;
+
+&lt;h5 id=&#34;push-the-app-1:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Push the App&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cd ../cities-service
+$ cf push &amp;lt;studentXX&amp;gt;-cities-service -i 1 -m 512M -p build/libs/cities-service.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Check the logs to learn more about why the application is not starting
+You can look at the recent logs from the cli or open up the App Console and view the log files for the app.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf logs &amp;lt;studentXX&amp;gt;-cities-service --recent
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/pcf-console-log.png&#34; alt=&#34;Logs for the App&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;step-7:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 7&lt;/h3&gt;
+
+&lt;h5 id=&#34;manually-binding-the-service-instance:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Manually Binding the Service Instance&lt;/h5&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Review the docs on &lt;a href=&#34;http://docs.pivotal.io/pivotalcf/devguide/services/bind-service.html&#34;&gt;Binding a Service Instance&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Bind the mysql instance &lt;code&gt;&amp;lt;YOUR INITIALS&amp;gt;-cities-db&lt;/code&gt; to your app cities-service
+You can bind from the App Manager or from the &lt;code&gt;cli&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf bind-service &amp;lt;studentXX&amp;gt;-cities-service &amp;lt;studentXX&amp;gt;-cities-db
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Restart your cities-service application to inject the new database.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf restart &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that the application is now running.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Check the Env variables to see if the service is bound.
+You can do it from App Manager or from the &lt;code&gt;cli&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf env &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Check the MySQL database to see that it now contains data using MySQL Workbench or a similar tool.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;a. This app is an Spring Cloud app which uses Spring Cloud Configuration to bind to a database service provided by the cloud platform.&lt;/p&gt;
+
+&lt;p&gt;b. Difference between app &lt;code&gt;restage&lt;/code&gt; and &lt;code&gt;restart&lt;/code&gt;. An app &lt;code&gt;restage&lt;/code&gt; will stop your application, run the application bits through the staging process to create a new droplet, and then start the new droplet.  &lt;code&gt;restart&lt;/code&gt; will simply stop your application and start it with the existing droplet.  You typically &lt;code&gt;restart&lt;/code&gt; when you need your application&amp;rsquo;s&amp;rsquo; environment refreshed and you typically &lt;code&gt;restage&lt;/code&gt; when you need/want the &lt;code&gt;buildpack&lt;/code&gt; to run without updating the application source.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-8:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 8&lt;/h3&gt;
+
+&lt;h5 id=&#34;binding-services-via-the-manifest:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Binding Services via the Manifest&lt;/h5&gt;
+
+&lt;p&gt;Next, lets push the cities-service app with a manifest to help automate deployment.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Review the documentation: &lt;a href=&#34;http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html&#34;&gt;http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Edit the application manifest  &lt;code&gt;manifest.service&lt;/code&gt; in your &lt;code&gt;cities-service&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ nano manifest.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
+*Be sure to name your application &amp;lsquo;&lt;studentXX&gt;-cities-service&amp;rsquo; *&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Add the services binding &lt;code&gt;&amp;lt;YOUR INITIALS&amp;gt;-cities-db&lt;/code&gt; to your deployment manifest for cities-service .&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Now, manually unbind the service and re-push your app using the manifest.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf unbind-service &amp;lt;studentXX&amp;gt;-cities-service &amp;lt;studentXX&amp;gt;-cities-db
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Test your manifest by re-pushing your app with no parameters:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ cf push -f manifest.service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that using a manifest, you have moved the command line parameters (number of instances, memory, etc) into the manifest.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Verify you can access your application via a curl request:
+You will have to get the route to your app&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;   // This will list your apps and the last column is the route.
+   $cf apps
+      url: cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io  
+      $ curl -i http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We must be able to access your application at  &lt;a href=&#34;http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io&#34;&gt;http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io&lt;/a&gt; for the next steps to work properly.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The default manifest file for an app is &lt;code&gt;manifest.yml&lt;/code&gt; and it if is present, it is automatically picked without specifying the manifest file option.
+In this exercise we have used a different naming convention.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-9:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 9&lt;/h3&gt;
+
+&lt;h5 id=&#34;health-logging-events-via-the-cli:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Health, logging &amp;amp; events via the CLI&lt;/h5&gt;
+
+&lt;p&gt;Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.&lt;/p&gt;
+
+&lt;p&gt;To tail the logs of your application perform this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf logs &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that nothing is showing because there isn&amp;rsquo;t&amp;rsquo; any activity. Use the following curl command to see the application working:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ curl -i http://&amp;lt;studentXX&amp;gt;-cities-service.pcf2.cloud.fe.pivotal.io/cities/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For other ways of viewing logs check out the documentation here: &lt;a href=&#34;http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view&#34;&gt;Streaming Logs&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;To view recent events, including application crashes, and error codes, you can see them from the App Manager or from the cli.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf events &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To view the health of the application you can see from the App Manager or from the cli:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf app &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You will get detailed output of the health&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  Showing health and status for app cities-service in org  / space development as...
+  OK
+
+  requested state: started
+  instances: 1/1
+  usage: 512M x 1 instances
+  urls: cities-service.pcf2.cloud.fe.pivotal.io
+  last uploaded: Wed May 27 15:53:32 UTC 2015
+  stack: cflinuxfs2
+
+       state     since                    cpu    memory           disk           details
+  #0   running   2015-05-27 12:17:55 PM   0.1%   434.5M of 512M   145.4M of 1G
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-10:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 10&lt;/h3&gt;
+
+&lt;h5 id=&#34;environment-variables:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Environment variables&lt;/h5&gt;
+
+&lt;p&gt;View the environment variable and explanation of &lt;a href=&#34;http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env&#34;&gt;VCAP Env&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf env &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You will get the output similar to this on your terminal&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  Getting env variables for app rj-cities-service in org Central / space development as rajesh.jain@pivotal.io...
+  OK
+
+  System-Provided:
+  {
+   &amp;quot;VCAP_SERVICES&amp;quot;: {
+    &amp;quot;cleardb&amp;quot;: [
+     {
+      &amp;quot;credentials&amp;quot;: {
+       &amp;quot;hostname&amp;quot;: &amp;quot;xxxx&amp;quot;,
+       &amp;quot;jdbcUrl&amp;quot;: &amp;quot;xxxx&amp;quot;,
+       &amp;quot;name&amp;quot;: &amp;quot;xxxx&amp;quot;,
+       &amp;quot;password&amp;quot;: &amp;quot;xxxx&amp;quot;,
+       &amp;quot;port&amp;quot;: &amp;quot;3306&amp;quot;,
+       &amp;quot;uri&amp;quot;: &amp;quot;mysql://xxxx?reconnect=true&amp;quot;,
+       &amp;quot;username&amp;quot;: &amp;quot;xxxx&amp;quot;
+      },
+      &amp;quot;label&amp;quot;: &amp;quot;cleardb&amp;quot;,
+      &amp;quot;name&amp;quot;: &amp;quot;rj-cities-db&amp;quot;,
+      &amp;quot;plan&amp;quot;: &amp;quot;spark&amp;quot;,
+      &amp;quot;tags&amp;quot;: [
+       &amp;quot;Data Stores&amp;quot;,
+       &amp;quot;Cloud Databases&amp;quot;,
+       &amp;quot;Developer Tools&amp;quot;,
+       &amp;quot;Data Store&amp;quot;,
+       &amp;quot;mysql&amp;quot;,
+       &amp;quot;relational&amp;quot;
+      ]
+     }
+    ]
+   }
+  }
+
+  {
+   &amp;quot;VCAP_APPLICATION&amp;quot;: {
+    &amp;quot;application_name&amp;quot;: &amp;quot;rj-cities-service&amp;quot;,
+    &amp;quot;application_uris&amp;quot;: [
+     &amp;quot;rj-cities-service.pcf2.cloud.fe.pivotal.io&amp;quot;
+    ],
+    &amp;quot;application_version&amp;quot;: &amp;quot;c3c35527-424f-4dbc-a4ea-115e1250cc5d&amp;quot;,
+    &amp;quot;limits&amp;quot;: {
+     &amp;quot;disk&amp;quot;: 1024,
+     &amp;quot;fds&amp;quot;: 16384,
+     &amp;quot;mem&amp;quot;: 512
+    },
+    &amp;quot;name&amp;quot;: &amp;quot;rj-cities-service&amp;quot;,
+    &amp;quot;space_id&amp;quot;: &amp;quot;56e1d8ef-e87f-4b1c-930b-e7f46c00e483&amp;quot;,
+    &amp;quot;space_name&amp;quot;: &amp;quot;development&amp;quot;,
+    &amp;quot;uris&amp;quot;: [
+     &amp;quot;rj-cities-service.pcf2.cloud.fe.pivotal.io&amp;quot;
+    ],
+    &amp;quot;users&amp;quot;: null,
+    &amp;quot;version&amp;quot;: &amp;quot;c3c35527-424f-4dbc-a4ea-115e1250cc5d&amp;quot;
+   }
+  }
+
+  User-Provided:
+  SPRING_PROFILES_ACTIVE: cloud
+
+  No running env variables have been set
+
+  No staging env variables have been set
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-11:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 11&lt;/h3&gt;
+
+&lt;h5 id=&#34;scaling-apps:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Scaling apps&lt;/h5&gt;
+
+&lt;p&gt;Applications can be scaled via the command line or the console. When we talk about scale, there are two different types of scale: Vertical and Horizontal. Read &lt;a href=&#34;http://docs.cloudfoundry.org/devguide/deploy-apps/cf-scale.html&#34;&gt;Scaling Apps&lt;/a&gt; doc on more details on scaling applications.&lt;/p&gt;
+
+&lt;p&gt;When you vertically scale your application, you are increasing the amount of memory made available to your application. You would vertically scale your application while profiling your app, do performance tuning and to find the best memory settings before you deploy it in production.
+Scaling your application horizontally means that you are adding application instances to increase your application throughput and performance under load.&lt;/p&gt;
+
+&lt;p&gt;Lets vertically scale the application to 1 GB of RAM.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf scale &amp;lt;studentXX&amp;gt;-cities-service -m 1G
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now scale your application down to 512 MB.&lt;/p&gt;
+
+&lt;p&gt;Next, lets scale up your application to 2 instances&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf scale &amp;lt;studentXX&amp;gt;-cities-service -i 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To check the status of your applications you can check from the command line to see how many instances your app is running and their current state&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf app &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once the second instance as started, scale the app back down to one instance.&lt;/p&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-12:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 12&lt;/h3&gt;
+
+&lt;h5 id=&#34;verify-the-app-from-the-console:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Verify the app from the Console&lt;/h5&gt;
+
+&lt;p&gt;To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ curl -i http://&amp;lt;studentXX&amp;gt;-cities-service.pcf2.cloud.fe.pivotal.io/cities
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ curl -i http://&amp;lt;studentXX&amp;gt;-cities-service.pcf2.cloud.fe.pivotal.io/cities/162
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ curl -i http://&amp;lt;studentXX&amp;gt;-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h5 id=&#34;discussion-part-2:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Discussion: Part 2&lt;/h5&gt;
+
+&lt;p&gt;In this part of the workshop we created a database service from the marketplace, pushed an app, bound it to the database service, monitored the health of the app and scaled the app.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;How does the app get the database info today vs. VCAP_SERVICES? &lt;br&gt;&lt;/li&gt;
+&lt;li&gt;How do you horizontally scale your applications?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;part-3-deploying-upstream-app-and-bind-to-backend-services:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;PART 3: Deploying Upstream App and Bind to backend services&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;cities&lt;/code&gt; directory also includes a &lt;code&gt;cities-ui&lt;/code&gt; application which uses the &lt;code&gt;cities-client&lt;/code&gt; to consume from the &lt;code&gt;cities-service&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;cities-client&lt;/code&gt; demonstrates using the &lt;a href=&#34;http://cloud.spring.io/spring-cloud-connectors&#34;&gt;Spring Cloud Connector&lt;/a&gt; project to consume from a microservice.  This is a common pattern for Cloud Native apps.  For more details on building 12 Factor Apps for the Cloud (Cloud Foundry) refer to &lt;a href=&#34;http://12factor.net/&#34;&gt;12 Factor&lt;/a&gt; website.&lt;/p&gt;
+
+&lt;p&gt;The goal of this exercise is to use what you have learned to deploy the &lt;code&gt;cities-ui&lt;/code&gt; application.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-13:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 13&lt;/h3&gt;
+
+&lt;h5 id=&#34;build-the-cities-ui-and-cities-client-app:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Build the Cities UI and Cities Client App&lt;/h5&gt;
+
+&lt;p&gt;The cities-ui and cities-client can be both built at once by running &lt;code&gt;./gradlew assemble&lt;/code&gt; in the parent directory. Run this command now.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-14:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 14&lt;/h3&gt;
+
+&lt;h5 id=&#34;create-a-user-provided-service-instance:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Create a User Provided Service Instance.&lt;/h5&gt;
+
+&lt;p&gt;In this section we will create a backend microservice end point for cities-service.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Review the documentation on link:&lt;a href=&#34;http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html[User&#34;&gt;http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html[User&lt;/a&gt; Provided Service Instances]&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Look for the details by running &lt;code&gt;cf cups --help&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;You will need to specify the parameter citiesuri to the user defined service instance .&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  // Use the interactive prompt to create user defined service
+  // It will prompt you for the parameters
+
+  $ cf create-user-provided-service &amp;lt;studentXX&amp;gt;-cities-ws -p &amp;quot;citiesuri&amp;quot;
+
+  citiesuri&amp;gt;   http://&amp;lt;studentXX&amp;gt;-cities-service.pcf2.cloud.fe.pivotal.io/
+
+  Creating user provided service....
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-15:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 15&lt;/h3&gt;
+
+&lt;h5 id=&#34;deploy-cities-ui-project:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Deploy cities-ui project&lt;/h5&gt;
+
+&lt;p&gt;A &lt;code&gt;manifest.yml&lt;/code&gt; is included in the cities-ui app.  Edit this manifest with your initials and add the service binding to your cities-service&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $cd cities-ui
+  $nano manifest.yml (Or your favorite editor)
+
+  ---
+  applications:
+  - name: &amp;lt;YOUR INITIALS&amp;gt;-cities-ui
+    memory: 512M
+    instances: 1
+    path: build/libs/cities-ui.jar
+    services: [ &amp;lt;YOUR INITIALS&amp;gt;-cities-ws ]
+    env:
+      SPRING_PROFILES_ACTIVE: cloud
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Push the &lt;code&gt;cities-ui&lt;/code&gt; without specifying the manifest.yml. It will by default pick the manifest.yml file and deploy the app.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ cf push
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the URL once the application has been successfully pushed.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-16:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 16&lt;/h3&gt;
+
+&lt;h5 id=&#34;verify-the-backend-service-is-bound-to-cities-ui:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Verify the backend service is bound to cities-ui&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;----
+$ cf env &amp;lt;studentXX&amp;gt;-cities-ui
+
+System-Provided:
+{
+ &amp;quot;VCAP_SERVICES&amp;quot;: {
+  &amp;quot;user-provided&amp;quot;: [
+   {
+    &amp;quot;credentials&amp;quot;: {
+     &amp;quot;tag&amp;quot;: &amp;quot;cities&amp;quot;,
+     &amp;quot;uri&amp;quot;: &amp;quot;http://rj-cities-service.pcf2.cloud.fe.pivotal.io/&amp;quot;
+    },
+    &amp;quot;label&amp;quot;: &amp;quot;user-provided&amp;quot;,
+    &amp;quot;name&amp;quot;: &amp;quot;cities-ws&amp;quot;,
+    &amp;quot;syslog_drain_url&amp;quot;: &amp;quot;&amp;quot;,
+    &amp;quot;tags&amp;quot;: []
+   }
+  ]
+ }
+}
+
+{
+ &amp;quot;VCAP_APPLICATION&amp;quot;: {
+  &amp;quot;application_name&amp;quot;: &amp;quot;rj-cities-ui&amp;quot;,
+  &amp;quot;application_uris&amp;quot;: [
+   &amp;quot;rj-cities-ui.pcf2.cloud.fe.pivotal.io&amp;quot;
+  ],
+  &amp;quot;application_version&amp;quot;: &amp;quot;dceb111b-3a68-45ad-83fd-3b8b836ebbe7&amp;quot;,
+  &amp;quot;limits&amp;quot;: {
+   &amp;quot;disk&amp;quot;: 1024,
+   &amp;quot;fds&amp;quot;: 16384,
+   &amp;quot;mem&amp;quot;: 512
+  },
+  &amp;quot;name&amp;quot;: &amp;quot;rj-cities-ui&amp;quot;,
+  &amp;quot;space_id&amp;quot;: &amp;quot;56e1d8ef-e87f-4b1c-930b-e7f46c00e483&amp;quot;,
+  &amp;quot;space_name&amp;quot;: &amp;quot;development&amp;quot;,
+  &amp;quot;uris&amp;quot;: [
+   &amp;quot;rj-cities-ui.pcf2.cloud.fe.pivotal.io&amp;quot;
+  ],
+  &amp;quot;users&amp;quot;: null,
+  &amp;quot;version&amp;quot;: &amp;quot;dceb111b-3a68-45ad-83fd-3b8b836ebbe7&amp;quot;
+ }
+}
+
+User-Provided:
+SPRING_PROFILES_ACTIVE: cloud
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-17:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 17&lt;/h3&gt;
+
+&lt;h5 id=&#34;access-the-cities-ui-to-verify-it-is-connected-to-your-microservice:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Access the cities-ui to verify it is connected to your microservice.&lt;/h5&gt;
+
+&lt;p&gt;Open the App Manager (Console) and navigate to your apps. You will see the cities-ui app, with a link to launch the cities-ui application. Alternatively you can open up your browser and navigate to the URL listed from a successful cf push command.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/cities-ui.png&#34; alt=&#34;Cities UI&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;
+
+&lt;h5 id=&#34;discussion-part-3:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Discussion: Part 3&lt;/h5&gt;
+
+&lt;p&gt;In this part of the workshop we created a cities-ui app which is loosely bound and independently developed from the backend service. We bound that app to the cities-service microservice.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Discussion on loose coupling of your services from your app and 12 Factor App design principles.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;part-4-deploy-version-2-of-the-app:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;PART 4: Deploy Version 2 of the App&lt;/h2&gt;
+
+&lt;p&gt;In this section we are going to do a green-blue deployment using cf plugin &lt;code&gt;autopilot&lt;/code&gt;. The same can be done by executing cf commands.&lt;/p&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;step-18:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 18&lt;/h3&gt;
+
+&lt;h5 id=&#34;delete-the-unversioned-app-and-the-route:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Delete the unversioned app and the route&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  cf delete -r &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-19:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Step 19&lt;/h3&gt;
+
+&lt;h5 id=&#34;process-of-blue-green-deployment:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Process of Blue Green Deployment&lt;/h5&gt;
+
+&lt;p&gt;Review the CF Document for blue green deployment link:&lt;a href=&#34;https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/blue-green.html[Using&#34;&gt;https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/blue-green.html[Using&lt;/a&gt; Blue-Green Deployment to Reduce Downtime and Risk]&lt;/p&gt;
+
+&lt;p&gt;In summary Blue-green deployment is a release technique that reduces downtime and risk by running two identical production environments called Blue and Green.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/blue-green-process.png&#34; alt=&#34;Blue Green Deployment Process&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Cloud Foundry plugin &lt;a href=&#34;https://github.com/concourse/autopilot&#34;&gt;Autopilot&lt;/a&gt; does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It does not perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+  $ mkdir $HOME/go
+  $ export GOPATH=$HOME/go
+  $ export PATH=$PATH:$GOPATH/bin
+
+  $ go get github.com/concourse/autopilot
+  $ cf install-plugin $GOPATH/bin/autopilot
+  $ cd cities-service
+  // Append the build number to the app Name
+
+  $ cf zero-downtime-push &amp;lt;studentXX&amp;gt;-cities-service
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Usage: blue-green.sh &amp;lt;app-name&amp;gt; &amp;lt;build-number&amp;gt; &amp;lt;domain&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;
+  $ ./blue-green.sh  cities-service 1001 pcf2.cloud.fe.pivotal.io
+  $ cf apps // You should see your app build 1001 and the Route
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now push the new build 1002 of the app&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;  $ ./blue-green.sh  cities-service 1002 pcf2.cloud.fe.pivotal.io
+  $ cf apps // You should see your app build 1002 and the same route mapped to the new build
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;discussion-part-4:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Discussion: Part 4&lt;/h5&gt;
+
+&lt;p&gt;In this part of the workshop did deployment using a blue green script without any downtime.
+This script / methodology can be used in your CD pipeline to build and deploy Cloud Native Apps with zero downtime.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Discussion on how do you do Continous Deployment and Delivery with zero downtime today.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&#34;recap:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Recap&lt;/h5&gt;
+
+&lt;p&gt;In this workshop we saw how to build, deploy, bind, scale, monitor apps on Cloud foundry and manage the lifecycle of the application&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://pcf-dell-workshop.cfapps.io/images/devops-cf.png&#34; alt=&#34;DevOps on CF&#34; style=&#34;width: 100%;&#34;/&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;q-a:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Q/A&lt;/h3&gt;
+
+&lt;h3 id=&#34;feedback:8bd1bf82bb668bb452ca3d0d6b4e19bc&#34;&gt;Feedback&lt;/h3&gt;
+
+&lt;p&gt;Please provide your feedback using this form &lt;a href=&#34;https://docs.google.com/a/pivotal.io/forms/d/1qWlLtTuoULomw9DAW0tuhn7YVWXwVILaMTNKfXkcq0s/viewform?usp=send_form&#34;&gt;Feedback Form&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
