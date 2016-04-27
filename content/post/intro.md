@@ -74,3 +74,8 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 
     Rajesh Jain, Platform Architect
     Parker Fleming, Customer Success Director
+
+#### Presentation
+
+
+{{< googleslide "https://docs.google.com/presentation/d/1wNT7il4szv25Tl0KBG4SaetQkwKwyqk_rrQfskDSLgo/embed?start=false&loop=false&delayms=3000" >}}
