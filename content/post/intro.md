@@ -84,6 +84,16 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
     Marcelo Borges, Platform Architect
     Edward Mikuszewski, Platform Architect
 
+#### Presentation
 
 
-{{< speakerdeck 01015ef688264f7da77d572e2d38fc22 >}}
+{{< googleslide "https://docs.google.com/presentation/d/1wNT7il4szv25Tl0KBG4SaetQkwKwyqk_rrQfskDSLgo/embed?start=false&loop=false&delayms=3000" >}}
+
+
+#### Videos
+
+
+{{< youtube V75fE_dxuBQ >}}
+
+
+{{< youtube 7APZD0me1nU >}}
