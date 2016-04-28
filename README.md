@@ -61,7 +61,7 @@ Update the config.toml
 
 ## Step 3: Update intro.md
 
-Update the content\intro.md with your workshop details.
+Update the content\post\intro.md with your workshop details.
 
 Date, Location, Agenda, Speakers and Prerequisites
 
