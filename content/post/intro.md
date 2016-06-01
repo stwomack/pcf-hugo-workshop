@@ -2,20 +2,18 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop in Metro Detroit"
+title = "Welcome to the Pivotal Cloud Foundry Workshop@GM Austin"
 type = "Introduction"
 weight = 1
 +++
 ##### Location
 
-Automation Alley
-2675 Bellingham Dr
-Troy, MI 48083
-
+Corvette 2nd Floor Austin
 
 ##### Date and Time
-Date: April 18 , 2016
-Time: 18 APRIL · 8:00AM—4:00PM
+Date: **April 26 , 2016**
+
+Time: **9:30AM—4:30PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -23,31 +21,28 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 ##### Agenda
 
-        8:00 AM—9:00 AM		Registration and Breakfast
+        Broad Agenda (We will have breaks in between sessions)
 
-        9:00 AM—9:45 AM		Overview of Cloud Native architecture
+        9:30 - 10:30: GM's Current and Desired Model of Software Delivery (3 Use Cases) -- Mano and GM Team
 
-        9:45 AM—10:30 AM	Introduction to Pivotal Cloud Foundry
+        10:30 - 11:30: Pivotal (and VMWare)'s approach to GM's desired state (Fulfilment of Use Cases)- Pivotal
 
-        10:30 AM—10:45 AM	Break
+        == LUNCH ==
 
-        10:45 AM—12:00 PM	Hands-on experience with Pivotal Cloud Foundry
-        (push, bind, scale, monitor)
+        12:30 - 2:00: Walkthrough (and Hands on)  Push/Bind/Scale/Blue Green Deployment of Spring boot apps provided by Pivotal Cloud Foundry hosted by Pivotal
 
-        12:00 PM—12:45 PM	Lunch and Networking
+        2:00 - 3:00: Build Pipelines for continuous deployment, Bosh/Ops Manager walk through and discussion on CI/CD.
 
-        12:45 PM—1:45 PM	Overview of Spring Boot and Spring Cloud
+        3:30 - 4:30: Lessons learned and Scoping for POC - Apps, Infrastructure vSphere, Sizing, Timelines and Project Plan
 
-        1:45 PM—3:30 PM		Hands-on experience developing Spring Boot and Spring Cloud applications
+        4:30 and beyond : Open discussion on various topics - Spring Cloud Services, Security, APM, K8, Docker
+                          Wrap Up, Q&A, Feedback
 
-        3:30 PM—4:00 PM		Wrap Up, Q&A, Feedback
-
-Prior to the event you will be contacted to confirm if you have dietary restrictions.
 
 ##### Prerequisites
 1. Java SDK 1.7+
 
-2. Git from [github.com](https://mac.github.com/)
+2. Git CLI from [github.com](https://mac.github.com/)
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
@@ -57,6 +52,7 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 
 6. Maven for build (https://maven.apache.org/install.html)
 
+7. Vagrant (In case you want to run Concourse CI/CD using Vagrant)
 
 ##### Setup
 
@@ -84,9 +80,20 @@ Prior to the event you will be contacted to confirm if you have dietary restrict
 
 ##### Speakers
 
-    Chris Johnson, Platform Architect
-    Rick Ross, Platform Architect
     Rajesh Jain, Platform Architect
+    Marcelo Borges, Platform Architect
+    Edward Mikuszewski, Platform Architect
 
-##### Workshop Partner
-<a href="http://www.csc.com"><img src="/images/logo-csc.png" alt="CSC" style="width: 60px;"></a>
+#### Presentation
+
+
+{{< googleslide "https://docs.google.com/presentation/d/1wNT7il4szv25Tl0KBG4SaetQkwKwyqk_rrQfskDSLgo/embed?start=false&loop=false&delayms=3000" >}}
+
+
+#### Videos
+
+
+{{< youtube V75fE_dxuBQ >}}
+
+
+{{< youtube 7APZD0me1nU >}}

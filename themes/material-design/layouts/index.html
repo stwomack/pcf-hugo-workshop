@@ -8,8 +8,20 @@
     <div class="row">
           {{ range .Site.Pages}}
             {{ if in .Params.categories "lab" }}
+              {{ if in .Params.tags "cf" }}
+                  {{ partial "labs.html" . }}
+              {{end}}
               {{ if in .Params.tags "spring" }}
-                {{ partial "labs.html" . }}
+                  {{ partial "spring-labs.html" . }}
+              {{end}}
+              {{ if in .Params.tags "node" }}
+                  {{ partial "node-labs.html" . }}
+              {{end}}
+              {{ if in .Params.tags "docker" }}
+                  {{ partial "docker-labs.html" . }}
+              {{end}}
+              {{ if in .Params.tags "concourse" }}
+                  {{ partial "concourse-labs.html" . }}
               {{end}}
             {{end}}
           {{end}}
