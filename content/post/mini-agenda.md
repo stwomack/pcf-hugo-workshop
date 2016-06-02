@@ -15,7 +15,7 @@ Phone:(248) 457-3200
 
 ##### Date and Time
 Date: **June 28 , 2016**  
-Time: **9:30AM—4:30PM**
+Time: **8:00 AM—4:30 PM**
 
 ##### Agenda
 <span style="color: #666666; font-family: Roboto,serif; font-weight: 300; font-size: 20px; line-height: 2.2em">
