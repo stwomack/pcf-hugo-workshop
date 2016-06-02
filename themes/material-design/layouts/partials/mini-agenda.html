@@ -1,6 +1,6 @@
 {{ $baseurl := .Site.BaseURL }}
   {{ range where .Data.Pages "Type"  "Mini-Agenda" }}
-    <div class="card-panel hoverable">
+    <div class="">
       <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
       <p>{{ .Content }}</p>
     </div>

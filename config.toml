@@ -9,7 +9,7 @@ theme="material-design"
 MetaDataFormat = "toml"
 paginate = 9 # To specify a multiple of 3
 disqusShortname = "rjain15" # optional
-copyright = "© Copyright 2016 Pivotal Software, Inc. All Rights Reserved. Sitemap"
+copyright = "© Copyright 2016 Pivotal Software, Inc. All Rights Reserved."
 
 #
 # All parameters below here are optional and can be mixed and matched.
@@ -28,7 +28,7 @@ copyright = "© Copyright 2016 Pivotal Software, Inc. All Rights Reserved. Sitem
     # Default (if omitted) is "Home".
     home = "Home"
 
-    description = "Pivotal Cloud Foundry" # optional
+    description = "Detroit · 28 June · 8:00AM - 4:00PM" # optional
     twitter = "pivotal" # optional
     customer = "detroit"
     # headerCover = "images/headerCover.png" # optional
