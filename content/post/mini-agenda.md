@@ -29,9 +29,9 @@ Space is limited. Reserve your seat today.
 ---
 
 #### Speakers
-+ Rajesh Jain
-+ Chris Johnson
-+ Rick Ross
++ Rajesh Jain - Platform Architect at Pivotal
++ Chris Johnson - Platform Architect at Pivotal
++ Rick Ross - Platform Architect at Pivotal
 
 ---
 
