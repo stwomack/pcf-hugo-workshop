@@ -8,9 +8,9 @@ weight = 1
 
 Join Pivotal technologists for this workshop where you will discover how you can accelerate software development without compromising operations on a modern cloud platform.
 
-In this workshop, you will learn about developing and deploying cloud native applications using production-ready industry best practices. You will also get hands-on experience as you use Pivotal’s Cloud Foundry platform to quickly deploy microservice applications. We will discuss applying cloud native principles using Spring Boot and Spring Cloud.
+In this workshop, you will learn about developing and deploying cloud native applications using production-ready industry best practices. You will also get hands-on experience as you use Pivotal’s Cloud Foundry platform to quickly deploy microservice applications as part of a Continuous Delivery pipeline.
 
-At the conclusion of this workshop attendees take with them the knowledge and experience necessary to start the journey to delivering cloud native applications with the Pivotal Cloud Foundry platform using Spring technologies.
+At the conclusion of this workshop attendees take with them the knowledge and experience necessary to start the journey to delivering cloud native applications with the Pivotal Cloud Foundry platform.
 
 Space is limited. Reserve your seat today.
 <br><br>
