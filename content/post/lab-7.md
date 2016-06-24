@@ -39,6 +39,8 @@ Prerequisites
 
 3. Apigee Account at (https://accounts2.apigee.com/accounts/sign_up)
 
+4. Activate API Management from your dashboard after 
+
 
 
 
@@ -67,8 +69,8 @@ https://github.com/apigee/pivotal-cf-apigee/tree/master/sample-api
 For example, from the command-line you can clone the repository this way:
 
 
-    $git clone https://github.com/apigee/pivotal-cf-apigee.git
-    $cd pivotal-cf-apigee/sample-api
+    $ git clone https://github.com/apigee/pivotal-cf-apigee.git
+    $ cd pivotal-cf-apigee/sample-api
 
 ### Step 2
 ##### Push it to Cloud Foundry
@@ -76,19 +78,22 @@ For example, from the command-line you can clone the repository this way:
 Edit manifest.yml to change the name and host properties to something specific for you.
 *Be sure to name your application `<studentXX>-apigee-demo` *
 
+    ````
     ---
-        applications:
-        - name: <studentXX>-apigee-demo
-        memory: 128M
-        instances: 1
-        host: <studentXX>-apigee-demo
-        path: .
-        buildpack: nodejs_buildpack
-    ---
+    applications:
+    - name: <studentXX>-apigee-demo
+      memory: 128M
+      instances: 1
+      host: <studentXX>-apigee-demo
+      path: .
+      buildpack: nodejs_buildpack
+    ````
 
 Push the app to cloud Foundry
-    $cf push
-    $cf apps // This will list your app. Get the route to your app
+
+    ````bash
+    $ cf push
+    $ cf apps // This will list your app. Get the route to your app
 
 
     Getting apps in org student25-org / space development as instructor...
@@ -98,10 +103,10 @@ Push the app to cloud Foundry
     student28-apigee-demo   started           1/1         128M     1G     student28-apigee-demo.pcf2.cloud.fe.pivotal.io
 
     //The route to your app is https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
-
+    ````
 Send a request to the app route using `curl`
 
-    $curl -k https://<studentXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
+    $ curl -k https://<studentXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
 
     // Output
     {"hello":"hello from cf app"}
