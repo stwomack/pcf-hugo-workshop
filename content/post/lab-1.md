@@ -626,9 +626,9 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
   cf install-plugin %GOPATH%\bin\autopilot.exe
   ````
 
+  Once the plugin is installed ...
+  
   ````
-  $ go get github.com/concourse/autopilot
-  $ cf install-plugin $GOPATH/bin/autopilot
   $ cd ../cities-service (on Windows cd ..\cities-service)
   // Append the build number to the app Name
 
