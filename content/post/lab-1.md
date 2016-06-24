@@ -31,6 +31,8 @@ Prerequisites
 
 6. Maven for build (https://maven.apache.org/install.html)
 
+7. Golang (https://golang.org/dl/)  
+
 
 
 Steps
@@ -159,7 +161,7 @@ The cities-service app requires a database service to store and fetch cities inf
 1. Do a cf push on cities-service. Notice that the push will fail. In the next step you can learn why.
 
     ````bash
-    $ cd ../cities-service
+    $ cd ../cities-service  (on Windows cd ..\cities-service)
     $ cf push <studentXX>-cities-service -i 1 -m 512M -p build/libs/cities-service.jar
     ````
 2. Check the logs to learn more about why the application is not starting
@@ -197,7 +199,7 @@ The cities-service app requires a database service to store and fetch cities inf
     $ cf env <studentXX>-cities-service
     ````
 
-5. Check the MySQL database to see that it now contains data using MySQL Workbench or a similar tool.
+5. Check the MySQL database through the `Manage` link in the App Manager to see that it now contains data. 
 
 
 
@@ -219,6 +221,12 @@ Next, lets push the cities-service app with a manifest to help automate deployme
 
     ````bash
     $ nano manifest.service
+    ````
+
+    On Windows 
+    
+    ````bash
+    `> notepad.exe manfiest.service
     ````
 
 3. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
@@ -243,11 +251,12 @@ Next, lets push the cities-service app with a manifest to help automate deployme
 
     ````bash
        // This will list your apps and the last column is the route.
-       $cf apps
+       $ cf apps
           url: cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io  
-          $ curl -i http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io
+          // Note - Use HTTPS
+       $ curl -i -k https://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io
     ````
-    We must be able to access your application at  http://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io for the next steps to work properly.
+    We must be able to access your application at https://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io for the next steps to work properly.
 
 __NOTE__
 
@@ -266,9 +275,9 @@ To tail the logs of your application perform this command:
   ````
 
 
-Notice that nothing is showing because there isn't' any activity. Use the following curl command to see the application working:
+Notice that nothing is showing because there isn't' any activity. Bring up another terminal/console window and use the following curl command to see the application working:
   ````bash
-  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/
+  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/
   ````
 
 For other ways of viewing logs check out the documentation here: [Streaming Logs](http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view)
@@ -415,15 +424,15 @@ Once the second instance as started, scale the app back down to one instance.
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities
+  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/162
+  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/49
   ````
 
   ````bash
-  $ curl -i http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
+  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -451,7 +460,7 @@ The goal of this exercise is to use what you have learned to deploy the `cities-
 ##### Build the Cities UI and Cities Client App
 
 
-The cities-ui and cities-client can be both built at once by running `./gradlew assemble` in the parent directory. Run this command now.
+The cities-ui and cities-client can be both built at once by running `./gradlew assemble` in the parent directory. Run this command now if you didn't run this in step # 2 above.
 
 
 ### Step 14
@@ -470,7 +479,7 @@ In this section we will create a backend microservice end point for cities-servi
 
   $ cf create-user-provided-service <studentXX>-cities-ws -p "citiesuri"
 
-  citiesuri>   http://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/
+  citiesuri>   https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/
 
   Creating user provided service....
   ````
@@ -480,12 +489,12 @@ In this section we will create a backend microservice end point for cities-servi
 ##### Deploy cities-ui project
 
 
-A `manifest.yml` is included in the cities-ui app.  Edit this manifest with your initials and add the service binding to your cities-service
+A `manifest.yml` is included in the cities-ui app.  Edit this manifest with your student number and add the service binding to your cities-service
 
 
   ````bash
-  $cd cities-ui
-  $nano manifest.yml (Or your favorite editor)
+  $ cd cities-ui
+  $ nano manifest.yml (Or your favorite editor) (on Windows use notepad manfiest.yml)
 
   ---
   applications:
@@ -520,7 +529,7 @@ System-Provided:
    {
     "credentials": {
      "tag": "cities",
-     "uri": "http://rj-cities-service.pcf2.cloud.fe.pivotal.io/"
+     "uri": "https://rj-cities-service.pcf2.cloud.fe.pivotal.io/"
     },
     "label": "user-provided",
     "name": "cities-ws",
@@ -604,21 +613,35 @@ In this section we are going to do a green-blue deployment using cf plugin `auto
 
 Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does blue green deployment, albeit it takes a different approach to other zero-downtime plugins. It does not perform any complex route re-mappings instead it leans on the manifest feature of the Cloud Foundry CLI. The method also has the advantage of treating a manifest as the source of truth and will converge the state of the system towards that. This makes the plugin ideal for continuous delivery environments.
 
-  ````bash
+  On a Mac
 
+  ````bash
   $ mkdir $HOME/go
   $ export GOPATH=$HOME/go
   $ export PATH=$PATH:$GOPATH/bin
-
   $ go get github.com/concourse/autopilot
   $ cf install-plugin $GOPATH/bin/autopilot
-  $ cd cities-service
-  // Append the build number to the app Name
-
-  $ cf zero-downtime-push <studentXX>-cities-service
+  ````
+  
+  On Windows:
+  
+  ````bash
+  md c:\gopath 
+  set GOPATH=c:\gopath
+  go get github.com/concourse/autopilot
+  cf install-plugin %GOPATH%\bin\autopilot.exe
   ````
 
-If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory
+  ````
+  $ go get github.com/concourse/autopilot
+  $ cf install-plugin $GOPATH/bin/autopilot
+  $ cd ../cities-service (on Windows cd ..\cities-service)
+  // Append the build number to the app Name
+
+  $ cf zero-downtime-push <studentXX>-cities-service -p manifest.yml
+  ````
+
+If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory which only works on a Mac
 
     Usage: blue-green.sh <app-name> <build-number> <domain>
 
