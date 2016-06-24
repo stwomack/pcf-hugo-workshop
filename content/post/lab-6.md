@@ -59,10 +59,11 @@ Learn how to
 ### Step 1
 ##### Configure your Concourse.CI server
 
-Download the Concourse CI server and boot up using vagrant. This step will take some time, you can do this prior to the start of the workshop presentation.
+If you have a Mac, you can download the Concourse CI server and boot up using vagrant. This step will take some time, you can do this prior to the start of the workshop presentation.
 
 ````bash
-$ mkdir ciworkshop && cd ciworkshop // ci workshop working directory
+$ mkdir ciworkshop 
+& cd ciworkshop
 $ vagrant init concourse/lite # creates ./Vagrantfile
 $ vagrant up                  # downloads the box and spins up the VM
 ````
@@ -74,6 +75,7 @@ If you're on Linux or OS X, you will have to `chmod +x` the downloaded binary an
 
 Next, lets target and login to the Concourse server
 
+Locally use this
 ````bash
 $ fly -t lite login -c http://192.168.100.4:8080
 ````
@@ -177,7 +179,7 @@ Now you have your pipeline defined, it is ready to be uploaded to the CI Server.
 
 
 ````
-$fly -t lite set-pipeline -p flight-school -c ci/pipeline.yml -l ~/.concourse/flight-school-properties.yml
+$ fly -t lite set-pipeline -p flight-school -c ci/pipeline.yml -l ~/.concourse/flight-school-properties.yml
 ````
 
 
@@ -186,12 +188,12 @@ $fly -t lite set-pipeline -p flight-school -c ci/pipeline.yml -l ~/.concourse/fl
 
 Test the tasks manually before you run the whole Pipelines
 ````
-fly -t lite execute -c ci/tasks/build.yml
+$ fly -t lite execute -c ci/tasks/build.yml
 ````
 
 
 ````
-fly -t lite trigger-job --job flight-school/test-app
+$ fly -t lite trigger-job --job flight-school/test-app
 ````
 
 
