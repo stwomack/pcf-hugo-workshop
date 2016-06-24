@@ -33,7 +33,9 @@ Prerequisites
 
 3. Vagrant (https://vagrantup.com/) to run Concourse locally
 
-4. Fly cli. The fly tool is a command line interface to Concourse, it available when you bring up Concourse
+4. VirtualBox (https://www.virtualbox.org/wiki/Downloads) 
+
+5. Fly cli. The fly tool is a command line interface to Concourse, it available when you bring up Concourse
 
 
 
@@ -60,9 +62,9 @@ Learn how to
 Download the Concourse CI server and boot up using vagrant. This step will take some time, you can do this prior to the start of the workshop presentation.
 
 ````bash
-$mkdir ciworkshop && cd ciworkshop // ci workshop working directory
-$vagrant init concourse/lite # creates ./Vagrantfile
-$vagrant up                  # downloads the box and spins up the VM
+$ mkdir ciworkshop && cd ciworkshop // ci workshop working directory
+$ vagrant init concourse/lite # creates ./Vagrantfile
+$ vagrant up                  # downloads the box and spins up the VM
 ````
 The web server will be running at http://192.168.100.4:8080
 
@@ -83,8 +85,8 @@ $ fly -t lite login -c http://192.168.100.4:8080
 We have an existing project `flight-school` in a git repo, which we can clone and use for our first pipeline.
 
 ````
-$git clone https://github.com/rjain-pivotal/flight-school.git
-$cd flight-school\ci
+$ git clone https://github.com/rjain-pivotal/flight-school.git
+$ cd flight-school\ci
 
 ````
 
@@ -97,7 +99,7 @@ Make a local copy of the flight-school-properties-sample.yml
 
 ````
 mkdir ~/.concourse
-cp ci/flight-school-properties-sample.yml ~/.concourse/flight-school-properties.yml
+cp flight-school-properties-sample.yml ~/.concourse/flight-school-properties.yml
 chmod 600 ~/.concourse/flight-school-properties.yml
 ````
 
@@ -106,11 +108,11 @@ Now edit the ~/.concourse/flight-school-properties.yml
 ````
 github-uri: https://github.com/.../flight-school.git
 github-branch: master
-cf-api: https://api.local.micropcf.io
-cf-username: admin
-cf-password: admin
-cf-org: micropcf-org
-cf-space: micropcf-space
+cf-api: https://api.pcf2.cloud.fe.pivotal.io
+cf-username: <studentX>
+cf-password: <password>
+cf-org: <studentX>-org
+cf-space: development
 cf-manifest-host: pcfdemo-ci
 
 ````
@@ -152,6 +154,11 @@ This pipeline has two resources and a single job. The resource `flight-school` i
 The single job in the pipeline `test-app` gets the source code from git on any commits to the repo, and triggers the task defined in the `build.yml`. Next, on completion of this task, it puts the output artifact in to the staging-app resource using the manifest file defined for `cf push`
 
 Edit the manifest file to reflect your app name
+
+````bash
+cd ..
+nano manifest.yml 
+````
 
 ````
 name: <student-id>-flight-school
