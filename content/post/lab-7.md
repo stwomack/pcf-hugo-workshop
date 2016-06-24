@@ -127,7 +127,7 @@ Get the Org Name, Env, User Id, Password
 
 Create the Apigee service instance using the Apigee Marketplace service
 
-    $cf marketplace
+    $ cf marketplace
 
     Getting services from marketplace in org student25-org / space development as instructor...
     OK
@@ -136,7 +136,12 @@ Create the Apigee service instance using the Apigee Marketplace service
     apigee-edge                   org                       Apigee Edge API Platform
 
     // Create a unique name to your service, replace <studentXXX>-api-connectors-service with your studentID.
-    $cf create-service apigee-edge org <studentXXX>-api-connectors-service -c '{"org":"<your org>", "env":"<your env>", "user":"<your user id>", "pass":"<your password>", "host": "apigee.net", "hostpattern": "${apigeeOrganization}-${apigeeEnvironment}.${proxyHost}"}'
+    $ cf create-service apigee-edge org <studentXXX>-api-connectors-service -c '{"org":"<your org>", "env":"<your env>", "user":"<your user id>", "pass":"<your password>", "host": "apigee.net", "hostpattern": "${apigeeOrganization}-${apigeeEnvironment}.${proxyHost}"}'
+    
+    // windows syntax
+    cf create-service apigee-edge org <studentXXX>-api-connectors-service -c "{\"org\":\"<your org>\", \"env\":\"<your env>\", \"user\":\"<your user id>\", \"pass\":\"<your password>\", \"host\": \"apigee.net\", \"hostpattern\": \"${apigeeOrganization}-${apigeeEnvironment}.${proxyHost}\"}"
+
+    // NOTE: Only replace the values above that are enclosed in <brackets>. The first org listed actually refers to the Apigee-edge org plan.
 
     //The JSON specifies the Apigee Edge details needed to route traffic:
 
@@ -153,7 +158,7 @@ Use the bind-route-service command to create an Edge API proxy and bind your Clo
 
 This tells the Go router to redirect requests to the Apigee Edge proxy before sending them to the Cloud Foundry application.
 
-    $cf bind-route-service pcf2.cloud.fe.pivotal.io <studentXXX>-api-connectors-service --hostname <studentXX>-apigee-demo
+    $ cf bind-route-service pcf2.cloud.fe.pivotal.io <studentXXX>-api-connectors-service --hostname <studentXX>-apigee-demo
 
 ### Step 4
 ##### Send Requests and Watch Apigee Edge Service
@@ -222,3 +227,5 @@ Finally, Stop the Tracing Session
 
     curl -k https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
 {"fault":{"faultstring":"Spike arrest violation. Allowed rate : 3pm","detail":{"errorcode":"policies.ratelimit.SpikeArrestViolation"}}}
+
+Notice the error coming back from the curl command. 
