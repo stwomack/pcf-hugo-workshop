@@ -632,7 +632,7 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
   $ cd ../cities-service (on Windows cd ..\cities-service)
   // Append the build number to the app Name
 
-  $ cf zero-downtime-push <studentXX>-cities-service -p manifest.yml
+  $ cf zero-downtime-push <studentXX>-cities-service -f manifest.yml
   ````
 
 If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory which only works on a Mac
