@@ -184,7 +184,7 @@ Click the Trace tab, the click the Start Trace Session button.
 
 Back at the command line, run the cURL command you ran earlier -- the one that makes a request to the Cloud Foundry application you pushed.
 
-    $curl -k https://<studentXXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
+    $ curl -k https://<studentXXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
 
 As before, the console will display the app's response.
 
@@ -223,9 +223,9 @@ Finally, Stop the Tracing Session
 
 5. Now, run multiple cURL commands from the command line. Run the cURL command you ran earlier -- the one that makes a request to the Cloud Foundry application you pushed, more than three times in a minute
 
-    $curl -k https://<studentXXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
+    $ curl -k https://<studentXXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
 
-    curl -k https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
+    $ curl -k https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
 {"fault":{"faultstring":"Spike arrest violation. Allowed rate : 3pm","detail":{"errorcode":"policies.ratelimit.SpikeArrestViolation"}}}
 
 Notice the error coming back from the curl command. 
