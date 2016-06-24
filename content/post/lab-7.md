@@ -39,7 +39,7 @@ Prerequisites
 
 3. Apigee Account at (https://accounts2.apigee.com/accounts/sign_up)
 
-4. Activate API Management from your dashboard after 
+4. Activate API Management from your dashboard after clicking on activation email
 
 
 
@@ -78,7 +78,6 @@ For example, from the command-line you can clone the repository this way:
 Edit manifest.yml to change the name and host properties to something specific for you.
 *Be sure to name your application `<studentXX>-apigee-demo` *
 
-    ````
     ---
     applications:
     - name: <studentXX>-apigee-demo
@@ -87,11 +86,9 @@ Edit manifest.yml to change the name and host properties to something specific f
       host: <studentXX>-apigee-demo
       path: .
       buildpack: nodejs_buildpack
-    ````
 
 Push the app to cloud Foundry
 
-    ````bash
     $ cf push
     $ cf apps // This will list your app. Get the route to your app
 
@@ -103,7 +100,7 @@ Push the app to cloud Foundry
     student28-apigee-demo   started           1/1         128M     1G     student28-apigee-demo.pcf2.cloud.fe.pivotal.io
 
     //The route to your app is https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
-    ````
+
 Send a request to the app route using `curl`
 
     $ curl -k https://<studentXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
