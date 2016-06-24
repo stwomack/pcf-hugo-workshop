@@ -2,13 +2,10 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop@GM Austin"
+title = "Welcome to the Pivotal Cloud Foundry Workshop@Detroit"
 type = "Introduction"
 weight = 1
 +++
-##### Location
-
-Corvette 2nd Floor Austin
 
 ##### Date and Time
 Date: **May 9 , 2016**
@@ -19,30 +16,19 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 <!--more-->
 
-##### Agenda
 
-Broad Agenda (We will have breaks in between sessions)
+#### Agenda
+|  |  |
+|------|------|
+| **8:00 AM–9:00 AM** | Registration and Breakfast  |
+| **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
+| **12:00 PM–1:00 PM** | Lunch and Networking  |
+| **1:00 PM–2:00 PM** |Routing Services and API Management using Apigee Service  |
+| **2:15 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
 
-    9:30 - 10:30   Walkthrough the Push/Bind/Scale
-
-    10:30 - 11:00  Setting up Cloud Foundry / CLI and Pre-Requisites on Developer laptops
-
-    11:00 - 12:30  Hands on Push/Bind/Scale/Blue Green Deployment
-
-    ==== LUNCH ====
-
-    1:30-4:00 : GM App Classification and hands-on push to platform
-
-    4:00 and beyond : Open discussion on various topics Docker, K8, Monitoring on Platform
-
-
-
-Goals and Outcomes:
-
-    Walk through App Classification and Decision tree​ for Pivotal Cloud Foundry​
-    Hands on experience doing rapid application deployment, consumption of services and blue-green deployments
-
-
+---
 
 ##### Prerequisites
 1. Java SDK 1.7+
@@ -57,7 +43,10 @@ Goals and Outcomes:
 
 6. Maven for build (https://maven.apache.org/install.html)
 
-7. Vagrant (In case you want to run Concourse CI/CD using Vagrant)
+7. Vagrant
+
+8. Virtual box
+
 
 ##### Setup
 
@@ -75,6 +64,7 @@ Goals and Outcomes:
 5. Note: Tiles preinstalled in the PCF Workshop environment which we will be using the workshop. You don't need any setup for these tiles.
 
           ER
+          Apigee
           Spring Cloud Services
           RabbitMQ
           MySQL
@@ -84,7 +74,7 @@ Goals and Outcomes:
           GitLab
           JFrog Artifactory
           Cloud Bees Jenkins
-          
+
 
 
 ##### Speakers
