@@ -3,7 +3,7 @@
 Categories = ["lab"]
 Tags = ["cf","microservices","cloudfoundry"]
 date = "2016-03-15T14:54:11-04:00"
-title = "Lab 1: Build and Deploy Apps on PCF"
+title = "Lab : Build and Deploy Apps on PCF"
 weight = 2
 
 +++
@@ -199,7 +199,7 @@ The cities-service app requires a database service to store and fetch cities inf
     $ cf env <studentXX>-cities-service
     ````
 
-5. Check the MySQL database through the `Manage` link in the App Manager to see that it now contains data. 
+5. Check the MySQL database through the `Manage` link in the App Manager to see that it now contains data.
 
 
 
@@ -224,8 +224,8 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     $ nano manifest.service
     ````
 
-    On Windows 
-    
+    On Windows
+
     ````bash
     `> notepad.exe manfiest.service
     ````
@@ -616,18 +616,18 @@ Cloud Foundry plugin [Autopilot](https://github.com/concourse/autopilot) does bl
   $ go get github.com/concourse/autopilot
   $ cf install-plugin $GOPATH/bin/autopilot
   ````
-  
+
   On Windows:
-  
+
   ````bash
-  md c:\gopath 
+  md c:\gopath
   set GOPATH=c:\gopath
   go get github.com/concourse/autopilot
   cf install-plugin %GOPATH%\bin\autopilot.exe
   ````
 
   Once the plugin is installed ...
-  
+
   ````
   $ cd ../cities-service (on Windows cd ..\cities-service)
   // Append the build number to the app Name

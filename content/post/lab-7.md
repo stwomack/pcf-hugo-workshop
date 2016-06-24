@@ -2,8 +2,8 @@
 Categories = ["lab"]
 Tags = ["apigee","cloudfoundry"]
 date = "2016-06-24T14:54:22-04:00"
-title = "Lab 7: Routing Services and API Management using Apigee Service"
-weight = 3
+title = "Lab : Routing Services and API Management using Apigee Service"
+weight = 4
 +++
 
 
