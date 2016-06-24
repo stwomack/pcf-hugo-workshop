@@ -148,10 +148,10 @@ The cities-service app requires a database service to store and fetch cities inf
     You can create the service from the `cli` or launch the App Manager-> Select the Development Space [https://apps.pcf2.cloud.fe.pivotal.io](https://apps.pcf2.cloud.fe.pivotal.io) and login.
 
     Navigate to the marketplace and see the available services. Here you will create the service using the CLI.
-  ````bash
+    ````bash
     $ cf marketplace // check if mysql service is available
     $ cf create-service p-mysql 100mb-dev <studentXX>-cities-db
-  ````
+    ````
 
 3. Launch the DB console via the `Manage` link in the App Manager.  Note the database is empty.
 
@@ -212,6 +212,7 @@ __NOTE__
 <br>
 
 ### Step 8
+=======
 ##### Binding Services via the Manifest
 
 Next, lets push the cities-service app with a manifest to help automate deployment.
@@ -231,22 +232,15 @@ Next, lets push the cities-service app with a manifest to help automate deployme
 
 3. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
 *Be sure to name your application '<studentXX>-cities-service' *
-4. Add the services binding `<YOUR INITIALS>-cities-db` to your deployment manifest for cities-service .
-5. Now, manually unbind the service and re-push your app using the manifest.
-
-    ````bash
-    $ cf unbind-service <studentXX>-cities-service <studentXX>-cities-db
-    ````
-
-
-6. Test your manifest by re-pushing your app with no parameters:
+4. Add the services binding `<studentXX>-cities-db` to your deployment manifest for cities-service .
+5. Test your manifest by re-pushing your app with no parameters:
 
     ````bash
     $ cf push -f manifest.service
     ````
 
     Notice that using a manifest, you have moved the command line parameters (number of instances, memory, etc) into the manifest.
-7. Verify you can access your application via a curl request:
+6. Verify you can access your application via a curl request:
    You will have to get the route to your app
 
     ````bash
@@ -264,7 +258,7 @@ __NOTE__
 In this exercise we have used a different naming convention.
 
 <br>
-### Step 9
+### Step 7
 ##### Health, logging & events via the CLI
 
 Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.
@@ -310,7 +304,7 @@ You will get detailed output of the health
   ````
 
 <br>
-### Step 10
+### Step 8
 ##### Environment variables
 
 View the environment variable and explanation of [VCAP Env](http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env)
@@ -387,7 +381,7 @@ You will get the output similar to this on your terminal
   ````
 
 
-### Step 11
+### Step 9
 ##### Scaling apps
 
 Applications can be scaled via the command line or the console. When we talk about scale, there are two different types of scale: Vertical and Horizontal. Read [Scaling Apps](http://docs.cloudfoundry.org/devguide/deploy-apps/cf-scale.html) doc on more details on scaling applications.
@@ -418,7 +412,7 @@ To check the status of your applications you can check from the command line to 
 Once the second instance as started, scale the app back down to one instance.
 
 <br>
-### Step 12
+### Step 10
 ##### Verify the app from the Console
 
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:

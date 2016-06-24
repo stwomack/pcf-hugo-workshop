@@ -39,7 +39,7 @@ Prerequisites
 
 Steps
 --
-In this workshop we are going to follow these steps to use the circuit-breaker in a Cloud Native Spring Boot app on Cloud foundry using the Spring Cloud Circuit Breaker Service.
+In this workshop we are going to follow these steps to use the Concourse.CI to build pipelines and trigger pipelines to continously deploy code on Cloud Foundry. 
 
 
 Learn how to
