@@ -110,6 +110,7 @@ chmod 600 ~/.concourse/flight-school-properties.yml
 ````
 
 Now edit the ~/.concourse/flight-school-properties.yml
+Be sure to point to the correct github-uri. The simplest uri to use is the same from the clone command in step 2.
 
 ````
 github-uri: https://github.com/.../flight-school.git
@@ -199,6 +200,8 @@ $ fly -t aws execute -c ci/tasks/build.yml
 
 ````
 $ fly -t aws pipelines // This will list all the pipelines
+
+$ fly -t aws unpause-pipeline -p studentXXX-flight-school  // this will unpause the pipeline. You can also press play in the web ui
 
 $ fly -t aws trigger-job --job studentXXX-flight-school/test-app
 ````
