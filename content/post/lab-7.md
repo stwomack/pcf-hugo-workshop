@@ -137,7 +137,7 @@ Create the Apigee service instance using the Apigee Marketplace service
 
     // Create a unique name to your service, replace <studentXXX>-api-connectors-service with your studentID.
     $ cf create-service apigee-edge org <studentXXX>-api-connectors-service -c '{"org":"<your org>", "env":"<your env>", "user":"<your user id>", "pass":"<your password>", "host": "apigee.net", "hostpattern": "${apigeeOrganization}-${apigeeEnvironment}.${proxyHost}"}'
-    
+
     // windows syntax
     cf create-service apigee-edge org <studentXXX>-api-connectors-service -c "{\"org\":\"<your org>\", \"env\":\"<your env>\", \"user\":\"<your user id>\", \"pass\":\"<your password>\", \"host\": \"apigee.net\", \"hostpattern\": \"${apigeeOrganization}-${apigeeEnvironment}.${proxyHost}\"}"
 
@@ -204,28 +204,29 @@ Finally, Stop the Tracing Session
 ### Step 5
 ##### Configure API Policies
 
-1. Go the Apigee Management Console and Switch to the Development Menu.
+Go the Apigee Management Console and Switch to the Development Menu.
 
 <img src="/images/apigee-7.png" alt="Apigee Edge Service" style="width: 100%;"/>
 
 
 
-2. Click on Add Step, this will pop-up a list of Apigee Policies
+Click on Add Step, this will pop-up a list of Apigee Policies
 
 <img src="/images/apigee-8.png" alt="Apigee Edge Service" style="width: 100%;"/>
 
 
-3. Select Spike Arrest, this policy will arrest if there is a spike in load from the same session. Change the Rate from default 30 fps to 3 fpm (3 Requests per minute) to trigger the policy.
+Select Spike Arrest, this policy will arrest if there is a spike in load from the same session. Change the Rate from default 30 fps to 3 fpm (3 Requests per minute) to trigger the policy.
+
 
 <img src="/images/apigee-9.png" alt="Apigee Edge Service" style="width: 100%;"/>
 
-4. Click Save
+Click Save
 
-5. Now, run multiple cURL commands from the command line. Run the cURL command you ran earlier -- the one that makes a request to the Cloud Foundry application you pushed, more than three times in a minute
+Now, run multiple cURL commands from the command line. Run the cURL command you ran earlier -- the one that makes a request to the Cloud Foundry application you pushed, more than three times in a minute
 
     $ curl -k https://<studentXXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
 
-    $ curl -k https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
-{"fault":{"faultstring":"Spike arrest violation. Allowed rate : 3pm","detail":{"errorcode":"policies.ratelimit.SpikeArrestViolation"}}}
-
-Notice the error coming back from the curl command. 
+Notice the error coming back from the curl command.
+=======
+    $curl -k https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
+      {"fault":{"faultstring":"Spike arrest violation. Allowed rate : 3pm","detail":{"errorcode":"policies.ratelimit.SpikeArrestViolation"}}}
