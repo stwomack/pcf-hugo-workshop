@@ -210,23 +210,28 @@ Go the Apigee Management Console and Switch to the Development Menu.
 
 
 
+#####  Add Policy
 Click on Add Step, this will pop-up a list of Apigee Policies
 
 <img src="/images/apigee-8.png" alt="Apigee Edge Service" style="width: 100%;"/>
 
 
-Select Spike Arrest, this policy will arrest if there is a spike in load from the same session. Change the Rate from default 30 fps to 3 fpm (3 Requests per minute) to trigger the policy.
+##### Select Spike Arrest
+
+This policy will arrest if there is a spike in load from the same session. Change the Rate from default 30 fps to 3 fpm (3 Requests per minute) to trigger the policy.
 
 
 <img src="/images/apigee-9.png" alt="Apigee Edge Service" style="width: 100%;"/>
 
-Click Save
+#####  Click Save
 
 Now, run multiple cURL commands from the command line. Run the cURL command you ran earlier -- the one that makes a request to the Cloud Foundry application you pushed, more than three times in a minute
 
     $ curl -k https://<studentXXX>-apigee-demo.pcf2.cloud.fe.pivotal.io
 
+##### Spike Error
+
 Notice the error coming back from the curl command.
-=======
+
     $curl -k https://student28-apigee-demo.pcf2.cloud.fe.pivotal.io
       {"fault":{"faultstring":"Spike arrest violation. Allowed rate : 3pm","detail":{"errorcode":"policies.ratelimit.SpikeArrestViolation"}}}
