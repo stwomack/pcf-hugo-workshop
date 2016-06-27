@@ -245,7 +245,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     https://github.com/rjain-pivotal/PCF-demo
     ````
 
-2. Make sure you have an S3 bucket configured to save your artifacts and the IAM user credentials to access the bucket.
+2.  We have S3 buckets configured to save your artifacts and the IAM user credentials to access the bucket. This will be given during the workshop.
 
 3. Configure the properties files and assign it to the pipeline
 
@@ -258,9 +258,9 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     s3-access-key-id: SAMPLEDF99FSWEBF9DW9  # AWS or S3 compatible access key id
     s3-secret-access-key: sampleaxfdpiA98FG8u7ahd08Sdgf8AFG8gh8S0F  # AWS or S3 compatible secret access key
     s3-endpoint: s3.amazonaws.com
-    s3-bucket-version: pcfdemo-releases
-    s3-bucket-releases: pcfdemo-releases
-    s3-bucket-release-candidates: pcfdemo-release-candidates
+    s3-bucket-version: studentXXX-pcfdemo-releases
+    s3-bucket-releases: studentXXX-pcfdemo-releases
+    s3-bucket-release-candidates: studentXXX-pcfdemo-release-candidates
     maven-opts: # -Xms256m -Xmx512m
     maven-config: # -s path/to/settings.xml
     cf-api: https://api.pcf2.cloud.fe.pivotal.io
