@@ -80,8 +80,8 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 ##### Speakers
 
     Rajesh Jain, Platform Architect
-    Marcelo Borges, Platform Architect
     Chris Johnson, Platform Architect
+    Rick Ross, Platform Architect
 
 #### Presentation
 
