@@ -69,11 +69,13 @@ Learn how to
    userid: pivotal
    password: <distributed in the workshop>
 
-   Download the fly cli from the main page based on your OS
+   Download the fly cli from the main page based on your OS or from the bottom right corner
 
    <img src="/images/concourse-4.png" alt="Concourse FLY" style="width: 100%;"/>
 
+  OR
 
+   <img src="/images/concourse-9.png" alt="Concourse FLY" style="width: 100%;"/>
 2. Open a cmd/terminal and target the concourse server.
    We will call our AWS CI Server as `aws`
 
