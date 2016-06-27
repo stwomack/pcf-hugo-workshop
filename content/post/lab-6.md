@@ -245,9 +245,18 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     https://github.com/rjain-pivotal/PCF-demo
     ````
 
-2.  We have S3 buckets configured to save your artifacts and the IAM user credentials to access the bucket. This will be given during the workshop.
+2. Change the manifest.yml to in the PCF-demo directory to reflect your studentID
 
-3. Configure the properties files and assign it to the pipeline
+    ````
+    applications:
+      name: studentXXX-pcfdemo
+      memory: 512M
+      instances: 1
+      host: studentXXX-pcfdemo
+      path: ./target/pcfdemo.war
+    ````
+3. We have S3 buckets configured to save your artifacts and the IAM user credentials to access the bucket. This will be given during the workshop.
+4. Configure the properties files and assign it to the pipeline
 
     Copy the pcfdemo-properties-sample.yml to your ~/.concourse/pcfdemo-properties.yml
     Change the cf properties, github properties and s3 properties.
@@ -273,25 +282,24 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
 
 
 
-4. Set the pipeline
+5. Set the pipeline
 
 
     ````
     fly -t aws set-pipeline -p studentXXX-pcfdemo -c ci/pipeline.yml -l ~/.concourse/pcfdemo-properties.yml
     ````
 
-5. List all the pipelines
+6. List all the pipelines
 
     ````
     fly -t aws pipelines
-    //
-    targeting https://52.86.28.231
+    //targeting https://52.86.28.231
     name                     paused
     student20-flight-school  yes   
     student25-pcfdemo        yes   
     ````
 
-6. Trigger the pipeline using the Web UI
+7. Trigger the pipeline using the Web UI
 
     Click on the "Burger" button on the top left corner. This will bring up the Pipelines. Click on you pipeline and press play.
 
@@ -304,7 +312,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
 
 
 
-7. Call the Ship-it step
+8. Call the Ship-it step
 
     ````
     fly -t aws trigger-job -j student25-pcfdemo/ship-it
@@ -315,7 +323,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     <img src="/images/concourse-3.png" alt="Concourse CI" style="width: 100%;"/>
 
 
-8. Open the app in browser
+9. Open the app in browser
 
     ````
     cf apps // Get the App Names and URL
