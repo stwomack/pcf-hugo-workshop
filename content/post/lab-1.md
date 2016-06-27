@@ -587,14 +587,8 @@ In this part of the workshop we created a cities-ui app which is loosely bound a
 In this section we are going to do a green-blue deployment using cf plugin `autopilot`. The same can be done by executing cf commands.
 
 <br>
+
 ### Step 18
-##### Delete the unversioned app and the route
-
-  ````bash
-  cf delete -r <studentXX>-cities-service
-  ````
-
-### Step 19
 ##### Process of Blue Green Deployment
 
   Review the CF Document for blue green deployment link:https://docs.pivotal.io/pivotalcf/devguide/deploy-apps/blue-green.html[Using Blue-Green Deployment to Reduce Downtime and Risk]

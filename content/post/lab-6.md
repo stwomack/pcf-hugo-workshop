@@ -115,11 +115,11 @@ Now edit the ~/.concourse/flight-school-properties.yml
 github-uri: https://github.com/.../flight-school.git
 github-branch: master
 cf-api: https://api.pcf2.cloud.fe.pivotal.io
-cf-username: <studentX>
+cf-username: <studentXXX>
 cf-password: <password>
-cf-org: <studentX>-org
+cf-org: <studentXXX>-org
 cf-space: development
-cf-manifest-host: pcfdemo-ci
+cf-manifest-host: <studentXXX>-flight-school-ci
 
 ````
 
@@ -257,12 +257,12 @@ Select the pipeline from the Web UI and double click on the test-app stage. This
     s3-bucket-release-candidates: pcfdemo-release-candidates
     maven-opts: # -Xms256m -Xmx512m
     maven-config: # -s path/to/settings.xml
-    cf-api: https://api.local.micropcf.io
-    cf-username: admin
-    cf-password: admin
-    cf-org: micropcf-org
-    cf-space: micropcf-space
-    cf-manifest-host: pcfdemo-ci
+    cf-api: https://api.pcf2.cloud.fe.pivotal.io
+    cf-username: studentXXX
+    cf-password: studentXXX-password
+    cf-org: studentXXX-org
+    cf-space: development
+    cf-manifest-host: studentXXX-pcfdemo-ci
     ````
 
 
@@ -297,9 +297,27 @@ Select the pipeline from the Web UI and double click on the test-app stage. This
     <img src="/images/concourse-8.png" alt="Concourse CI" style="width: 100%;"/>
 
 
+
+7. Call the Ship-it step
+
+    ````
+    fly -t aws trigger-job -j student25-pcfdemo/ship-it
+    ````
+
     Once the complete Pipeline finishes you should be able to see all the steps in green.
 
     <img src="/images/concourse-3.png" alt="Concourse CI" style="width: 100%;"/>
+
+
+8. Open the app in browser
+
+    ````
+    cf apps // Get the App Names and URL
+    ````
+
+    Open a browser and check the app load. (https://studentXXX-pcfdemo-ci.pcf2.cloud.fe.pivotal.io)
+
+    <img src="/images/concourse-10.png" alt="Concourse CI" style="width: 100%;"/>
 
 
 ## Part 3: Optional Installing Concourse Locally
@@ -327,3 +345,5 @@ Locally use this
 ````bash
 $ fly -t lite login -c http://192.168.100.4:8080
 ````
+
+You can repeat **Part 1** and **Part 2**, but make sure you change the target from `aws` to `lite` in the fly cli commands
