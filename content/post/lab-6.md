@@ -228,8 +228,11 @@ Select the pipeline from the Web UI and double click on the test-app stage. This
 
 <img src="/images/concourse-6.png" alt="Concourse FLY" style="width: 100%;"/>
 
+To delete the pipeline, run the following command:
 
-
+````
+$ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE the pipeline from Concourse
+````
 
 ## Part 2: Running a real world pipeline
 
