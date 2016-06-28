@@ -31,21 +31,28 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 ---
 
 ##### Prerequisites
-1. Java SDK 1.7+
+1. Java SDK 1.7+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-2. Git CLI from [github.com](https://mac.github.com/)
+          Set the JAVA_HOME variable to the installation dir, in case it is not automatically set
+
+2. Git CLI for [Windows](https://github.com/git-for-windows/git/releases/download/v2.9.0.windows.1/Git-2.9.0-64-bit.exe)
+
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
-4. Curl from [curl](http://curl.haxx.se/)
+4. Curl for [Windows](http://winampplugins.co.uk/curl/)
+   Or for [Mac] (http://pdb.finkproject.org/pdb/package.php/curl)
 
 5. Use Workshop PCF Env or Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
 6. Maven for build (https://maven.apache.org/install.html)
 
-7. Vagrant
-
-8. Virtual box
+          Set the M2_HOME in case it is not automatically set
+          Windows: set M2_HOME=<directory where Maven is installed>
+          e.g.
+          set M2_HOME=C:\Program Files\apache-maven-3.1.0-bin\apache-maven-3.1.0
+7. Optional Vagrant
+8. Optional Virtual box
 
 
 ##### Setup
