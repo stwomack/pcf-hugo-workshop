@@ -46,10 +46,16 @@ nav ul li a {
 }
 
 #index-banner {
-  background: url(https://d1fto35gcfffzn.cloudfront.net/images/home/bg-cloud-native-hero.jpg) no-repeat center -500px #000;
+  background: url(https://d1fto35gcfffzn.cloudfront.net/images/home/bg-home-golden-gate-pa.jpg) no-repeat top center #0e161a;
   text-align: center;
-  padding: 200px 0 50px;
+  background-size: cover;
+  padding: 300px 0 160px;
+  position: relative;
 }
+
+
+
+
 
 #index-banner h1, #index-banner h6 {
   color:#fff;
