@@ -7,4 +7,4 @@ type = "Registration"
 weight = 1
 +++
 
-{{< googleform "https://docs.google.com/forms/d/1iMddn2vOJHfMdTLDuVlvqJsmoQs9E64LSj9S71BiSTI/viewform?embedded=true" >}}
+{{< googleform "https://docs.google.com/forms/d/e/1FAIpQLSeuuhxwHg6HRSDiTHuGBrZ8DnKAHmY2p3AU6ncKDxvG8ADXuQ/viewform?embedded=true" >}}

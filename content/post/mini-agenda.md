@@ -22,8 +22,8 @@ Space is limited. Reserve your seat today.
 | **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
 | **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
 | **12:00 PM–1:00 PM** | Lunch and Networking  |
-| **1:00 PM–2:00 PM** |Routing Services and API Management using Apigee Service  |
-| **2:15 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **1:00 PM–1:30 PM** | "Developers Have Enough Choices Without Adding Infrastructure"  by JP@CSC |
+| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
 | **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
 
 ---
@@ -32,6 +32,7 @@ Space is limited. Reserve your seat today.
 + Rajesh Jain - Platform Architect at Pivotal
 + Chris Johnson - Platform Architect at Pivotal
 + Rick Ross - Platform Architect at Pivotal
++ JP Morgenthal - Distinguished Engineer at CSC
 
 ---
 

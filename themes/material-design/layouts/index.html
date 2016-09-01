@@ -2,7 +2,6 @@
 
 
   <div class="section container-main">
-    <!---
     <div class="container">
       <div class="row">
         <div class="col s12 m12 l8">
@@ -13,48 +12,41 @@
         </div>
       </div>
     </div>
-  -->
-
   </div>
-
+<!--
   <div class="container">
-  <div class="section">
-    {{ partial "agenda.html" .}}
-  </div>
+    <div class="section">
+      {{ partial "agenda.html" .}}
+    </div>
+    <div class="section">
+      <div class="row">
+            {{ range .Site.Pages}}
+              {{ if in .Params.categories "lab" }}
+                {{ if (in .Params.tags "cf")  }}
+                    {{ partial "labs.html" . }}
+                {{end}}
+                {{ if (in .Site.Params.tags "spring") and (in .Params.tags "spring") }}
+                    {{ partial "spring-labs.html" . }}
+                {{end}}
+                {{ if (in .Site.Params.tags "node") and (in .Params.tags "node") }}
+                    {{ partial "node-labs.html" . }}
+                {{end}}
+                {{ if (in .Site.Params.tags "docker") and (in .Params.tags "docker") }}
+                    {{ partial "docker-labs.html" . }}
+                {{end}}
 
-  <div class="section">
-    <div class="row">
-          {{ range .Site.Pages}}
-            {{ if in .Params.categories "lab" }}
-              {{ if (in .Params.tags "cf")  }}
-                  {{ partial "labs.html" . }}
-              {{end}}
-    <!-- Commenting out the labs we don't need, there has to be a better way to do this -->
-    <!--
-              {{ if (in .Site.Params.tags "spring") and (in .Params.tags "spring") }}
-                  {{ partial "spring-labs.html" . }}
-              {{end}}
-              {{ if (in .Site.Params.tags "node") and (in .Params.tags "node") }}
-                  {{ partial "node-labs.html" . }}
-              {{end}}
-              {{ if (in .Site.Params.tags "docker") and (in .Params.tags "docker") }}
-                  {{ partial "docker-labs.html" . }}
-              {{end}}
-      -->
-
-              {{ if (in .Params.tags "concourse") }}
-                  {{ partial "concourse-labs.html" . }}
-              {{end}}
-              {{ if (in .Params.tags "apigee") }}
-                  {{ partial "apigee-labs.html" . }}
+                {{ if (in .Params.tags "concourse") }}
+                    {{ partial "concourse-labs.html" . }}
+                {{end}}
+                {{ if (in .Params.tags "apigee") }}
+                    {{ partial "apigee-labs.html" . }}
+                {{end}}
               {{end}}
             {{end}}
-          {{end}}
+      </div>
     </div>
-  </div>
-    {{ partial "pagination.html" .Paginator }}
-
-  </div>
+      {{ partial "pagination.html" .Paginator }}
 </div>
+-->
 
 {{ partial "footer.html" . }}
