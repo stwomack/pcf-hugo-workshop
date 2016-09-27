@@ -54,9 +54,14 @@ __NOTE__
 
 ### Step 1
 ##### Get the cities app
-Fork and Clone [PCF Workspace](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
- <img src="/images/git-clone.png" alt="Git style="width: 100%;"/>
-or Download as Zip file and save it in local folder
+Fork and Clone [PCF Workspace:  https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
+
+ <img src="/images/git-clone.png" alt="Git style="width: 50%;"/>
+
+or
+
+Download as Zip file and save it in local folder
+
 ```bash
    unzip pcf-workspace-devops-master.zip
 ```
@@ -232,7 +237,7 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     On Windows
 
     ````bash
-    `> notepad.exe manifest.service
+    notepad.exe manifest.service
     ````
 
 3. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.

@@ -34,7 +34,6 @@ copyright = "© Copyright 2016 Pivotal Software, Inc. All Rights Reserved."
     # headerCover = "images/headerCover.png" # optional
     # footerCover = "images/footerCover.png" # optional
     googleAnalyticsUserID = "UA-75133856-1" # optional
-    tags = "cf"
 
 [permalinks]
   post = "/:year/:month/:day/:title/" # optional

@@ -1,6 +1,6 @@
 {{ partial "header.html" . }}
 
-
+<!--
   <div class="section container-main">
     <div class="container">
       <div class="row">
@@ -13,7 +13,8 @@
       </div>
     </div>
   </div>
-<!--
+-->
+
   <div class="container">
     <div class="section">
       {{ partial "agenda.html" .}}
@@ -22,23 +23,22 @@
       <div class="row">
             {{ range .Site.Pages}}
               {{ if in .Params.categories "lab" }}
-                {{ if (in .Params.tags "cf")  }}
+                {{ if in .Params.tags "cf"  }}
                     {{ partial "labs.html" . }}
                 {{end}}
-                {{ if (in .Site.Params.tags "spring") and (in .Params.tags "spring") }}
+                {{ if in .Site.Params.tags "spring" }}
                     {{ partial "spring-labs.html" . }}
                 {{end}}
-                {{ if (in .Site.Params.tags "node") and (in .Params.tags "node") }}
+                {{ if in .Site.Params.tags "node" }}
                     {{ partial "node-labs.html" . }}
                 {{end}}
-                {{ if (in .Site.Params.tags "docker") and (in .Params.tags "docker") }}
+                {{ if in .Site.Params.tags "docker" }}
                     {{ partial "docker-labs.html" . }}
                 {{end}}
-
-                {{ if (in .Params.tags "concourse") }}
+                {{ if in .Params.tags "concourse" }}
                     {{ partial "concourse-labs.html" . }}
                 {{end}}
-                {{ if (in .Params.tags "apigee") }}
+                {{ if in .Site.Params.tags "apigee" }}
                     {{ partial "apigee-labs.html" . }}
                 {{end}}
               {{end}}
@@ -47,6 +47,6 @@
     </div>
       {{ partial "pagination.html" .Paginator }}
 </div>
--->
+
 
 {{ partial "footer.html" . }}

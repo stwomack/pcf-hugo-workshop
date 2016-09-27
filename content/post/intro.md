@@ -8,9 +8,9 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **May 9 , 2016**
+Date: **Sep 28 , 2016**
 
-Time: **9:30AM—4:30PM**
+Time: **8:00AM - 4:00PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -24,9 +24,11 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 | **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
 | **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
 | **12:00 PM–1:00 PM** | Lunch and Networking  |
-| **1:00 PM–2:00 PM** |Routing Services and API Management using Apigee Service  |
-| **2:15 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **1:00 PM–1:30 PM** | Developers Have Enough Choices Without Adding Infrastructure |
+| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
 | **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
+
+
 
 ---
 
@@ -36,7 +38,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
           Set the JAVA_HOME variable to the installation dir, in case it is not automatically set
 
 2. Git CLI for [Windows](https://github.com/git-for-windows/git/releases/download/v2.9.0.windows.1/Git-2.9.0-64-bit.exe)
-
+   or Git from [github.com](https://desktop.github.com)
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
@@ -61,7 +63,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 2. Check if you are able to use the cf cli to connect to the PCF Workshop Env. Alternatively, you can create a PWS account and check the firewall/connectivity before the Workshop
 
-          cf login -a https://api.pcf2.cloud.fe.pivotal.io  --skip-ssl-validation
+          cf login -a https://api.run.haas-68.pez.pivotal.io  --skip-ssl-validation
 
 3. Check if you are able to connect to Git repo and download / clone the repo using CLI
 4. Login to the App Manager Console at
@@ -71,24 +73,18 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 5. Note: Tiles preinstalled in the PCF Workshop environment which we will be using the workshop. You don't need any setup for these tiles.
 
           ER
-          Apigee
-          Spring Cloud Services
           RabbitMQ
           MySQL
-          MongoDB
-          Neo4J
           Redis
-          GitLab
-          JFrog Artifactory
-          Cloud Bees Jenkins
 
 
 
-##### Speakers
 
-    Rajesh Jain, Platform Architect
-    Chris Johnson, Platform Architect
-    Rick Ross, Platform Architect
+#### Speakers
++ Rajesh Jain - Platform Architect at Pivotal
++ Chris Johnson - Platform Architect at Pivotal
++ Rick Ross - Platform Architect at Pivotal
++ JP Morgenthal - Distinguished Engineer at CSC
 
 #### Presentation
 
@@ -99,7 +95,4 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 #### Videos
 
 
-{{< youtube V75fE_dxuBQ >}}
-
-
-{{< youtube 7APZD0me1nU >}}
+{{< youtube xdw_9dADM-4 >}}
