@@ -21,7 +21,7 @@ Prerequisites
 
 1. Java SDK 1.7+
 
-2. Git from [github.com](https://mac.github.com/)
+2. Git from [github.com](https://desktop.github.com)
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
@@ -54,8 +54,13 @@ __NOTE__
 
 ### Step 1
 ##### Get the cities app
-1. Fork and Clone [PCF Workspace](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
-2. Review the [cities](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/tree/master) application.
+Fork and Clone [PCF Workspace](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
+ <img src="/images/git-clone.png" alt="Git style="width: 100%;"/>
+or Download as Zip file and save it in local folder
+```bash
+   unzip pcf-workspace-devops-master.zip
+```
+
 
 
 ### Step 2
@@ -82,12 +87,12 @@ The students have userId's (student1-student25) and the passwords will be distri
 Each student is assigned an userId within their own organization (student1-org). Please refer to the handout you have been given.
 
 ````
-cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
+cf login -a https://api.run.haas-68.pez.pivotal.io --skip-ssl-validation
   Email: student1
   Password: ••••••••
 ````
 
-Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
+Login to the App Console at https://apps.run.haas-68.pez.pivotal.io
 
 <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
@@ -105,7 +110,7 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
     requested state: started
     instances: 1/1
     usage: 512M x 1 instances
-    urls: cities-hello-lactiferous-unanswerableness.pcf2.cloud.fe.pivotal.io
+    urls: cities-hello-lactiferous-unanswerableness.run.haas-68.pez.pivotal.io
     last uploaded: Mon Jun 15 14:53:10 UTC 2015
     stack: cflinuxfs2
     ```
@@ -116,7 +121,7 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
 
 3. If you haven't already it is a good time to walk through the AppsManager:
 
-        https://apps.pcf2.cloud.fe.pivotal.io
+        https://apps.run.haas-68.pez.pivotal.io
 
 ##### Recap: Part 1
 
@@ -145,7 +150,7 @@ The cities-service app requires a database service to store and fetch cities inf
 
 2. Create a mysql service, name it as `<YOUR INITIALS>-cities-db`
 
-    You can create the service from the `cli` or launch the App Manager-> Select the Development Space [https://apps.pcf2.cloud.fe.pivotal.io](https://apps.pcf2.cloud.fe.pivotal.io) and login.
+    You can create the service from the `cli` or launch the App Manager-> Select the Development Space [https://apps.run.haas-68.pez.pivotal.io](https://apps.run.haas-68.pez.pivotal.io) and login.
 
     Navigate to the marketplace and see the available services. Here you will create the service using the CLI.
     ````bash
@@ -227,7 +232,7 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     On Windows
 
     ````bash
-    `> notepad.exe manfiest.service
+    `> notepad.exe manifest.service
     ````
 
 3. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
@@ -246,11 +251,11 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     ````bash
        // This will list your apps and the last column is the route.
        $ cf apps
-          url: cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io  
+          url: cities-hello-postpericardial-nonsubtlety.run.haas-68.pez.pivotal.io  
           // Note - Use HTTPS
-       $ curl -i -k https://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io
+       $ curl -i -k https://cities-hello-postpericardial-nonsubtlety.run.haas-68.pez.pivotal.io
     ````
-    We must be able to access your application at https://cities-hello-postpericardial-nonsubtlety.pcf2.cloud.fe.pivotal.io for the next steps to work properly.
+    We must be able to access your application at https://cities-hello-postpericardial-nonsubtlety.run.haas-68.pez.pivotal.io for the next steps to work properly.
 
 __NOTE__
 
@@ -259,49 +264,18 @@ In this exercise we have used a different naming convention.
 
 <br>
 ### Step 7
-##### Health, logging & events via the CLI
+##### PCF Metrics for Health, logging & events via the CLI
 
 Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.
 
-To tail the logs of your application perform this command:
-  ````bash
-  $ cf logs <studentXX>-cities-service
-  ````
+Open the metrics dashboard at https://metrics.run.haas-68.pez.pivotal.io/
+Use you login id/password which is your student id.
 
+<img src="/images/pcf-metrics.png" alt="Metrics" style="width: 100%;"/>
 
-Notice that nothing is showing because there isn't' any activity. Bring up another terminal/console window and use the following curl command to see the application working:
-  ````bash
-  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/
-  ````
+You can Monitor your Container Metrics, Network Metrics and Events for your app. Explore your logs, which shows all your app logs streamed using the Loggregator.
 
-For other ways of viewing logs check out the documentation here: [Streaming Logs](http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#view)
-
-To view recent events, including application crashes, and error codes, you can see them from the App Manager or from the cli.
-
-  ````bash
-  $ cf events <studentXX>-cities-service
-  ````
-
-To view the health of the application you can see from the App Manager or from the cli:
-  ````bash
-  $ cf app <studentXX>-cities-service
-  ````
-
-You will get detailed output of the health
-  ````bash
-  Showing health and status for app cities-service in org  / space development as...
-  OK
-
-  requested state: started
-  instances: 1/1
-  usage: 512M x 1 instances
-  urls: cities-service.pcf2.cloud.fe.pivotal.io
-  last uploaded: Wed May 27 15:53:32 UTC 2015
-  stack: cflinuxfs2
-
-       state     since                    cpu    memory           disk           details
-  #0   running   2015-05-27 12:17:55 PM   0.1%   434.5M of 512M   145.4M of 1G
-  ````
+<img src="/images/metrics-architecture.png" alt="Metrics" style="width: 100%;"/>
 
 <br>
 ### Step 8
@@ -353,7 +327,7 @@ You will get the output similar to this on your terminal
    "VCAP_APPLICATION": {
     "application_name": "rj-cities-service",
     "application_uris": [
-     "rj-cities-service.pcf2.cloud.fe.pivotal.io"
+     "rj-cities-service.run.haas-68.pez.pivotal.io"
     ],
     "application_version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d",
     "limits": {
@@ -365,7 +339,7 @@ You will get the output similar to this on your terminal
     "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
     "space_name": "development",
     "uris": [
-     "rj-cities-service.pcf2.cloud.fe.pivotal.io"
+     "rj-cities-service.run.haas-68.pez.pivotal.io"
     ],
     "users": null,
     "version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d"
@@ -418,15 +392,15 @@ Once the second instance as started, scale the app back down to one instance.
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities
+  $ curl -i -k https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities/49
+  $ curl -i -k https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/cities/49
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/cities?size=5
+  $ curl -i -k https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -473,7 +447,7 @@ In this section we will create a backend microservice end point for cities-servi
 
   $ cf create-user-provided-service <studentXX>-cities-ws -p "citiesuri"
 
-  citiesuri>   https://<studentXX>-cities-service.pcf2.cloud.fe.pivotal.io/
+  citiesuri>   https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/
 
   Creating user provided service....
   ````
@@ -523,7 +497,7 @@ System-Provided:
    {
     "credentials": {
      "tag": "cities",
-     "uri": "https://rj-cities-service.pcf2.cloud.fe.pivotal.io/"
+     "uri": "https://rj-cities-service.run.haas-68.pez.pivotal.io/"
     },
     "label": "user-provided",
     "name": "cities-ws",
@@ -538,7 +512,7 @@ System-Provided:
  "VCAP_APPLICATION": {
   "application_name": "rj-cities-ui",
   "application_uris": [
-   "rj-cities-ui.pcf2.cloud.fe.pivotal.io"
+   "rj-cities-ui.run.haas-68.pez.pivotal.io"
   ],
   "application_version": "dceb111b-3a68-45ad-83fd-3b8b836ebbe7",
   "limits": {
@@ -550,7 +524,7 @@ System-Provided:
   "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
   "space_name": "development",
   "uris": [
-   "rj-cities-ui.pcf2.cloud.fe.pivotal.io"
+   "rj-cities-ui.run.haas-68.pez.pivotal.io"
   ],
   "users": null,
   "version": "dceb111b-3a68-45ad-83fd-3b8b836ebbe7"
@@ -636,14 +610,14 @@ If you would like to inject build numbers in your app names here is a script you
 
   ````bash
 
-  $ ./blue-green.sh  cities-service 1001 pcf2.cloud.fe.pivotal.io
+  $ ./blue-green.sh  cities-service 1001 run.haas-68.pez.pivotal.io
   $ cf apps // You should see your app build 1001 and the Route
   ````
 
   Now push the new build 1002 of the app
 
   ````bash
-  $ ./blue-green.sh  cities-service 1002 pcf2.cloud.fe.pivotal.io
+  $ ./blue-green.sh  cities-service 1002 run.haas-68.pez.pivotal.io
   $ cf apps // You should see your app build 1002 and the same route mapped to the new build
 
   ````
@@ -653,7 +627,7 @@ If you would like to inject build numbers in your app names here is a script you
 In this part of the workshop did deployment using a blue green script without any downtime.
 This script / methodology can be used in your CD pipeline to build and deploy Cloud Native Apps with zero downtime.
 
-1. Discussion on how do you do Continous Deployment and Delivery with zero downtime today.
+1. Discussion on how do you do Continuous Deployment and Delivery with zero downtime today.
 
 
 ##### Recap
