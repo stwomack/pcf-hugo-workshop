@@ -281,7 +281,7 @@ In this exercise we have used a different naming convention.
 
 Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.
 
-Open the metrics dashboard at https://metrics.haas-68.pez.pivotal.io/
+Open the metrics dashboard at https://metrics.run.haas-68.pez.pivotal.io/
 Use you login id/password which is your student id.
 
 <img src="/images/pcf-metrics.png" alt="Metrics" style="width: 100%;"/>
@@ -405,15 +405,15 @@ Once the second instance as started, scale the app back down to one instance.
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.haas-68.pez.pivotal.io/cities
+  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-68.pez.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.haas-68.pez.pivotal.io/cities/49
+  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-68.pez.pivotal.io/cities/49
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.haas-68.pez.pivotal.io/cities?size=5
+  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-68.pez.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -460,7 +460,7 @@ In this section we will create a backend microservice end point for cities-servi
 
   $ cf create-user-provided-service <studentXX>-cities-ws -p "citiesuri"
 
-  citiesuri>   http://<studentXX>-cities-service.haas-68.pez.pivotal.io/
+  citiesuri>   http://<studentXX>-cities-service.cfapps.haas-68.pez.pivotal.io/
 
   Creating user provided service....
   ````
