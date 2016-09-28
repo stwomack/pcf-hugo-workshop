@@ -62,26 +62,29 @@ Learn how to
 ### Step 1
 ##### Download Fly and Target Concourse CI Server in AWS
 
-1. The Concourse Server in AWS is already configured from an existing AMI for this workshop.
-   Open a browser window and launch `https://52.86.28.231`
+The Concourse Server in AWS is already configured from an existing AMI for this workshop.
+
+   Open a browser window and launch ***https://52.54.77.21***
 
    The userid/password for this server is
-   userid: pivotal
-   password: <distributed in the workshop>
+   ```
+      userid: pivotal
+      password: <distributed in the workshop>
+   ```
 
-   Download the fly cli from the main page based on your OS or from the bottom right corner
+   Download the fly cli from the main web page based on your OS or from the bottom right corner
 
    <img src="/images/concourse-4.png" alt="Concourse FLY" style="width: 100%;"/>
 
   OR
 
    <img src="/images/concourse-9.png" alt="Concourse FLY" style="width: 100%;"/>
-2. Open a cmd/terminal and target the concourse server.
-   We will call our AWS CI Server as `aws`
 
-    ````
-    $ fly -t aws login -c https://52.86.28.231 -k
-    ````
+Open a cmd/terminal and target the concourse server.
+
+We will call our Concourse CI Server as *```aws```*
+
+    $ fly -t aws login -c https://52.54.77.21 -k
 
     Use the same userid / password combination.
 
@@ -92,13 +95,13 @@ We have an existing project `flight-school` in a git repo, which we can clone an
 
 ````
 $ git clone https://github.com/rjain-pivotal/flight-school.git
-$ cd flight-school\ci
+$ cd flight-school
 
 ````
 
 In the ci folder there is a properties file, flight-school-properties-sample.yml
 
-This contains the cf and git specific configuration which is read by the pipeline.
+This contains the cf and git specific configuration which is read by the pipeline. You don't want your configuration user name/passwords etc to be stored in the repository. Hence you will make a local copy of the file and add your specific configuration. This makes the CI pipeline portable across teams.
 
 Make a local copy of the flight-school-properties-sample.yml
 
@@ -115,7 +118,7 @@ Be sure to point to the correct github-uri. The simplest uri to use is the same 
 ````
 github-uri: https://github.com/.../flight-school.git
 github-branch: master
-cf-api: https://api.pcf2.cloud.fe.pivotal.io
+cf-api: https://api.run.haas-68.pez.pivotal.io
 cf-username: <studentXXX>
 cf-password: <password>
 cf-org: <studentXXX>-org
@@ -272,7 +275,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     s3-bucket-release-candidates: studentXXX-pcfdemo-release-candidates
     maven-opts: # -Xms256m -Xmx512m
     maven-config: # -s path/to/settings.xml
-    cf-api: https://api.pcf2.cloud.fe.pivotal.io
+    cf-api: https://api.run.haas-68.pez.pivotal.io
     cf-username: studentXXX
     cf-password: studentXXX-password
     cf-org: studentXXX-org
@@ -293,7 +296,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
 
     ````
     fly -t aws pipelines
-    //targeting https://52.86.28.231
+    //targeting https://52.54.77.21
     name                     paused
     student20-flight-school  yes   
     student25-pcfdemo        yes   
@@ -312,10 +315,10 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
 
 
 
-8. Call the Ship-it step
+8. Call the Ship-it step, Replace the name of the pipeline with your pipeline name
 
     ````
-    fly -t aws trigger-job -j student25-pcfdemo/ship-it
+    fly -t aws trigger-job -j studentXXX-pcfdemo/ship-it
     ````
 
     Once the complete Pipeline finishes you should be able to see all the steps in green.
@@ -329,7 +332,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     cf apps // Get the App Names and URL
     ````
 
-    Open a browser and check the app load. (https://studentXXX-pcfdemo-ci.pcf2.cloud.fe.pivotal.io)
+    Open a browser and check the app load. (https://studentXXX-pcfdemo-ci.run.haas-68.pez.pivotal.io)
 
     <img src="/images/concourse-10.png" alt="Concourse CI" style="width: 100%;"/>
 

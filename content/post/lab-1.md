@@ -95,6 +95,14 @@ Each student is assigned an userId within their own organization (student1-org).
 cf login -a https://api.run.haas-68.pez.pivotal.io --skip-ssl-validation
   Email: student1
   Password: ••••••••
+
+  Select a space (or press enter to skip):
+  1. development
+  2. test
+  3. production
+
+  Select any one and stick to that space for the rest of the workshop.
+
 ````
 
 Login to the App Console at https://apps.run.haas-68.pez.pivotal.io
@@ -273,7 +281,7 @@ In this exercise we have used a different naming convention.
 
 Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.
 
-Open the metrics dashboard at https://metrics.run.haas-68.pez.pivotal.io/
+Open the metrics dashboard at https://metrics.haas-68.pez.pivotal.io/
 Use you login id/password which is your student id.
 
 <img src="/images/pcf-metrics.png" alt="Metrics" style="width: 100%;"/>
@@ -332,7 +340,7 @@ You will get the output similar to this on your terminal
    "VCAP_APPLICATION": {
     "application_name": "rj-cities-service",
     "application_uris": [
-     "rj-cities-service.run.haas-68.pez.pivotal.io"
+     "rj-cities-service.haas-68.pez.pivotal.io"
     ],
     "application_version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d",
     "limits": {
@@ -344,7 +352,7 @@ You will get the output similar to this on your terminal
     "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
     "space_name": "development",
     "uris": [
-     "rj-cities-service.run.haas-68.pez.pivotal.io"
+     "rj-cities-service.haas-68.pez.pivotal.io"
     ],
     "users": null,
     "version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d"
@@ -397,15 +405,15 @@ Once the second instance as started, scale the app back down to one instance.
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/cities
+  $ curl -i -k https://<studentXX>-cities-service.haas-68.pez.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/cities/49
+  $ curl -i -k https://<studentXX>-cities-service.haas-68.pez.pivotal.io/cities/49
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/cities?size=5
+  $ curl -i -k https://<studentXX>-cities-service.haas-68.pez.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -452,7 +460,7 @@ In this section we will create a backend microservice end point for cities-servi
 
   $ cf create-user-provided-service <studentXX>-cities-ws -p "citiesuri"
 
-  citiesuri>   https://<studentXX>-cities-service.run.haas-68.pez.pivotal.io/
+  citiesuri>   http://<studentXX>-cities-service.haas-68.pez.pivotal.io/
 
   Creating user provided service....
   ````
@@ -502,7 +510,7 @@ System-Provided:
    {
     "credentials": {
      "tag": "cities",
-     "uri": "https://rj-cities-service.run.haas-68.pez.pivotal.io/"
+     "uri": "https://rj-cities-service.haas-68.pez.pivotal.io/"
     },
     "label": "user-provided",
     "name": "cities-ws",
