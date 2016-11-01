@@ -96,3 +96,9 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 
 {{< youtube xdw_9dADM-4 >}}
+
+
+#### EBooks
+Beyond the Twelve-Factor App - https://pivotal.io/beyond-the-twelve-factor-app
+Cloud Foundry: The Cloud Native Platform - https://pivotal.io/cloud-foundry-the-cloud-native-platform
+Migrating to Cloud Native Application Architectures - https://pivotal.io/platform/migrating-to-cloud-native-application-architectures-ebook
