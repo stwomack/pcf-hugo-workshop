@@ -654,24 +654,24 @@ There are three different options in this lab to do blue-green deployment. You c
 
 First push a new version of the app with a blue route.
 
-    // Delete the route instuctor-cities-service if it is already mapped
-    // $cf delete-route cfapps.haas-88.pez.pivotal.io --hostname instructor-cities-service
+    // Delete the route studentXXX-cities-service if it is already mapped
+    // $cf delete-route cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
 
     $ cd cities-service
     // Push the app version v1 with the hostname as blue
-    $ cf push instructor-cities-service-v1 --hostname instructor-cities-service-blue -f manifest.service
+    $ cf push studentXXX-cities-service-v1 --hostname studentXXX-cities-service-blue -f manifest.service
     // Map your outside route to this blue version
-    $ cf map-route instructor-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname instructor-cities-service
+    $ cf map-route studentXXX-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
     $ cf apps // Check the apps and the routes
 
 Next, you can push a new version of the app with a green route.
 
     // Push the app version v2 with the hostname as green
-    $ cf push instructor-cities-service-v2 --hostname instructor-cities-service-green -f manifest.yml
+    $ cf push studentXXX-cities-service-v2 --hostname studentXXX-cities-service-green -f manifest.yml
     // Map the outside route to this green version. Now your outside route is mapped to both blue and green
-    $ cf map-route instructor-cities-service-v2 cfapps.haas-88.pez.pivotal.io --hostname instructor-cities-service
+    $ cf map-route studentXXX-cities-service-v2 cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
     // Unmap the outside route to the blue version. All the traffic is now directed to v2
-    $ cf unmap-route instructor-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname instructor-cities-service
+    $ cf unmap-route studentXXX-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
 
 
 ##### Option 2
