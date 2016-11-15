@@ -654,9 +654,12 @@ There are three different options in this lab to do blue-green deployment. You c
 
 First push a new version of the app with a blue route.
 
+    // Delete the route instuctor-cities-service if it is already mapped
+    // $cf delete-route cfapps.haas-88.pez.pivotal.io --hostname instructor-cities-service
+
     $ cd cities-service
     // Push the app version v1 with the hostname as blue
-    $ cf push instructor-cities-service-v1 --hostname instructor-cities-service-blue -f manifest.yml
+    $ cf push instructor-cities-service-v1 --hostname instructor-cities-service-blue -f manifest.service
     // Map your outside route to this blue version
     $ cf map-route instructor-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname instructor-cities-service
     $ cf apps // Check the apps and the routes
