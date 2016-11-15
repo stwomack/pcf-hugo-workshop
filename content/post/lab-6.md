@@ -107,8 +107,10 @@ Make a local copy of the flight-school-properties-sample.yml
 
 
 ````
+// These instructions are for Linux/OS. Please use the correct commands for Windows
 mkdir ~/.concourse
-cp flight-school-properties-sample.yml ~/.concourse/flight-school-properties.yml
+cp ci/flight-school-properties-sample.yml ~/.concourse/flight-school-properties.yml
+// This command is not required for Windows
 chmod 600 ~/.concourse/flight-school-properties.yml
 ````
 
@@ -116,9 +118,9 @@ Now edit the ~/.concourse/flight-school-properties.yml
 Be sure to point to the correct github-uri. The simplest uri to use is the same from the clone command in step 2.
 
 ````
-github-uri: https://github.com/.../flight-school.git
+github-uri: https://github.com/rjain-pivotal/flight-school.git
 github-branch: master
-cf-api: https://api.run.haas-68.pez.pivotal.io
+cf-api: https://api.run.haas-88.pez.pivotal.io
 cf-username: <studentXXX>
 cf-password: <password>
 cf-org: <studentXXX>-org
