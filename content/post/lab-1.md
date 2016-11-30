@@ -35,19 +35,27 @@ set HTTPS_PROXY=<your https proxy>
 Prerequisites
 --
 
-1. Java SDK 1.7+
+1. Java SDK 1.7+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-2. Git from [github.com](https://desktop.github.com)
+    Set the JAVA_HOME variable to the installation dir, in case it is not automatically set
+
+2. Git CLI for [Windows](https://github.com/git-for-windows/git/releases/download/v2.9.0.windows.1/Git-2.9.0-64-bit.exe)
+   or Git from [github.com](https://desktop.github.com)
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
-4. Curl from [curl](http://curl.haxx.se/)
+4. Curl for [Windows](http://winampplugins.co.uk/curl/)
+   Or for [Mac] (http://pdb.finkproject.org/pdb/package.php/curl)
 
-5. Use Workshop PCF Env or Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
+5. Maven for build (https://maven.apache.org/install.html)
 
-6. Maven for build (https://maven.apache.org/install.html)
+    Set the M2_HOME in case it is not automatically set
+    Windows: set M2_HOME=<directory where Maven is installed>
+    e.g.
+    set M2_HOME=C:\Program Files\apache-maven-3.1.0-bin\apache-maven-3.1.0
 
-7. Golang (https://golang.org/dl/)  
+
+7. Optional Golang (https://golang.org/dl/)  
    After you install Go, make sure you set the GOHOME and PATH
    For Linux/Mac:
     ```
@@ -146,7 +154,7 @@ The students have userId's (student1-student25) and the passwords will be distri
 Each student is assigned an userId within their own organization (student1-org). Please refer to the handout you have been given.
 
 ````
-cf login -a https://api.run.haas-88.pez.pivotal.io --skip-ssl-validation
+cf login -a https://api.run.haas-98.pez.pivotal.io --skip-ssl-validation
   Email: student1
   Password: ••••••••
 
@@ -159,7 +167,7 @@ cf login -a https://api.run.haas-88.pez.pivotal.io --skip-ssl-validation
 
 ````
 
-Login to the App Console at https://apps.run.haas-88.pez.pivotal.io
+Login to the App Console at https://apps.run.haas-98.pez.pivotal.io
 
 <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 70%;"/>
 
@@ -177,7 +185,7 @@ Login to the App Console at https://apps.run.haas-88.pez.pivotal.io
     requested state: started
     instances: 1/1
     usage: 512M x 1 instances
-    urls: cities-hello-lactiferous-unanswerableness.run.haas-88.pez.pivotal.io
+    urls: cities-hello-lactiferous-unanswerableness.run.haas-98.pez.pivotal.io
     last uploaded: Mon Jun 15 14:53:10 UTC 2015
     stack: cflinuxfs2
     ```
@@ -188,7 +196,7 @@ Login to the App Console at https://apps.run.haas-88.pez.pivotal.io
 
 3. If you haven't already it is a good time to walk through the AppsManager:
 
-        https://apps.run.haas-88.pez.pivotal.io
+        https://apps.run.haas-98.pez.pivotal.io
 
 ##### Recap: Part 1
 
@@ -217,7 +225,7 @@ The cities-service app requires a database service to store and fetch cities inf
 
 2. Create a mysql service, name it as `<YOUR INITIALS>-cities-db`
 
-    You can create the service from the `cli` or launch the App Manager-> Select the Development Space [https://apps.run.haas-88.pez.pivotal.io](https://apps.run.haas-88.pez.pivotal.io) and login.
+    You can create the service from the `cli` or launch the App Manager-> Select the Development Space [https://apps.run.haas-98.pez.pivotal.io](https://apps.run.haas-98.pez.pivotal.io) and login.
     Navigate to the marketplace and see the available services.
 
     <img src="/images/pcf-marketplace.png" alt="Marketplace Services" style="width: 70%;"/>
@@ -307,7 +315,7 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     ````
 
 3. Set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
-*Be sure to name your application '<studentXX>-cities-service' *
+*Be sure to name your application '<studentXX>-cities-service' e.g. student1-cities-service *
 4. Add the services binding `<studentXX>-cities-db` to your deployment manifest for cities-service .
 5. Test your manifest by re-pushing your app with no parameters:
 
@@ -322,11 +330,11 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     ````bash
        // This will list your apps and the last column is the route.
        $ cf apps
-          url: cities-hello-postpericardial-nonsubtlety.run.haas-88.pez.pivotal.io  
+          url: cities-hello-postpericardial-nonsubtlety.run.haas-98.pez.pivotal.io  
           // Note - Use HTTPS
-       $ curl -i -k https://cities-hello-postpericardial-nonsubtlety.run.haas-88.pez.pivotal.io
+       $ curl -i -k https://cities-hello-postpericardial-nonsubtlety.run.haas-98.pez.pivotal.io
     ````
-    We must be able to access your application at https://cities-hello-postpericardial-nonsubtlety.run.haas-88.pez.pivotal.io for the next steps to work properly.
+    We must be able to access your application at https://cities-hello-postpericardial-nonsubtlety.run.haas-98.pez.pivotal.io for the next steps to work properly.
 
 __NOTE__
 
@@ -339,7 +347,7 @@ In this exercise we have used a different naming convention.
 
 Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.
 
-Open the metrics dashboard at https://metrics.run.haas-88.pez.pivotal.io/
+Open the metrics dashboard at https://metrics.run.haas-98.pez.pivotal.io/
 Use you login id/password which is your student id.
 
 <img src="/images/pcf-metrics.png" alt="Metrics" style="width: 70%;"/>
@@ -398,7 +406,7 @@ You will get the output similar to this on your terminal
    "VCAP_APPLICATION": {
     "application_name": "rj-cities-service",
     "application_uris": [
-     "rj-cities-service.haas-88.pez.pivotal.io"
+     "rj-cities-service.haas-98.pez.pivotal.io"
     ],
     "application_version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d",
     "limits": {
@@ -410,7 +418,7 @@ You will get the output similar to this on your terminal
     "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
     "space_name": "development",
     "uris": [
-     "rj-cities-service.haas-88.pez.pivotal.io"
+     "rj-cities-service.haas-98.pez.pivotal.io"
     ],
     "users": null,
     "version": "c3c35527-424f-4dbc-a4ea-115e1250cc5d"
@@ -467,15 +475,15 @@ You can also use the Autoscaler service from the marketplace and bind it to your
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-88.pez.pivotal.io/cities
+  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-98.pez.pivotal.io/cities
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-88.pez.pivotal.io/cities/49
+  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-98.pez.pivotal.io/cities/49
   ````
 
   ````bash
-  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-88.pez.pivotal.io/cities?size=5
+  $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-98.pez.pivotal.io/cities?size=5
   ````
 <br>
 
@@ -522,7 +530,7 @@ In this section we will create a backend microservice end point for cities-servi
 
   $ cf create-user-provided-service <studentXX>-cities-ws -p "citiesuri"
 
-  citiesuri>   http://<studentXX>-cities-service.cfapps.haas-88.pez.pivotal.io/
+  citiesuri>   http://<studentXX>-cities-service.cfapps.haas-98.pez.pivotal.io/
 
   Creating user provided service....
   ````
@@ -572,7 +580,7 @@ System-Provided:
    {
     "credentials": {
      "tag": "cities",
-     "uri": "https://rj-cities-service.haas-88.pez.pivotal.io/"
+     "uri": "https://rj-cities-service.haas-98.pez.pivotal.io/"
     },
     "label": "user-provided",
     "name": "cities-ws",
@@ -587,7 +595,7 @@ System-Provided:
  "VCAP_APPLICATION": {
   "application_name": "rj-cities-ui",
   "application_uris": [
-   "rj-cities-ui.run.haas-88.pez.pivotal.io"
+   "rj-cities-ui.run.haas-98.pez.pivotal.io"
   ],
   "application_version": "dceb111b-3a68-45ad-83fd-3b8b836ebbe7",
   "limits": {
@@ -599,7 +607,7 @@ System-Provided:
   "space_id": "56e1d8ef-e87f-4b1c-930b-e7f46c00e483",
   "space_name": "development",
   "uris": [
-   "rj-cities-ui.run.haas-88.pez.pivotal.io"
+   "rj-cities-ui.run.haas-98.pez.pivotal.io"
   ],
   "users": null,
   "version": "dceb111b-3a68-45ad-83fd-3b8b836ebbe7"
@@ -655,13 +663,13 @@ There are three different options in this lab to do blue-green deployment. You c
 First push a new version of the app with a blue route.
 
     // Delete the route studentXXX-cities-service if it is already mapped
-    // $cf delete-route cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
+    // $cf delete-route cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
 
     $ cd cities-service
     // Push the app version v1 with the hostname as blue
     $ cf push studentXXX-cities-service-v1 --hostname studentXXX-cities-service-blue -f manifest.service
     // Map your outside route to this blue version
-    $ cf map-route studentXXX-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
+    $ cf map-route studentXXX-cities-service-v1 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
     $ cf apps // Check the apps and the routes
 
 Next, you can push a new version of the app with a green route.
@@ -669,9 +677,9 @@ Next, you can push a new version of the app with a green route.
     // Push the app version v2 with the hostname as green
     $ cf push studentXXX-cities-service-v2 --hostname studentXXX-cities-service-green -f manifest.yml
     // Map the outside route to this green version. Now your outside route is mapped to both blue and green
-    $ cf map-route studentXXX-cities-service-v2 cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
+    $ cf map-route studentXXX-cities-service-v2 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
     // Unmap the outside route to the blue version. All the traffic is now directed to v2
-    $ cf unmap-route studentXXX-cities-service-v1 cfapps.haas-88.pez.pivotal.io --hostname studentXXX-cities-service
+    $ cf unmap-route studentXXX-cities-service-v1 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
 
 
 ##### Option 2
@@ -711,14 +719,14 @@ If you would like to inject build numbers in your app names here is a script you
 
   ````bash
 
-  $ ./blue-green.sh  cities-service 1001 run.haas-88.pez.pivotal.io
+  $ ./blue-green.sh  cities-service 1001 run.haas-98.pez.pivotal.io
   $ cf apps // You should see your app build 1001 and the Route
   ````
 
   Now push the new build 1002 of the app
 
   ````bash
-  $ ./blue-green.sh  cities-service 1002 run.haas-88.pez.pivotal.io
+  $ ./blue-green.sh  cities-service 1002 run.haas-98.pez.pivotal.io
   $ cf apps // You should see your app build 1002 and the same route mapped to the new build
 
   ````
