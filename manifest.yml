@@ -7,5 +7,3 @@ applications:
   domain: cfapps.io
   path: public
   buildpack: staticfile_buildpack
-
-
