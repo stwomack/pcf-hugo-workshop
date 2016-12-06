@@ -662,24 +662,24 @@ There are three different options in this lab to do blue-green deployment. You c
 
 First push a new version of the app with a blue route.
 
-    // Delete the route studentXXX-cities-service if it is already mapped
-    // $cf delete-route cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
+    // Delete the route studentXXX-cities-hello if it is already mapped
+    // $cf delete-route cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-hello
 
-    $ cd cities-service
+    $ cd cities-hello
     // Push the app version v1 with the hostname as blue
-    $ cf push studentXXX-cities-service-v1 --hostname studentXXX-cities-service-blue -f manifest.service
+    $ cf push studentXXX-cities-hello-v1 --hostname studentXXX-cities-hello-blue -f manifest.hello
     // Map your outside route to this blue version
-    $ cf map-route studentXXX-cities-service-v1 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
+    $ cf map-route studentXXX-cities-hello-v1 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-hello
     $ cf apps // Check the apps and the routes
 
 Next, you can push a new version of the app with a green route.
 
     // Push the app version v2 with the hostname as green
-    $ cf push studentXXX-cities-service-v2 --hostname studentXXX-cities-service-green -f manifest.yml
+    $ cf push studentXXX-cities-hello-v2 --hostname studentXXX-cities-hello-green -f manifest.yml
     // Map the outside route to this green version. Now your outside route is mapped to both blue and green
-    $ cf map-route studentXXX-cities-service-v2 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
+    $ cf map-route studentXXX-cities-hello-v2 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-hello
     // Unmap the outside route to the blue version. All the traffic is now directed to v2
-    $ cf unmap-route studentXXX-cities-service-v1 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-service
+    $ cf unmap-route studentXXX-cities-hello-v1 cfapps.haas-98.pez.pivotal.io --hostname studentXXX-cities-hello
 
 
 ##### Option 2
@@ -702,31 +702,31 @@ Download the latest release of the autopilot plugin from the github releases pag
 
   Once the plugin is installed ...
 
-    $ cd cities-service (on Windows cd cities-service)
+    $ cd cities-hello (on Windows cd cities-hello)
     // Append the build number to the app Name
-    $ nano manifest.service // Change the app name and append the build number, on Windows use notepad manifest.service
+    $ nano manifest.hello // Change the app name and append the build number, on Windows use notepad manifest.hello
 
 <img src="/images/pcf-blue-green-b100.png" alt="Blue Green Deployment Build" style="width: 50%;"/>
 
-    $ cf zero-downtime-push <studentXX>-cities-service -f manifest.service
+    $ cf zero-downtime-push <studentXX>-cities-hello -f manifest.hello
 
 ##### Option 3 (This is as bash script and works only on Linux/OSX)
 
-If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-service directory which only works on a Mac
+If you would like to inject build numbers in your app names here is a script you could use to do blue green deployments in the cities-hello directory which only works on a Mac
 
     Usage: blue-green.sh <app-name> <build-number> <domain>
 
 
   ````bash
 
-  $ ./blue-green.sh  cities-service 1001 run.haas-98.pez.pivotal.io
+  $ ./blue-green.sh  cities-hello 1001 run.haas-98.pez.pivotal.io
   $ cf apps // You should see your app build 1001 and the Route
   ````
 
   Now push the new build 1002 of the app
 
   ````bash
-  $ ./blue-green.sh  cities-service 1002 run.haas-98.pez.pivotal.io
+  $ ./blue-green.sh  cities-hello 1002 run.haas-98.pez.pivotal.io
   $ cf apps // You should see your app build 1002 and the same route mapped to the new build
 
   ````
