@@ -57,7 +57,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 2. Check if you are able to use the cf cli to connect to the PCF Workshop Env. Alternatively, you can create a PWS account and check the firewall/connectivity before the Workshop
 
-          cf login -a https://api.run.haas-68.pez.pivotal.io  --skip-ssl-validation
+          cf login -a https://api.run.haas-98.pez.pivotal.io  --skip-ssl-validation
 
 3. Check if you are able to connect to Git repo and download / clone the repo using CLI
 4. Login to the App Manager Console at
