@@ -28,9 +28,9 @@ copyright = "© Copyright 2016 Pivotal Software, Inc. All Rights Reserved."
     # Default (if omitted) is "Home".
     home = "Home"
 
-    description = "Detroit · 15 Nov · 8:00AM - 4:00PM" # optional
+    description = "Ford Dearborn · 7 Dec · 11:30AM - 4:00PM" # optional
     twitter = "pivotal" # optional
-    customer = "detroit"
+    customer = "ford"
     # headerCover = "images/headerCover.png" # optional
     # footerCover = "images/footerCover.png" # optional
     googleAnalyticsUserID = "UA-75133856-1" # optional

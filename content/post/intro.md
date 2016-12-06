@@ -2,15 +2,15 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop@Detroit"
+title = "Welcome to the Pivotal Cloud Foundry Workshop@Ford"
 type = "Introduction"
 weight = 1
 +++
 
 ##### Date and Time
-Date: **Nov 15 , 2016**
+Date: **Dec 07 , 2016**
 
-Time: **8:00AM - 4:00PM**
+Time: **11:30AM - 4:00PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -20,11 +20,8 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 #### Agenda
 |  |  |
 |------|------|
-| **8:00 AM–9:00 AM** | Registration and Breakfast  |
-| **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
-| **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
-| **12:00 PM–1:30 PM** | Lunch and Networking  |
-| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **11:30 AM–12:30 PM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **12:30 PM–3:30 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor, blue green deployment) |
 | **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
 
 ---
