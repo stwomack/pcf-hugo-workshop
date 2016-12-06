@@ -1,4 +1,4 @@
-baseurl = "http://pcf-detroit-workshop.cfapps.io/"
+baseurl = "http://pcf-ford-workshop.cfapps.io/"
 languageCode = "en-us"
 title = "Cloud Foundry Workshop"
 
