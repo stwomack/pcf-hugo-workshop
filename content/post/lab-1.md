@@ -342,7 +342,7 @@ __NOTE__
 In this exercise we have used a different naming convention.
 
 <br>
-### Step 7
+### Step 9
 ##### PCF Metrics for Health, logging & events via the CLI
 
 Learning about how your application is performing is critical to help you diagnose and troubleshoot potential issues. Cloud Foundry gives you options for viewing the logs.
@@ -357,7 +357,7 @@ You can Monitor your Container Metrics, Network Metrics and Events for your app.
 <img src="/images/metrics-architecture.png" alt="Metrics" style="width: 70%;"/>
 
 <br>
-### Step 8
+### Step 10
 ##### Environment variables
 
 View the environment variable and explanation of [VCAP Env](http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#view-env)
@@ -434,7 +434,7 @@ You will get the output similar to this on your terminal
   ````
 
 
-### Step 9
+### Step 11
 ##### Scaling apps
 
 Applications can be scaled via the command line or the console. When we talk about scale, there are two different types of scale: Vertical and Horizontal. Read [Scaling Apps](http://docs.cloudfoundry.org/devguide/deploy-apps/cf-scale.html) doc on more details on scaling applications.
@@ -469,7 +469,7 @@ You can also use the Autoscaler service from the marketplace and bind it to your
 
 
 <br>
-### Step 10
+### Step 12
 ##### Verify the app from the Console
 
 To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
