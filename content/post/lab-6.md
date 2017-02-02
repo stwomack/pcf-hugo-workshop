@@ -120,7 +120,7 @@ Be sure to point to the correct github-uri. The simplest uri to use is the same 
 ````
 github-uri: https://github.com/rjain-pivotal/flight-school.git
 github-branch: master
-cf-api: https://api.run.haas-88.pez.pivotal.io
+cf-api: https://api.run.haas-100.-88.pez.pivotal.io
 cf-username: <studentXXX>
 cf-password: <password>
 cf-org: <studentXXX>-org
@@ -277,7 +277,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     s3-bucket-release-candidates: studentXXX-pcfdemo-release-candidates
     maven-opts: # -Xms256m -Xmx512m
     maven-config: # -s path/to/settings.xml
-    cf-api: https://api.run.haas-68.pez.pivotal.io
+    cf-api: https://api.run.haas-100.68.pez.pivotal.io
     cf-username: studentXXX
     cf-password: studentXXX-password
     cf-org: studentXXX-org
@@ -334,7 +334,7 @@ $ fly -t aws destroy-pipeline -p studentXXX-flight-school // This will DELETE th
     cf apps // Get the App Names and URL
     ````
 
-    Open a browser and check the app load. (https://studentXXX-pcfdemo-ci.run.haas-68.pez.pivotal.io)
+    Open a browser and check the app load. (https://studentXXX-pcfdemo-ci.run.haas-100.pez.pivotal.io)
 
     <img src="/images/concourse-10.png" alt="Concourse CI" style="width: 100%;"/>
 
