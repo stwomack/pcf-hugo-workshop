@@ -64,7 +64,7 @@ Learn how to
 
 The Concourse Server in AWS is already configured from an existing AMI for this workshop.
 
-   Open a browser window and launch ***https://52.54.77.21***
+   Open a browser window and launch ***https://ci.rick-ross.com/***
 
    The userid/password for this server is
    ```
@@ -84,7 +84,7 @@ Open a cmd/terminal and target the concourse server.
 
 We will call our Concourse CI Server as *```aws```*
 
-    $ fly -t aws login -c https://52.54.77.21 -k
+    $ fly -t aws login -c https://ci.rick-ross.com -k
 
     Use the same userid / password combination.
 
