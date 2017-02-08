@@ -15,23 +15,6 @@ To deploy and configure a microservice and UI, leverage the platform for monitor
 
 <!--more-->
 
-##### __PROXY_SETUP__
-
-In case you run into Proxy issues, set the HTTP and HTTPS PROXY variable in the Global Environment, before you open a terminal window.
-
-```
-export HTTP_PROXY=<your http proxy>
-export HTTPS_PROXY=<your https proxy>
-```
-
-For Windows
-```
-set HTTP_PROXY=<your http proxy>
-set HTTPS_PROXY=<your https proxy>
-```
-
-
-
 Prerequisites
 --
 
@@ -44,30 +27,66 @@ Prerequisites
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
-4. Curl for [Windows](http://winampplugins.co.uk/curl/)
-   Or for [Mac] (http://pdb.finkproject.org/pdb/package.php/curl)
+4. Clone or Download the Source Code
 
-5. Maven for build (https://maven.apache.org/install.html)
+	[PCF Workspace:  https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
 
-    Set the M2_HOME in case it is not automatically set
-    Windows: set M2_HOME=<directory where Maven is installed>
-    e.g.
-    set M2_HOME=C:\Program Files\apache-maven-3.1.0-bin\apache-maven-3.1.0
+	##### Get the source code repository app
 
+	<img src="/images/git-clone.png" alt="Git style="width: 70%;"/>
 
-7. Optional Golang (https://golang.org/dl/)  
-   After you install Go, make sure you set the GOHOME and PATH
-   For Linux/Mac:
-    ```
-    export GOROOT=$HOME/go
-    export PATH=$PATH:$GOROOT/bin
-    ```
+	Download the source code. Download as Zip file and save it in local folder
 
-    For Windows
-    ```
-    set GOROOT=C:\<Some directory>\go
-    set PATH=%PATH%;%GOROOT%\bin
-    ```
+	```bash
+	   unzip pcf-workspace-devops-master.zip
+	```
+	##### ---OR---
+
+	Fork and Clone
+
+	[PCF Workspace:  https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
+
+	For Linux/Mac:
+	```bash
+	$git clone https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops.git
+	```
+
+	For Windows
+	```
+	C:\<Some Directory to save code>\> git clone https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops.git
+	```
+
+5. Environment Proxy Setup (Optional depending on network configuration)
+
+	If you are connected to the Ford Network, that requires using a proxy, you'll need to set the appropriate environment variables. In the repository there is a file called setenv.bat. 
+
+	Open up a terminal/command prompt, change directory to the top level folder and run the setenv.bat file. 
+
+	For Mac
+	```
+	export HTTP_PROXY=<your http proxy>
+	export HTTPS_PROXY=<your https proxy>
+	```
+
+	For Windows
+	```
+	set HTTP_PROXY=<your http proxy>
+	set HTTPS_PROXY=<your https proxy>
+	```
+	
+6. Gradle Environment Setup (Optional depending on network configuration)
+
+	In a terminal/command prompt, copy the gradle.ford to gradle.properties
+	
+	For Mac	
+	```
+	cp gradle.ford gradle.properties
+	```
+
+	For Windows
+	```
+	copy gradle.ford gradle.properties
+	```
 
 
 Steps
@@ -89,38 +108,6 @@ __NOTE__
 ## PART 1: Introduction to CF, Push an App.
 
 ### Step 1
-##### Get the cities app
-
-<img src="/images/git-clone.png" alt="Git style="width: 70%;"/>
-
-Download the source code. Download as Zip file and save it in local folder
-
-```bash
-   unzip pcf-workspace-devops-master.zip
-```
-##### ---OR---
-
-Fork and Clone
-
-[PCF Workspace:  https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
-
-For Linux/Mac:
-```bash
-$git clone https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops.git
-```
-
-For Windows
-```
-C:\<Some Directory to save code>\> git clone https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops.git
-```
-
-
-
-
-
-
-
-### Step 2
 ##### Build the app
 By this point, you should have cloned (or forked, or downloaded) the [workspace repo](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/).  Now you will build the project and deploy it to Cloud Foundry.
 
@@ -147,7 +134,7 @@ Windows:
     gradlew.bat clean build
 
 
-### Step 3
+### Step 2
 ##### Login into Pivotal Cloud Foundry
 
 The students have userId's (student1-student25) and the passwords will be distributed in the workshop.
@@ -234,7 +221,7 @@ The cities-service app requires a database service to store and fetch cities inf
 
     ````bash
     $ cf marketplace // check if mysql service is available
-    $ cf create-service p-mysql 100mb-dev <studentXX>-cities-db
+    $ cf create-service p-mysql 100mb <studentXX>-cities-db
     ````
 
 3. Launch the DB console via the `Manage` link in the App Manager.  Note the database is empty.
@@ -324,17 +311,23 @@ Next, lets push the cities-service app with a manifest to help automate deployme
     ````
 
     Notice that using a manifest, you have moved the command line parameters (number of instances, memory, etc) into the manifest.
-6. Verify you can access your application via a curl request:
+6. Verify you can access your application via a curl request or your browser:
    You will have to get the route to your app
 
+    For a Mac
     ````bash
        // This will list your apps and the last column is the route.
        $ cf apps
-          url: cities-hello-postpericardial-nonsubtlety.run.haas-100.pez.pivotal.io  
+          url: instructor-cities-service.run.haas-100.pez.pivotal.io  
           // Note - Use HTTPS
-       $ curl -i -k https://cities-hello-postpericardial-nonsubtlety.run.haas-100.pez.pivotal.io
+       $ curl -i -k https://instructor-cities-service.run.haas-100.pez.pivotal.io
     ````
-    We must be able to access your application at https://cities-hello-postpericardial-nonsubtlety.run.haas-100.pez.pivotal.io for the next steps to work properly.
+    
+    For Windows
+    ````
+       Open the URL (e.g. https://instructor-cities-service.run.haas-100.pez.pivotal.io) in a browser window
+    ````
+    We must be able to access your application at https://instructor-cities-service.run.haas-100.pez.pivotal.io for the next steps to work properly.
 
 __NOTE__
 
@@ -472,7 +465,7 @@ You can also use the Autoscaler service from the marketplace and bind it to your
 ### Step 12
 ##### Verify the app from the Console
 
-To verify that the application is running, use the following curl commands to retrieve data from the service or use a browser to access the URL:
+To verify that the application is running, use the following curl commands (or use your browser) to retrieve data from the service or use a browser to access the URL:
 
   ````bash
   $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-100.pez.pivotal.io/cities
@@ -485,6 +478,9 @@ To verify that the application is running, use the following curl commands to re
   ````bash
   $ curl -i -k https://<studentXX>-cities-service.cfapps.haas-100.pez.pivotal.io/cities?size=5
   ````
+  
+  For Windows, use your browser and visit the corresponding URLs.
+  
 <br>
 
 ##### Discussion: Part 2
