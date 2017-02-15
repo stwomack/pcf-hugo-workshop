@@ -2,57 +2,57 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop@GM Austin"
+title = "Welcome to the Pivotal Cloud Foundry Workshop@Detroit"
 type = "Introduction"
 weight = 1
 +++
-##### Location
-
-Corvette 2nd Floor Austin
 
 ##### Date and Time
-Date: **April 26 , 2016**
+Date: **Nov 15 , 2016**
 
-Time: **9:30AM—4:30PM**
+Time: **8:00AM - 4:00PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 <!--more-->
 
-##### Agenda
 
-        Broad Agenda (We will have breaks in between sessions)
+#### Agenda
+|  |  |
+|------|------|
+| **8:00 AM–9:00 AM** | Registration and Breakfast  |
+| **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
+| **12:00 PM–1:30 PM** | Lunch and Networking  |
+| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
 
-        9:30 - 10:30: GM's Current and Desired Model of Software Delivery (3 Use Cases) -- Mano and GM Team
-
-        10:30 - 11:30: Pivotal (and VMWare)'s approach to GM's desired state (Fulfilment of Use Cases)- Pivotal
-
-        == LUNCH ==
-
-        12:30 - 2:00: Walkthrough (and Hands on)  Push/Bind/Scale/Blue Green Deployment of Spring boot apps provided by Pivotal Cloud Foundry hosted by Pivotal
-
-        2:00 - 3:00: Build Pipelines for continuous deployment, Bosh/Ops Manager walk through and discussion on CI/CD.
-
-        3:30 - 4:30: Lessons learned and Scoping for POC - Apps, Infrastructure vSphere, Sizing, Timelines and Project Plan
-
-        4:30 and beyond : Open discussion on various topics - Spring Cloud Services, Security, APM, K8, Docker
-                          Wrap Up, Q&A, Feedback
-
+---
 
 ##### Prerequisites
-1. Java SDK 1.7+
+1. Java SDK 1.7+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-2. Git CLI from [github.com](https://mac.github.com/)
+          Set the JAVA_HOME variable to the installation dir, in case it is not automatically set
+
+2. Git CLI for [Windows](https://github.com/git-for-windows/git/releases/download/v2.9.0.windows.1/Git-2.9.0-64-bit.exe)
+   or Git from [github.com](https://desktop.github.com)
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
-4. Curl from [curl](http://curl.haxx.se/)
+4. Curl for [Windows](http://winampplugins.co.uk/curl/)
+   Or for [Mac] (http://pdb.finkproject.org/pdb/package.php/curl)
 
 5. Use Workshop PCF Env or Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
 6. Maven for build (https://maven.apache.org/install.html)
 
-7. Vagrant (In case you want to run Concourse CI/CD using Vagrant)
+          Set the M2_HOME in case it is not automatically set
+          Windows: set M2_HOME=<directory where Maven is installed>
+          e.g.
+          set M2_HOME=C:\Program Files\apache-maven-3.1.0-bin\apache-maven-3.1.0
+7. Optional Vagrant
+8. Optional Virtual box
+
 
 ##### Setup
 
@@ -60,7 +60,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 2. Check if you are able to use the cf cli to connect to the PCF Workshop Env. Alternatively, you can create a PWS account and check the firewall/connectivity before the Workshop
 
-          cf login -a https://api.pcf2.cloud.fe.pivotal.io  --skip-ssl-validation
+          cf login -a https://api.run.haas-68.pez.pivotal.io  --skip-ssl-validation
 
 3. Check if you are able to connect to Git repo and download / clone the repo using CLI
 4. Login to the App Manager Console at
@@ -70,19 +70,17 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 5. Note: Tiles preinstalled in the PCF Workshop environment which we will be using the workshop. You don't need any setup for these tiles.
 
           ER
-          Spring Cloud Services
           RabbitMQ
           MySQL
-          MongoDB
-          Neo4J
           Redis
 
 
-##### Speakers
 
-    Rajesh Jain, Platform Architect
-    Marcelo Borges, Platform Architect
-    Edward Mikuszewski, Platform Architect
+
+#### Speakers
++ Rajesh Jain - Platform Architect at Pivotal
++ Chris Johnson - Platform Architect at Pivotal
++ Rick Ross - Platform Architect at Pivotal
 
 #### Presentation
 
@@ -93,7 +91,10 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 #### Videos
 
 
-{{< youtube V75fE_dxuBQ >}}
+{{< youtube xdw_9dADM-4 >}}
 
 
-{{< youtube 7APZD0me1nU >}}
+#### EBooks
+Beyond the Twelve-Factor App - https://pivotal.io/beyond-the-twelve-factor-app
+Cloud Foundry: The Cloud Native Platform - https://pivotal.io/cloud-foundry-the-cloud-native-platform
+Migrating to Cloud Native Application Architectures - https://pivotal.io/platform/migrating-to-cloud-native-application-architectures-ebook
