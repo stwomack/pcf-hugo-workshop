@@ -15,18 +15,37 @@ At the conclusion of this workshop attendees take with them the knowledge and ex
 <br><br>
 
 #### Agenda
-|  |  |
+|   |  |
 |------|------|
 | **8:00 AM–8:30 AM** | Registration and Breakfast  |
-| **8:30 AM–9:30 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **8:30 AM–9:30 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |
 | **10:00 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
 | **12:00 PM–1:30 PM** | Lunch , Q&A and Feedback  |
 
 ---
+##### Key Take-aways
+
++  **The Twelve-Factor App**: A collection of cloud-native app architecture patterns
+
++  **Microservices**: independently deployable services that do one thing well
+
++  **Self-Service Agile Infrastructure**: platforms for rapid, repeatable, and consistent provisioning of app environments and backing services
+
++  **API-based Collaboration**: published and versioned APIs that allow interaction between services in a cloud-native app architecture
+
++  **Anti-Fragility**: systems that get stronger when subjected to stress
+
+##### Learn how to :
+
++  Push a microservice application to Pivotal Cloud Foundry
++  Bind backing services to your application
++  Scale your application for high availability and traffic demands
++  Monitor your application in real-time
+
 
 #### Speakers
-+ Marcelo Borges - Platform Architect at Pivotal
 + Rajesh Jain - Platform Architect at Pivotal
++ Marcelo Borges - Platform Architect at Pivotal
 + Patrick Crocker - Platform Architect at Pivotal
 
 ---
