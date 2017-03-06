@@ -8,9 +8,9 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **Feb 07, 2017**
+Date: **Mar 06, 2017**
 
-Time: **11:30AM - 4:00PM**
+Time: **1:00PM - 5:30PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -20,9 +20,28 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 #### Agenda
 |  |  |
 |------|------|
-| **11:30 AM–12:30 PM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
-| **12:30 PM–3:30 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor, blue green deployment) |
+##### Day 1 :
+|  |  |
+|------|------|
+| **8:00 AM–9:00 AM** | Registration and Breakfast  |
+| **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
+| **12:00 PM–1:30 PM** | Lunch and Networking  |
+| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
 | **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
+
+##### Day 2 :
+| **8:00 AM–10:00 AM** | Introduction to Spring Boot |    
+| **10:15 AM–12:00 PM** | Hands-On Experience with Spring Boot App Development |
+| **12:00 PM–1:30 PM** | Lunch and Networking  |
+| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
+
+---
+#### Speakers
++ Rajesh Jain - Platform Architect at Pivotal
++ Rick Ross - Platform Architect at Pivotal
+
 
 ---
 
@@ -72,12 +91,6 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
           Redis
 
 
-
-
-#### Speakers
-+ Rajesh Jain - Platform Architect at Pivotal
-+ Chris Johnson - Platform Architect at Pivotal
-+ Rick Ross - Platform Architect at Pivotal
 
 #### Presentation
 
