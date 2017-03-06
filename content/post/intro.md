@@ -8,9 +8,9 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **Mar 06, 2017**
+Date: **Mar 06,07 2017**
 
-Time: **1:00PM - 5:30PM**
+Time: **1:00PM - 5:30PM**/**8:00 AM - 12:00 PM
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -23,21 +23,18 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 ##### Day 1 :
 |  |  |
 |------|------|
-| **8:00 AM–9:00 AM** | Registration and Breakfast  |
-| **9:00 AM–10:00 AM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
-| **10:15 AM–12:00 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
-| **12:00 PM–1:30 PM** | Lunch and Networking  |
-| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
-| **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
+| **1:00 PM–2:00 PM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **2:10 AM–4:30 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
+| **4:45 PM–5:15 PM** | CI/CD on Cloud Foundry using Concourse  |
+| **5:15 PM–5:30 PM** | Wrap Up, Q&A, Feedback  |
 
 ##### Day 2 :
 |  |  |
 |------|------|
-| **8:00 AM–10:00 AM** | Introduction to Spring Boot |    
-| **10:15 AM–12:00 PM** | Hands-On Experience with Spring Boot App Development |
-| **12:00 PM–1:30 PM** | Lunch and Networking  |
-| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
-| **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
+| **8:00 AM–9:00 AM** | Introduction to Spring Boot |    
+| **9:15 AM–11:30 PM** | Hands-On Experience with Spring Boot App Development |
+| **11:30 PM–12:00 PM** | Wrap Up, Q&A, Feedback  |
+| **12:00 PM–1:00 PM** | Lunch and Networking  |
 
 ---
 #### Speakers
