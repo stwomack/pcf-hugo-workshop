@@ -8,9 +8,9 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **Mar 06,07 2017**
+Date: **Mar 23 2017**
 
-Time: **1:00PM - 5:30PM**/**8:00 AM - 12:00 PM
+Time: **1:00PM - 4:0PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -28,18 +28,10 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 | **4:45 PM–5:15 PM** | CI/CD on Cloud Foundry using Concourse  |
 | **5:15 PM–5:30 PM** | Wrap Up, Q&A, Feedback  |
 
-##### Day 2 :
-|  |  |
-|------|------|
-| **8:00 AM–9:00 AM** | Introduction to Spring Boot |    
-| **9:15 AM–11:30 PM** | Hands-On Experience with Spring Boot App Development |
-| **11:30 PM–12:00 PM** | Wrap Up, Q&A, Feedback  |
-| **12:00 PM–1:00 PM** | Lunch and Networking  |
-
 ---
 #### Speakers
++ Todd Hall - Ford
 + Rajesh Jain - Platform Architect at Pivotal
-+ Rick Ross - Platform Architect at Pivotal
 
 
 ---

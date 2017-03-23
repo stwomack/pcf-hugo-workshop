@@ -26,18 +26,12 @@ Space is limited. Reserve your seat today.
 | **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
 | **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
 
-##### Day 2 :
-| **8:00 AM–10:00 AM** | Introduction to Spring Boot |    
-| **10:15 AM–12:00 PM** | Hands-On Experience with Spring Boot App Development |
-| **12:00 PM–1:30 PM** | Lunch and Networking  |
-| **1:30 PM–3:30 PM** | CI/CD on Cloud Foundry using Concourse  |
-| **3:30 PM–4:00 PM** | Wrap Up, Q&A, Feedback  |
 
 ---
 
 #### Speakers
 + Rajesh Jain - Platform Architect at Pivotal
-+ Rick Ross - Platform Architect at Pivotal
++ Todd Hall - Ford
 
 ---
 
