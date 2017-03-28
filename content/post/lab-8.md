@@ -8,4 +8,4 @@ weight = 2
 
 +++
 
-{{< gitpage "https://rossr3-pivotal.github.io/spring-boot-workshop/index.html" >}}
+{{< gitpage "https://rjain-pivotal.github.io/spring-boot-workshop/" >}}
