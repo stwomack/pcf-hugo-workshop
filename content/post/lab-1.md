@@ -140,8 +140,9 @@ Windows:
 The students have userId's (student1-student50) and the passwords will be distributed in the workshop.
 ````
 Note to workshop with >30 participants:
-if you are student1-student25: Please use endpoint: https://api.run.haas-72.pez.pivotal.io
-If you are student26-student50: Please use endpoint: https://api.demo.pcf-on-aws.net
+if you are student1-student25: This doc is straight forward to you.
+If you are student26-student50: 
+   When you see "run.haas-72.pez.pivotal.io" in the below doc, please replace with: "demo.pcf-on-aws.net" instead
 ````
 Each student is assigned an userId within their own organization (student1-org). Please refer to the handout you have been given.
 
