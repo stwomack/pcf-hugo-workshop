@@ -8,9 +8,9 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **Mar 23 2017**
+Date: **Apr 26 2017**
 
-Time: **1:00PM - 4:0PM**
+Time: **9:00PM - 12:30PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -23,10 +23,9 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 ##### Day 1 :
 |  |  |
 |------|------|
-| **1:00 PM–2:00 PM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
-| **2:10 AM–4:30 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
-| **4:45 PM–5:15 PM** | CI/CD on Cloud Foundry using Concourse  |
-| **5:15 PM–5:30 PM** | Wrap Up, Q&A, Feedback  |
+| **9:00 PM–10:00 PM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
+| **10:10 AM–12:10 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
+| **12:10 PM–12:30 PM** | Wrap Up, Q&A, Feedback  |
 
 ---
 #### Speakers
