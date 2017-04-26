@@ -27,7 +27,6 @@ copyright = "© Copyright 2017 Pivotal Software, Inc. All Rights Reserved."
     # Text for the top menu link, which goes the root URL for the site.
     # Default (if omitted) is "Home".
     home = "Home"
-
     description = "Ford Dearborn · 26 Apr  9:00AM - 12:30PM PM" # optional
     twitter = "pivotal" # optional
     customer = "ford"
