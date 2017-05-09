@@ -37,8 +37,6 @@ Prerequisites
 
 5. Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
-6. Maven for build (https://maven.apache.org/install.html)
-
 
 Steps
 --
@@ -81,12 +79,12 @@ The students have userId's (student1-student25) and the passwords will be distri
 Each student is assigned their own Organization (student1-org)
 
 ````
-cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
+cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
   Email: student1
   Password: ••••••••
 ````
 
-Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
+Login to the App Console at https://apps.run.haas-123.pez.pivotal.io
 
 <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
@@ -155,19 +153,23 @@ https://github.com/myorg/configurations
 
 <img src="/images/pcf-config-service-1.png" alt="Config Server" style="width: 100%;"/>
 
-4. This will create the studentXX-config-service service instance. Next configure this service by clicking manage.
+4. This will create the studentXX-config-service service instance. .
 
 <img src="/images/pcf-config-service-2.png" alt="Config Server" style="width: 100%;"/>
 
-The Git repository URL is the URL of your cloned git repo in Step 3.
+5. Next, to configure the Config server to point to the Git Data store do the following from the `cf cli`
 
-````
-https://github.com/rjain-pivotal//student1-workshop-app-config.git
-````
+For Windows
+  `cf update-service ins-config-server -c "{\"git\": {\"uri\": \"https://github.com/rjain-pivotal/workshop-app-config.git\"}}"`
 
-We are using defaults for the rest, hence leave them blank.
+For Mac/Linux
+  `cf update-service instructor-config-server -c '{"git": {"uri": "https://github.com/rjain-pivotal/workshop-app-config.git"}}'`
+
+Note: The Git repository URL is the URL of your cloned git repo in Step 3. If you are using the instructor git url, you can specify that.
+
+
 For detailed documentation on the other configuration items, refer to the product documentation.
-http://docs.pivotal.io/spring-cloud-services/config-server/creating-an-instance.html
+
 
 
 ### Step 5
@@ -279,7 +281,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
       greeting:
         displayFortune: true # <----Change to true
 
-      quoteServiceURL: http://quote-service-dev.cfapps.io/quote
+      quoteServiceURL: http://quote-service-dev.cfapps.haas-123.pez.pivotal.io/quote
       ````
 
 
@@ -302,10 +304,10 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
             SPRING_PROFILES_ACTIVE: dev
 
 
-2. Build the app using maven
+2. Build the app using gradle
 
       ````
-      mvn clean package
+      ./gradlew clean build
       ````
 
 3. Push the app using cf cli
@@ -317,8 +319,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 4. Open in the browser the App
 
       ````
-      http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-      http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+      http://student1-greeting-config.run.haas-123.pez.pivotal.io/
+      http://student1-greeting-config.run.haas-123.pez.pivotal.io/random-quote
       ````
 
 ### Step 7
@@ -330,13 +332,13 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
       greeting:
         displayFortune: false # <----Change to true
 
-      quoteServiceURL: http://quote-service-qa.cfapps.io/quote
+      quoteServiceURL: http://quote-service-qa.cfapps.haas-123.pez.pivotal.io/quote
       ````
 
 2. Force refresh the beans
 
       ````
-      curl -X POST http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/refresh
+      curl -X POST http://student1-greeting-config.run.haas-123.pez.pivotal.io/refresh
       ````
 
       This will output the properties which changed
@@ -348,14 +350,14 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
       You will see the Greetings doesn't have any fortune and the random-quote is from qa service
 
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+        http://student1-greeting-config.run.haas-123.pez.pivotal.io/
+        http://student1-greeting-config.run.haas-123.pez.pivotal.io/random-quote
 
 
 ### Step 8
 ##### Change the profile and Push
 
-1. Next, update the manifest.yml to point to the SPRING_PROFILES_ACTIVE to qa
+1. Next, update the manifest.yml to point to the SPRING_PROFILES_ACTIVE to `qa`
 
         ---
         applications:
@@ -381,8 +383,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
       You can verify by opening the two URLs
 
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://student1-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+        http://student1-greeting-config.run.haas-123.pez.pivotal.io/
+        http://student1-greeting-config.run.haas-123.pez.pivotal.io/random-quote
 
 
 ### Step 9
@@ -414,48 +416,116 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
 3. Build the app and push 3 app instances
 
       ````
-      $mvn clean package
+      $./gradlew clean build
       $cf push -i 3
       ````
 
 4. Change the app-config/greeting-config.yml and refresh all the app instances using Cloud Bus
 
       ````
-      curl -X POST http://<studentXXX>-greeting-config.pcf2.cloud.fe.pivotal.io/bus/refresh
+      curl -X POST http://<studentXXX>-greeting-config.run.haas-123.pez.pivotal.io/bus/refresh
       ````
 
 5. Verify by opening the two URLs
 
-        http://<studentXXX>-greeting-config.pcf2.cloud.fe.pivotal.io/
-        http://<studentXXX>-greeting-config.pcf2.cloud.fe.pivotal.io/random-quote
+        http://<studentXXX>-greeting-config.run.haas-123.pez.pivotal.io/
+        http://<studentXXX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
 
 ### Step 10
 ##### Spring Actuator Endpoints
 
 Check the Actuator Endpoints
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/beans``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/beans``
 
 Dumps all of the beans in the Spring context.
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/autoconfig``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/autoconfig``
 
 Dumps all of the auto-configuration performed as part of application bootstrapping.
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/configprops``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/configprops``
 
 Displays a collated list of all @ConfigurationProperties.
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/env``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/env``
 
 Dumps the application’s shell environment as well as all Java system properties.
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/mappings``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/mappings``
 
 Dumps all URI request mappings and the controller methods to which they are mapped.
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/dump``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/dump``
 
 Performs a thread dump.
 
-``http://<studentXX>-greeting-config.pcf2.cloud.fe.pivotal.io/trace``
+``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/trace``
+
+# Advanced Topics
+
+## Encryption and Decryption of data
+The Config Server can serve encrypted property values from a configuration file. If the Config Server is configured with a symmetric or asymmetric encryption key and the encrypted values are prefixed with the string {cipher}, the Config Server will decrypt the values before serving them to client applications. The Config Server has an /encrypt endpoint, which can be used to encrypt property values.
+
+`{"git": {"uri": "https://github.com/spring-cloud-services-samples/cook-config.git" }, "encrypt": { "key": "KEY" }}`
+
+And to get the encrypted values, first get the Oauth TOKEN_STRING
+
+        $ cf env cook
+        Getting env variables for app cook in org myorg / space development as admin...
+        OK
+
+        System-Provided:
+        {
+         "VCAP_SERVICES": {
+          "p-config-server": [
+           {
+            "credentials": {
+             "access_token_uri": "https://p-spring-cloud-services.uaa.cf.wise.com/oauth/token",
+             "client_id": "p-config-server-876cd13b-1564-4a9a-9d44-c7c8a6257b73",
+             "client_secret": "rU7dMUw6bQjR",
+             "uri": "https://config-86b38ce0-eed8-4c01-adb4-1a651a6178e2.apps.wise.com"
+            },
+        [...]
+
+
+        TOKEN=$(curl -k ACCESS_TOKEN_URI -u CLIENT_ID:CLIENT_SECRET -d
+        grant_type=client_credentials | jq -r .access_token); curl -k -H
+        "Authorization: bearer $TOKEN" -H "Accept: application/json"
+        URI/ENDPOINT | jq
+
+
+
+`curl -H 'Authorization: bearer TOKEN_STRING' http://SERVER/encrypt -d 'Value to be encrypted'`
+
+The Config Server returns the encrypted value. You can use the encrypted value in a configuration file with the {cipher} prefixed
+In a file within the configuration repository, properties whose values are prefixed with {cipher} will be decrypted before they are served to client applications.
+
+Example encrypted values in the properties file
+
+        secretMenu: '{cipher}AQA90Q3GIRAMu6ToMqwS++En2iFzMXIWX99G66yaZFRHrQNq64CntqOzWymd3xE7uJp
+        ZKQc9XBIkfyRz/HUGhXRdf3KZQ9bqclwmR5vkiLmN9DHlAxS+6biT+7f8ptKo3fzQ0gGOBaR4kTnWLBxmVaIkjq1
+        Qze4aIgsgUWuhbEek+3znkH9+Mc+5zNPvwN8hhgDMDVzgZLB+4YnvWJAq3Au4wEevakAHHxVY0mXcxj1Ro+H+Zel
+        IzfF8K2AvC3vmvlmxy9Y49Zjx0RhMzUx17eh3mAB8UMMRJZyUG2a2uGCXmz+UunTA5n/dWWOvR3VcZyzXPFSFkhN
+        ekw3db9XZ7goceJSPrRN+5s+GjLCPr+KSnhLmUt1XAScMeqTieNCHT5I='
+
+
+SCS 1.4 adds support for Hashicorp Vault backends to Config Server service instances and adds support for declaratively defining composite (i.e. combined Git + Vault) configuration of multiple backends to Config Server service instances.
+
+
+## Git SSH and HTTPS and HTTP/S Proxy access
+
+You can configure a Config Server configuration source so that the Config Server accesses it using the Secure Shell (SSH) protocol
+
+      '{"git": { "uri": "ssh://git@github.com/spring-cloud-services-samples/cook.git", "hostKey": "AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+...", "hostKeyAlgorithm": "ssh-rsa", "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIJKQIB..."} }'
+
+
+You can configure a Config Server service instance to access configuration sources using an HTTP or HTTPS proxy.
+
+      '{"git": { "proxy": { "http": { "host": "proxy.wise.com", "port": "80" } } } }'
+      '{"git": { "proxy": { "http": { "host": "proxy.wise.com", "port": "80" } } } }'
+
+You can configure a Config Server service instance to use multiple configuration sources, which will be used only for specific applications or for applications which are using specific profiles
+
+      '{"git": { "repos": { "cookie": { "uri": "https://github.com/myorg/config-repo", "label": "develop" } } } }'
+      '{"git": { "repos": { "cookie": { "pattern": "co*/dev*", "uri": "https://github.com/spring-cloud-services-samples/cook-config" } } } }'

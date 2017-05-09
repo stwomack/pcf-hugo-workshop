@@ -18,7 +18,7 @@ To deploy and configure a microservice and UI, leverage the platform for monitor
 Prerequisites
 --
 
-1. Java SDK 1.7+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+1. Java SDK 1.8+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
     Set the JAVA_HOME variable to the installation dir, in case it is not automatically set
 
@@ -58,7 +58,7 @@ Prerequisites
 
 5. Environment Proxy Setup (Optional depending on network configuration)
 
-	If you are connected to the Ford Network, that requires using a proxy, you'll need to set the appropriate environment variables. In the repository there is a file called setenv.bat.
+	If you are connected to the Ford Network, that requires using a proxy, you'll need to set the appropriate environment variables. In the repository there is a file called *setenv.bat*.
 
 	Open up a terminal/command prompt, change directory to the top level folder and run the setenv.bat file.
 
