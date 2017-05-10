@@ -27,7 +27,9 @@ Prerequisites
 
 3. Cloud Foundry CLI for [Mac](https://github.com/cloudfoundry/cli/releases) or [Windows](http://docs.cloudfoundry.org/devguide/installcf/install-go-cli.html#windows)
 
-4. Clone or Download the Source Code
+4. Gradle for build (https://projects.eclipse.org/projects/tools.buildship)
+
+5. Clone or Download the Source Code
 
 	[PCF Workspace:  https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/](https://github.com/Pivotal-Field-Engineering/pcf-workspace-devops/)
 

@@ -35,7 +35,7 @@ Prerequisites
 
 5. Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
-6. Maven for build (https://maven.apache.org/install.html)
+6. Gradle for build (https://projects.eclipse.org/projects/tools.buildship)
 
 
 Steps
@@ -80,12 +80,12 @@ The students have userId's (student1-student25) and the passwords will be distri
 Each student is assigned their own Organization (student1-org)
 
 ````
-cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
-  Email: student1
+cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
+  Email: student-XX
   Password: ••••••••
 ````
 
-Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
+Login to the App Console at https://apps.run.haas-123.pez.pivotal.io
 
   <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
@@ -133,24 +133,19 @@ Let's walk through the code in the traveler app in the source repo (Step #1) usi
       public class AgencyApplication {
       ````
 
-2. Review the *traveler/feign-agency/pom.xml* file. By adding *spring-cloud-services-starter-circuit-breaker* to the classpath this application is able to use the circuit breaker.
+2. Review the *traveler/feign-agency/build.gradle* file. By adding *spring-cloud-services-starter-circuit-breaker* to the classpath this application is able to use the circuit breaker.
 
       ````
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-feign</artifactId>
-      </dependency>
-
-      <dependency>
-        <groupId>io.pivotal.spring.cloud</groupId>
-        <artifactId>spring-cloud-services-starter-service-registry</artifactId>
-      </dependency>
-
-      <dependency>
-        <groupId>io.pivotal.spring.cloud</groupId>
-        <artifactId>spring-cloud-services-starter-circuit-breaker</artifactId>
-      </dependency>
-
+      dependencies {
+           compile('org.springframework.boot:spring-boot-starter-actuator')
+           compile('org.springframework.boot:spring-boot-starter-cloud-connectors')
+           compile("org.springframework.cloud:spring-cloud-starter-feign")
+           compile('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
+           compile("io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker")
+           compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+           compile('org.springframework.boot:spring-boot-starter-web')
+           testCompile('org.springframework.boot:spring-boot-starter-test')
+      }
       ````
 
 3. Review the *traveler/feign-agency/src/main/java/agency/TravelAgent.java*
@@ -180,54 +175,55 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 1. Change the manifest.yml file in the traveler/company to reflect the name of the app and the service-registry
 
         ---
-        memory: 512M
+        memory: 1G
         applications:
-          - name: <studentXX>-company
+          - name: company
+            host: <student-XX>-company
             services:
-              - <studentXX>-service-registry
-            path: ./target/company-0.0.1-SNAPSHOT.jar
+              - <student-XX>-service-registry
+            path: ./build/libs/company-0.0.1-SNAPSHOT.jar
             env:
               SPRING_PROFILES_ACTIVE: dev
-              CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+              TRUST_CERTS: api.run.haas-123.pez.pivotal.io
+
 
 
 2. Change the manifest.yml file in the traveler/feign-agency to reflect the name of the app and the circuit-breaker and service-registry Services
 
 
-        ---
-        instances: 1
-        memory: 512M
+        memory: 1G
         applications:
-          - name:  <studentXX>-agency
-            path: ./target/agency-0.0.1-SNAPSHOT.jar
+          - name: agency
+            host: <student-XX>-agency
             services:
-              -  <studentXX>-service-registry
-              -  <studentXX>-circuit-breaker-dashboard
+              - <student-XX>-service-registry
+              - <student-XX>-circuit-breaker
+            path: ./build/libs/agency-0.0.1-SNAPSHOT.jar
             env:
               SPRING_PROFILES_ACTIVE: dev
-              CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+              TRUST_CERTS: api.run.haas-123.pez.pivotal.io
 
 
 
 3. Build the app using maven in the parent traveler directory
 
       ````
-      $cd traveler
-      $mvn clean package
+      cd traveler
+      ./gradlew clean build
       ````
 
-4. Push the apps using scripts/deploy_mvn.sh or scripts/deploy_mvn.bat
+4. Push the apps either manually or using scripts/deploy_gradle.sh or scripts/deploy_gradle.bat
 
     First check and change the service names in the script. If the script registry is already created don't create a new one.
 
 
       ````
-      #cf create-service p-service-registry standard <studentXX>-service-registry
-      cf create-service p-circuit-breaker-dashboard standard <studentXX>-circuit-breaker-dashboard
+      cf create-service p-service-registry standard service-registry
+      cf create-service p-circuit-breaker-dashboard standard circuit-breaker
       sleep 120
-      pushd company && cf push -p target/company-0.0.1-SNAPSHOT.jar
+      pushd company && cf push -p build/libs/company-0.0.1-SNAPSHOT.jar
       popd; sleep 30
-      pushd feign-agency && cf push -p target/agency-0.0.1-SNAPSHOT.jar
+      pushd feign-agency && cf push -p build/libs/agency-0.0.1-SNAPSHOT.jar
       popd
       echo "" && echo "Done!" && echo ""
       ````
@@ -236,7 +232,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       ````bash
       $cd traveler
-      $./scripts/deploy_mvn.sh
+      $./scripts/deploy_gradle.sh
       ````
 
 5. Open in the browser the App
@@ -245,10 +241,10 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       ````
       // This is the agency app
-      http://<studentXX>-agency.pcf2.cloud.fe.pivotal.io/
+      http://<studentXX>-agency.haas-123.pez.pivotal.io/
 
       // Note this is the company app
-      http://<studentXX>-company.pcf2.cloud.fe.pivotal.io/available
+      http://<studentXX>-company.haas-123.pez.pivotal.io/available
       ````
 
 6.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
@@ -269,7 +265,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Now check the app status, the agency app will fall back to the backup.
 
-        http:// <studentXX>-agency.pcf2.cloud.fe.pivotal.io/
+        http://<studentXX>-agency.haas-123.pez.pivotal.io/
 
         Your guide will be: None available! Your backup guide is: Cookie
 
@@ -282,7 +278,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Load the circuit
 
-        while true; do curl http://<studentXX>-agency.pcf2.cloud.fe.pivotal.io/; done
+        while true; do curl http://<studentXX>-agency.haas-123.pez.pivotal.io/; done
 
 
 3. When failures exceed the configured threshold (the default is 20 failures in 5 seconds), the breaker opens the circuit.

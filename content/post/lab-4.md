@@ -37,7 +37,7 @@ Prerequisites
 
 5. Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
-6. Maven for build (https://maven.apache.org/install.html)
+6. Gradle for build (https://projects.eclipse.org/projects/tools.buildship)
 
 
 Steps
@@ -77,16 +77,16 @@ git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ### Step 2
 ##### Login into Pivotal Cloud Foundry
 
-The students have userId's (student1-student25) and the passwords will be distributed in the workshop.
+The students have userId's (student1-student40) and the passwords will be distributed in the workshop.
 Each student is assigned their own Organization (student1-org)
 
 ````
-cf login -a https://api.pcf2.cloud.fe.pivotal.io --skip-ssl-validation
-  Email: student1
+cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
+  Email: student-XX
   Password: ••••••••
 ````
 
-Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
+Login to the App Console at https://apps.run.haas-123.pez.pivotal.io
 
 <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
@@ -100,11 +100,11 @@ Login to the App Console at https://apps.pcf2.cloud.fe.pivotal.io
       <img src="/images/pcf-console-2.png" alt="Marketplace Services" style="width: 100%;"/>
 
 2. Select the default plan.
-3. Name the service instance as 'studentXX-registry-service'
+3. Name the service instance as 'studentXX-service-registry'
 
       <img src="/images/pcf-registry-service-1.png" alt="Registry Service" style="width: 100%;"/>
 
-4. This will create the studentXX-registry-service service instance. To view the configuration of this service by clicking manage.
+4. This will create the studentXX-service-registry service instance. To view the configuration of this service by clicking manage.
 
       <img src="/images/pcf-registry-service-2.png" alt="Registry Service" style="width: 100%;"/>
 
@@ -126,13 +126,13 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
       ````
       spring.application.name is the name the application will use when registering with Eureka.
 
-2. Review the *fortune-service/pom.xml* file. By adding *spring-cloud-services-starter-service-registry* to the classpath this application is eligible to register and discover services with the service-registry.
+2. Review the *fortune-service/build.gradle* file. By adding *spring-cloud-services-starter-service-registry* to the classpath this application is eligible to register and discover services with the service-registry.
 
       ````
-      <dependency>
-      	<groupId>io.pivotal.spring.cloud</groupId>
-      	<artifactId>spring-cloud-services-starter-service-registry</artifactId>
-      </dependency>
+      dependencies {
+           compile('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
+            ...
+      }
       ````
 
 3. Review the *fortune-service/src/main/java/io/pivotal/FortuneServiceApplication.java*
@@ -155,24 +155,22 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
 
 1. Change the manifest.yml file in the fortune-service/ to reflect the name of the app and the service-registry
 
-        ---
         applications:
-        - name: <studentXXX>-fortune-service
-          memory: 512MB
+        - name: fortune-service
+          memory: 1G
           instances: 1
-          host: <studentXXX>-fortune-service
-          path: ./target/fortune-service-0.0.1-SNAPSHOT.jar
+          host: <student-XX>-fortune-service
+          path: ./build/libs/fortune-service-0.0.1-SNAPSHOT.jar
           services:
-          - <studentXXX>-service-registry
+          - <student-XX>-service-registry
           env:
-            CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+            TRUST_CERTS: api.run.haas-123.pez.pivotal.io
 
 
-
-2. Build the app using maven
+2. Build the app using gradle
 
       ````
-      mvn clean package
+      ./gradlew clean build
       ````
 
 3. Push the app using cf cli
@@ -185,7 +183,7 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
    Get the route to your app
 
       ````
-      http://fortune-service-decompressive-retrenchment.pcf2.cloud.fe.pivotal.io/
+      http://fortune-service-decompressive-retrenchment.haas-123.pez.pivotal.io/
       ````
 
 ### Step 6
@@ -254,22 +252,23 @@ Lets walk through the code
         ---
         applications:
         - name: greeting-feign
-          memory: 512MB
+          memory: 1G
           instances: 1
-          host: <studentXXX>-greeting-feign
-          path: ./target/greeting-feign-0.0.1-SNAPSHOT.jar
+          host: student-XX-greeting-feign
+          path: ./build/libs/greeting-feign-0.0.1-SNAPSHOT.jar
           services:
-          - <studentXX>-service-registry
+          - student-XX-service-registry
           env:
-            CF_TARGET: https://api.pcf2.cloud.fe.pivotal.io
+            TRUST_CERTS: api.run.haas-123.pez.pivotal.io
 
 
 
 
-2. Build the app using maven
+
+2. Build the app using gradle
 
       ````
-      mvn clean package
+      ./gradlew clean build
       ````
 
 3. Push the app using cf cli
@@ -283,7 +282,7 @@ Lets walk through the code
       Get the route to your app
 
       ````
-      http://studentXXX-greeting-feign.pcf2.cloud.fe.pivotal.io/
+      http://studentXXX-greeting-feign.haas-123.pez.pivotal.io/
       ````
 
       <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 100%;"/>

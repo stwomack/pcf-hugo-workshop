@@ -21,13 +21,15 @@
       {{ partial "agenda.html" .}}
     </div>
     <div class="section">
+      {{ $tags := .Site.Params.tags }}
+
       <div class="row">
             {{ range .Site.Pages}}
               {{ if in .Params.categories "lab" }}
                 {{ if in .Params.tags "cf"  }}
                     {{ partial "labs.html" . }}
                 {{end}}
-                {{ if in .Site.Params.tags "spring" }}
+                {{ if in $tags "spring" }}
                     {{ partial "spring-labs.html" . }}
                 {{end}}
                 {{ if in .Site.Params.tags "node" }}

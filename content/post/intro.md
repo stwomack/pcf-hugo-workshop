@@ -8,7 +8,7 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **Apr 26 2017**
+Date: **May 10 2017**
 
 Time: **9:00PM - 12:30PM**
 
@@ -20,11 +20,9 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 #### Agenda
 |  |  |
 |------|------|
-##### Day 1 :
-|  |  |
-|------|------|
-| **9:00 PM–10:00 PM** | Cloud Native Architecture & Pivotal Cloud Foundry |    
-| **10:10 AM–12:10 PM** | Hands-On Experience with Pivotal Cloud Foundry  (push, bind, scale, monitor) |
+| **9:00 PM–10:00 PM** | Config Server Service |    
+| **10:10 AM–11:00 PM** | Registry Service |
+| **11:10 AM–12:00 PM** | Circuit Breaker Service |
 | **12:10 PM–12:30 PM** | Wrap Up, Q&A, Feedback  |
 
 ---
@@ -36,7 +34,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 ---
 
 ##### Prerequisites
-1. Java SDK 1.7+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+1. Java SDK 1.8+ [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
           Set the JAVA_HOME variable to the installation dir, in case it is not automatically set
 
@@ -50,15 +48,6 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 5. Use Workshop PCF Env or Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
-6. Maven for build (https://maven.apache.org/install.html)
-
-          Set the M2_HOME in case it is not automatically set
-          Windows: set M2_HOME=<directory where Maven is installed>
-          e.g.
-          set M2_HOME=C:\Program Files\apache-maven-3.1.0-bin\apache-maven-3.1.0
-7. Optional Vagrant
-8. Optional Virtual box
-
 
 ##### Setup
 
@@ -66,12 +55,12 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 2. Check if you are able to use the cf cli to connect to the PCF Workshop Env. Alternatively, you can create a PWS account and check the firewall/connectivity before the Workshop
 
-          cf login -a https://api.run.haas-100.pez.pivotal.io  --skip-ssl-validation
+          cf login -a https://api.run.haas-123.pez.pivotal.io  --skip-ssl-validation
 
 3. Check if you are able to connect to Git repo and download / clone the repo using CLI
 4. Login to the App Manager Console at
 
-        https://apps.pcf2.cloud.fe.pivotal.io
+        https://apps.run.haas-123.pez.pivotal.io
 
 5. Note: Tiles preinstalled in the PCF Workshop environment which we will be using the workshop. You don't need any setup for these tiles.
 

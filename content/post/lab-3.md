@@ -35,7 +35,9 @@ Prerequisites
 
 4. Curl from [curl](http://curl.haxx.se/)
 
-5. Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
+5. Gradle for build (https://projects.eclipse.org/projects/tools.buildship)
+
+6. Pivotal Web Services Account.  Create a free trial account here [Pivotal Web Services](http://run.pivotal.io/)
 
 
 Steps
@@ -75,12 +77,12 @@ git clone https://github.com/rjain-pivotal/pcf-workshop-spring-labs.git
 ### Step 2
 ##### Login into Pivotal Cloud Foundry
 
-The students have userId's (student1-student25) and the passwords will be distributed in the workshop.
+The students have userId's (student1-student40) and the passwords will be distributed in the workshop.
 Each student is assigned their own Organization (student1-org)
 
 ````
 cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
-  Email: student1
+  Email: <student-XX>
   Password: ••••••••
 ````
 
@@ -290,18 +292,19 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
 1. Change the manifest.yml file in the greeting-config/ to reflect the name of the app and the config-service
 
-        ---
+            ---
         applications:
-        - name: <studentXXX>-greeting-config
-          memory: 512M
+        - name: greeting-config
+          memory: 1G
           buildpack: https://github.com/cloudfoundry/java-buildpack
           instances: 1
-          host: <studentXXX>-greeting-config
-          path: target/greeting-config-0.0.1-SNAPSHOT.jar
+          host: <student-XX>-greeting-config
+          path: build/libs/greeting-config-0.0.1-SNAPSHOT.jar
           services:
-            - <studentXXX>-config-service
+            - <student-XX>-config-server
           env:
             SPRING_PROFILES_ACTIVE: dev
+            TRUST_CERTS: api.run.haas-123.pez.pivotal.io
 
 
 2. Build the app using gradle
@@ -319,8 +322,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 4. Open in the browser the App
 
       ````
-      http://student1-greeting-config.run.haas-123.pez.pivotal.io/
-      http://student1-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+      http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/
+      http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
       ````
 
 ### Step 7
@@ -338,7 +341,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 2. Force refresh the beans
 
       ````
-      curl -X POST http://student1-greeting-config.run.haas-123.pez.pivotal.io/refresh
+      curl -X POST http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/refresh
       ````
 
       This will output the properties which changed
@@ -350,8 +353,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
       You will see the Greetings doesn't have any fortune and the random-quote is from qa service
 
-        http://student1-greeting-config.run.haas-123.pez.pivotal.io/
-        http://student1-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/
+        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
 
 
 ### Step 8
@@ -383,8 +386,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
       You can verify by opening the two URLs
 
-        http://student1-greeting-config.run.haas-123.pez.pivotal.io/
-        http://student1-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/
+        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
 
 
 ### Step 9
@@ -413,11 +416,11 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
       </dependency>
       ````
 
-3. Build the app and push 3 app instances
+3. Build the app and push 2 app instances
 
       ````
       $./gradlew clean build
-      $cf push -i 3
+      $cf push -i 2
       ````
 
 4. Change the app-config/greeting-config.yml and refresh all the app instances using Cloud Bus
@@ -467,7 +470,7 @@ Performs a thread dump.
 ## Encryption and Decryption of data
 The Config Server can serve encrypted property values from a configuration file. If the Config Server is configured with a symmetric or asymmetric encryption key and the encrypted values are prefixed with the string {cipher}, the Config Server will decrypt the values before serving them to client applications. The Config Server has an /encrypt endpoint, which can be used to encrypt property values.
 
-`{"git": {"uri": "https://github.com/spring-cloud-services-samples/cook-config.git" }, "encrypt": { "key": "KEY" }}`
+      {"git": {"uri": "https://github.com/spring-cloud-services-samples/cook-config.git" }, "encrypt": { "key": "KEY" }}
 
 And to get the encrypted values, first get the Oauth TOKEN_STRING
 
@@ -489,14 +492,15 @@ And to get the encrypted values, first get the Oauth TOKEN_STRING
         [...]
 
 
+  To get the token and assign to $TOKEN
+
         TOKEN=$(curl -k ACCESS_TOKEN_URI -u CLIENT_ID:CLIENT_SECRET -d
-        grant_type=client_credentials | jq -r .access_token); curl -k -H
-        "Authorization: bearer $TOKEN" -H "Accept: application/json"
-        URI/ENDPOINT | jq
+        grant_type=client_credentials | jq -r .access_token);
 
+  Use this token in your curl request.
 
-
-`curl -H 'Authorization: bearer TOKEN_STRING' http://SERVER/encrypt -d 'Value to be encrypted'`
+        curl -k -H "Authorization: bearer $TOKEN" -H "Accept: application/json" URI/ENDPOINT | jq
+        curl -H "Authorization: bearer $TOKEN" http://SERVER/encrypt -d 'Value to be encrypted'`
 
 The Config Server returns the encrypted value. You can use the encrypted value in a configuration file with the {cipher} prefixed
 In a file within the configuration repository, properties whose values are prefixed with {cipher} will be decrypted before they are served to client applications.
