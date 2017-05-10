@@ -81,7 +81,7 @@ Each student is assigned their own Organization (student1-org)
 
 ````
 cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
-  Email: student-XX
+  Email: <studentXX>
   Password: ••••••••
 ````
 
