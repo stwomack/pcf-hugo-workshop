@@ -82,7 +82,7 @@ Each student is assigned their own Organization (student1-org)
 
 ````
 cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
-  Email: <student-XX>
+  Email: <studentXX>
   Password: ••••••••
 ````
 
@@ -162,10 +162,12 @@ https://github.com/myorg/configurations
 5. Next, to configure the Config server to point to the Git Data store do the following from the `cf cli`
 
 For Windows
-  `cf update-service ins-config-server -c "{\"git\": {\"uri\": \"https://github.com/rjain-pivotal/workshop-app-config.git\"}}"`
+
+        `cf update-service student1-config-server -c "{\"git\": {\"uri\": \"https://github.com/rjain-pivotal/workshop-app-config.git\"}}"`
 
 For Mac/Linux
-  `cf update-service instructor-config-server -c '{"git": {"uri": "https://github.com/rjain-pivotal/workshop-app-config.git"}}'`
+
+        `cf update-service student1-config-server -c '{"git": {"uri": "https://github.com/rjain-pivotal/workshop-app-config.git"}}'`
 
 Note: The Git repository URL is the URL of your cloned git repo in Step 3. If you are using the instructor git url, you can specify that.
 
