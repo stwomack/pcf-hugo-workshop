@@ -82,7 +82,7 @@ Each student is assigned their own Organization (student1-org)
 
 ````
 cf login -a https://api.run.haas-123.pez.pivotal.io --skip-ssl-validation
-  Email: student-XX
+  Email: <studentXX>
   Password: ••••••••
 ````
 
@@ -183,7 +183,7 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
    Get the route to your app
 
       ````
-      http://fortune-service-decompressive-retrenchment.haas-123.pez.pivotal.io/
+      http://student1-fortune-service.cfapps.haas-123.pez.pivotal.io/
       ````
 
 ### Step 6

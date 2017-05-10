@@ -241,10 +241,10 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       ````
       // This is the agency app
-      http://<studentXX>-agency.haas-123.pez.pivotal.io/
+      http://<studentXX>-agency.cfapps.haas-123.pez.pivotal.io/
 
       // Note this is the company app
-      http://<studentXX>-company.haas-123.pez.pivotal.io/available
+      http://<studentXX>-company.cfapps.haas-123.pez.pivotal.io/available
       ````
 
 6.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
@@ -265,7 +265,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Now check the app status, the agency app will fall back to the backup.
 
-        http://<studentXX>-agency.haas-123.pez.pivotal.io/
+        http://<studentXX>-agency.cfapps.haas-123.pez.pivotal.io/
 
         Your guide will be: None available! Your backup guide is: Cookie
 
@@ -278,7 +278,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Load the circuit
 
-        while true; do curl http://<studentXX>-agency.haas-123.pez.pivotal.io/; done
+        while true; do curl http://<studentXX>-agency.cfapps.haas-123.pez.pivotal.io/; done
 
 
 3. When failures exceed the configured threshold (the default is 20 failures in 5 seconds), the breaker opens the circuit.
