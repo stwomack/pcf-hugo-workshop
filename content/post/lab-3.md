@@ -411,13 +411,13 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
       $ cf bind-service <studentXXX>-greeting-config cloud-bus
       ````
 
-2. Add the dependency to the pom.xml
+2. Add the dependency to the build.gradle
 
       ````
-      <dependency>
-          <groupId>org.springframework.cloud</groupId>
-          <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-      </dependency>
+
+      dependencies {
+        compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
+
       ````
 
 3. Build the app and push 2 app instances
@@ -430,44 +430,44 @@ Spring Cloud Bus addresses the issues listed above by providing a single endpoin
 4. Change the app-config/greeting-config.yml and refresh all the app instances using Cloud Bus
 
       ````
-      curl -X POST http://<studentXXX>-greeting-config.run.haas-123.pez.pivotal.io/bus/refresh
+      curl -X POST http://<studentXXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/bus/refresh
       ````
 
 5. Verify by opening the two URLs
 
-        http://<studentXXX>-greeting-config.run.haas-123.pez.pivotal.io/
-        http://<studentXXX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+        http://<studentXXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/
+        http://<studentXXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/random-quote
 
 ### Step 10
 ##### Spring Actuator Endpoints
 
 Check the Actuator Endpoints
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/beans``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/beans``
 
 Dumps all of the beans in the Spring context.
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/autoconfig``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/autoconfig``
 
 Dumps all of the auto-configuration performed as part of application bootstrapping.
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/configprops``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/configprops``
 
 Displays a collated list of all @ConfigurationProperties.
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/env``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/env``
 
 Dumps the application’s shell environment as well as all Java system properties.
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/mappings``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/mappings``
 
 Dumps all URI request mappings and the controller methods to which they are mapped.
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/dump``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/dump``
 
 Performs a thread dump.
 
-``http://<studentXX>-greeting-config.run.haas-123.pez.pivotal.io/trace``
+``http://<studentXX>-greeting-config.cfapps.haas-123.pez.pivotal.io/trace``
 
 # Advanced Topics
 
