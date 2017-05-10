@@ -180,6 +180,8 @@ For detailed documentation on the other configuration items, refer to the produc
 
 ##### Code walk through (greeting-config)
 
+Import the greeting-config project in Eclipse as a Gradle Project.
+
 Let's walk through the code in the greeting-config app in the source repo (Step #1) using your favorite editor (Atom/Sublime/Eclipse/IntelliJ/STS)
 
 1. greeting-service
@@ -324,8 +326,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 4. Open in the browser the App
 
       ````
-      http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/
-      http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+      http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/
+      http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/random-quote
       ````
 
 ### Step 7
@@ -343,7 +345,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 2. Force refresh the beans
 
       ````
-      curl -X POST http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/refresh
+      curl -X POST http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/refresh
       ````
 
       This will output the properties which changed
@@ -355,8 +357,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
       You will see the Greetings doesn't have any fortune and the random-quote is from qa service
 
-        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/
-        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+        http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/
+        http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/random-quote
 
 
 ### Step 8
@@ -388,8 +390,8 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
 
       You can verify by opening the two URLs
 
-        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/
-        http://<student-XX>-greeting-config.run.haas-123.pez.pivotal.io/random-quote
+        http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/
+        http://<student-XX>-greeting-config.cfapps.haas-123.pez.pivotal.io/random-quote
 
 
 ### Step 9
