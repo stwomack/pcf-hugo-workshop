@@ -223,7 +223,7 @@ The cities-service app requires a database service to store and fetch cities inf
 
     ````bash
     $ cf marketplace // check if mysql service is available
-    $ cf create-service p-mysql 100mb <studentXX>-cities-db
+    $ cf create-service p.mysql db-small <studentXX>-cities-db
     ````
 
 3. Launch the DB console via the `Manage` link in the App Manager.  Note the database is empty.
