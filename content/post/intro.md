@@ -8,9 +8,9 @@ weight = 1
 +++
 
 ##### Date and Time
-Date: **May 10 2017**
+Date: **Sep 4 2017**
 
-Time: **9:00PM - 12:30PM**
+Time: **8:30AM - 12:00PM**
 
 Click to get the Agenda, Prerequisites and Setup for the workshop.
 
@@ -20,7 +20,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 #### Agenda
 |  |  |
 |------|------|
-| **9:00 PM–10:00 PM** | Config Server Service |    
+| **8:00 AM–10:00 PM** | Config Server Service |    
 | **10:10 AM–11:00 PM** | Registry Service |
 | **11:10 AM–12:00 PM** | Circuit Breaker Service |
 | **12:10 PM–12:30 PM** | Wrap Up, Q&A, Feedback  |
