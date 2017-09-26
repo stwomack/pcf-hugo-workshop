@@ -80,12 +80,12 @@ The students have userId's (student1-student25) and the passwords will be distri
 Each student is assigned their own Organization (student1-org)
 
 ````
-cf login -a https://api.run.haas-112.pez.pivotal.io --skip-ssl-validation
+cf login -a https://api.run.aws.pcfninja.io --skip-ssl-validation
   Email: <studentXX>
   Password: ••••••••
 ````
 
-Login to the App Console at https://apps.run.haas-112.pez.pivotal.io
+Login to the App Console at https://apps.run.aws.pcfninja.io
 
   <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
@@ -184,7 +184,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
             path: ./build/libs/company-0.0.1-SNAPSHOT.jar
             env:
               SPRING_PROFILES_ACTIVE: dev
-              TRUST_CERTS: api.run.haas-112.pez.pivotal.io
+              TRUST_CERTS: api.run.aws.pcfninja.io
 
 
 
@@ -201,7 +201,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
             path: ./build/libs/agency-0.0.1-SNAPSHOT.jar
             env:
               SPRING_PROFILES_ACTIVE: dev
-              TRUST_CERTS: api.run.haas-112.pez.pivotal.io
+              TRUST_CERTS: api.run.aws.pcfninja.io
 
 
 
@@ -241,10 +241,10 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       ````
       // This is the agency app
-      http://<studentXX>-agency.cfapps.haas-112.pez.pivotal.io/
+      http://<studentXX>-agency.run.aws.pcfninja.io/
 
       // Note this is the company app
-      http://<studentXX>-company.cfapps.haas-112.pez.pivotal.io/available
+      http://<studentXX>-company.run.aws.pcfninja.io/available
       ````
 
 6.  Check the Hysterix Dashboard from the App Console -> Manage Hysterix Service instance
@@ -265,7 +265,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Now check the app status, the agency app will fall back to the backup.
 
-        http://<studentXX>-agency.cfapps.haas-112.pez.pivotal.io/
+        http://<studentXX>-agency.run.aws.pcfninja.io/
 
         Your guide will be: None available! Your backup guide is: Cookie
 
@@ -278,7 +278,7 @@ For more details, refer to the documentation of the Circuit Breaker configuratio
 
       Load the circuit
 
-        while true; do curl http://<studentXX>-agency.cfapps.haas-112.pez.pivotal.io/; done
+        while true; do curl http://<studentXX>-agency.run.aws.pcfninja.io/; done
 
 
 3. When failures exceed the configured threshold (the default is 20 failures in 5 seconds), the breaker opens the circuit.

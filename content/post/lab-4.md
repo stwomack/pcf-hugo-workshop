@@ -81,12 +81,12 @@ The students have userId's (student1-student40) and the passwords will be distri
 Each student is assigned their own Organization (student1-org)
 
 ````
-cf login -a https://api.run.haas-112.pez.pivotal.io --skip-ssl-validation
+cf login -a https://api.run.aws.pcfninja.io --skip-ssl-validation
   Email: <studentXX>
   Password: ••••••••
 ````
 
-Login to the App Console at https://apps.run.haas-112.pez.pivotal.io
+Login to the App Console at https://apps.run.aws.pcfninja.io
 
 <img src="/images/pcf-console.png" alt="PCF App Console" style="width: 100%;"/>
 
@@ -164,7 +164,7 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
           services:
           - <student-XX>-service-registry
           env:
-            TRUST_CERTS: api.run.haas-112.pez.pivotal.io
+            TRUST_CERTS: api.run.aws.pcfninja.io
 
 
 2. Build the app using gradle
@@ -183,7 +183,7 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
    Get the route to your app
 
       ````
-      http://student1-fortune-service.cfapps.haas-112.pez.pivotal.io/
+      http://student1-fortune-service.run.aws.pcfninja.io/
       ````
 
 ### Step 6
@@ -259,7 +259,7 @@ Lets walk through the code
           services:
           - student-XX-service-registry
           env:
-            TRUST_CERTS: api.run.haas-112.pez.pivotal.io
+            TRUST_CERTS: api.run.aws.pcfninja.io
 
 
 
@@ -282,7 +282,7 @@ Lets walk through the code
       Get the route to your app
 
       ````
-      http://studentXXX-greeting-feign.haas-112.pez.pivotal.io/
+      http://studentXXX-greeting-feign.aws.pcfninja.io/
       ````
 
       <img src="/images/pcf-registry-example.png" alt="Service Registry Example" style="width: 100%;"/>
