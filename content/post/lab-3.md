@@ -287,7 +287,7 @@ Let's walk through the code in the greeting-config app in the source repo (Step 
       greeting:
         displayFortune: true # <----Change to true
 
-      quoteServiceURL: http://quote-service-dev.run.aws.pcfninja.io/quote
+      quoteServiceURL: http://quote-service-dev.cfapps.io/quote
       ````
 
 
