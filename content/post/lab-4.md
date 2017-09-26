@@ -183,7 +183,7 @@ Let's walk through the code in the fortune-service app in the source repo (Step 
    Get the route to your app
 
       ````
-      http://student1-fortune-service.run.aws.pcfninja.io/
+      http://student1-fortune-service.apps.aws.pcfninja.io/
       ````
 
 ### Step 6
