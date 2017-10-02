@@ -3,7 +3,7 @@ Building the workshop site for a customer
 ---
 
 We will use Hugo for this website.  
-The code for workshop is available on github: [pcf-hugo-workshop](https://github.com/rjain-pivotal/pcf-hugo-workshop).
+The code for workshop is available on github: [pcf-hugo-workshop](https://github.com/stwomack/pcf-hugo-workshop).
 
 Five easy steps to create a custom workshop website in less than 10 minutes.
 Use the power of Hugo + Wercker + PCF
@@ -121,7 +121,7 @@ Hugo Static Site Generator v0.15 BuildDate: 2015-11-26T11:59:00+05:30
 ## Step 2: Clone this Website to get the Workshop website
 
 ```bash
-$ git clone https://github.com/rjain-pivotal/pcf-hugo-workshop
+$ git clone https://github.com/stwomack/pcf-hugo-workshop
 ```
 
 ## Step 3: Build the website and test it locally
@@ -139,7 +139,7 @@ $ hugo server --buildDrafts
 0 tags created
 0 categories created
 in 6 ms
-Watching for changes in /Users/rjain/pcf-hugo-workshop/{data,content,layouts,static}
+Watching for changes in /Users/swomack/pcf-hugo-workshop/{data,content,layouts,static}
 Serving pages from memory
 Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 Press Ctrl+C to stop
