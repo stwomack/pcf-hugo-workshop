@@ -2,7 +2,7 @@
 Categories = ["agenda","workshop"]
 Tags = ["logistics","speakers"]
 date = "2016-03-15T16:23:23+09:00"
-title = "Welcome to the Pivotal Cloud Foundry Workshop@Detroit"
+title = "Welcome to the Pivotal Cloud Foundry Workshop @ESI"
 type = "Introduction"
 weight = 1
 +++
@@ -78,9 +78,7 @@ Click to get the Agenda, Prerequisites and Setup for the workshop.
 
 
 #### Speakers
-+ Rajesh Jain - Platform Architect at Pivotal
-+ Chris Johnson - Platform Architect at Pivotal
-+ Rick Ross - Platform Architect at Pivotal
++ Steve Womack - Platform Architect at Pivotal
 
 #### Presentation
 
